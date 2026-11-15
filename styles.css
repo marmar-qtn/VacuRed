@@ -9,90 +9,42 @@ body {
 }
 
 /* ---------------------------------------------------------
-   1. ELEMENTOS DINÁMICOS DE TURNOS (inyectados por script.js)
+   1. MODALES GLOBALES DEL ENCABEZADO (Buscar y Ubicación)
    --------------------------------------------------------- */
-.appointment-row {
-    @apply grid items-center gap-3 p-3.5 border border-[#edf0f4] rounded-xl bg-white transition-all hover:border-[#d9e4ed] hover:bg-[#fcfdff];
-    grid-template-columns: 39px minmax(0, 1.5fr) minmax(105px, .7fr) auto 30px;
-}
-.appointment-row-icon {
-    @apply w-9 h-9 grid place-items-center rounded-xl bg-vs text-violetbrand text-[17px];
-}
-.appointment-main-info strong { @apply block text-[11px] leading-snug; }
-.appointment-main-info small { @apply block text-muted text-[10px] mt-1 leading-snug; }
-.appointment-center { @apply overflow-hidden text-ellipsis whitespace-nowrap; }
-.appointment-date strong { @apply block text-[11px]; }
-.appointment-date small { @apply block text-muted text-[10px] mt-1; }
-
-.appointment-status, .detail-status {
-    @apply inline-flex items-center justify-center rounded-full px-2.5 py-1.5 text-[9px] font-extrabold whitespace-nowrap;
-}
-.appointment-status.confirmed, .detail-status.confirmed { @apply bg-[#eaf5f1] text-greenbrand; }
-.appointment-status.pending, .detail-status.pending { @apply bg-vs text-violetbrand; }
-.appointment-status.completed, .detail-status.completed { @apply bg-bs text-bluebrand; }
-.appointment-status.cancelled, .detail-status.cancelled { @apply bg-rs text-redbrand; }
-
-.appointment-more {
-    @apply w-[30px] h-[30px] border-0 rounded-lg bg-transparent text-muted text-[19px] cursor-pointer hover:bg-vs hover:text-violetbrand transition-colors;
+#mfields {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
-/* Responsive turnos */
-@media (max-width: 900px) {
-    .appointment-row {
-        grid-template-columns: 38px minmax(0, 1fr) auto 30px;
-    }
-    .appointment-date { grid-column: 2; grid-row: 2; }
-    .appointment-status { grid-column: 3; grid-row: 1 / 3; }
-    .appointment-more { grid-column: 4; grid-row: 1 / 3; }
-}
-@media (max-width: 650px) {
-    .appointment-row {
-        grid-template-columns: 34px minmax(0, 1fr) 30px;
-        @apply gap-2.5 p-3;
-    }
-    .appointment-row-icon { @apply w-8 h-8; }
-    .appointment-date { grid-column: 2; grid-row: 2; }
-    .appointment-status { grid-column: 2; grid-row: 3; justify-self: start; }
-    .appointment-more { grid-column: 3; grid-row: 1 / 4; }
+#mfields label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #203247;
+    margin-top: 6px;
 }
 
-/* Modal de reservas de turnos */
-.booking-step { @apply flex flex-col items-center gap-1.5 min-w-[65px]; }
-.booking-step span { @apply w-[29px] h-[29px] grid place-items-center rounded-full bg-[#f0f2f5] text-muted text-[11px] font-extrabold transition-colors duration-200; }
-.booking-step small { @apply text-[9px] text-muted whitespace-nowrap; }
-.booking-step.active span { @apply bg-violetbrand text-white; }
-.booking-step.active small { @apply text-violetbrand font-extrabold; }
-.booking-step.done span { @apply bg-bs text-bluebrand; }
-.booking-step-line { @apply h-[2px] flex-1 max-w-[65px] mx-1 mb-[17px] bg-line; }
-
-.booking-fields { @apply grid gap-2.5; }
-.booking-fields label { @apply text-[11px] font-bold text-ink mt-1; }
-.booking-fields input, .booking-fields select {
-    @apply w-full h-[42px] px-3 border border-line rounded-lg bg-white text-ink text-xs outline-none focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 transition-shadow;
+#mfields input,
+#mfields select {
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #e5eaf0;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #203247;
+    font-size: 12px;
+    outline: none;
 }
-.booking-selected-center { @apply grid gap-1.5 p-3.5 rounded-xl bg-bs mb-2; }
-.booking-selected-center span { @apply text-bluebrand text-[9px] font-extrabold tracking-wide; }
-.booking-selected-center strong { @apply text-xs; }
-.booking-selected-center small { @apply text-[10px] text-muted; }
-.booking-note { @apply text-[10px] leading-relaxed text-muted bg-[#f5f7fa] rounded-xl p-3 mt-2.5; }
 
-.booking-confirmation { @apply text-center; }
-.confirmation-icon { @apply w-11 h-11 grid place-items-center rounded-xl bg-vs text-violetbrand text-[22px] mx-auto mb-3; }
-.booking-confirmation h4 { @apply text-[14px] font-bold mb-4; }
-.confirmation-details { @apply grid grid-cols-1 sm:grid-cols-2 text-left border border-line rounded-xl overflow-hidden; }
-.confirmation-details > div { @apply flex flex-col gap-1 p-3 border-b border-line; }
-.confirmation-details > div:nth-child(odd) { @apply sm:border-r sm:border-line; }
-.confirmation-details > div:nth-last-child(-n+2) { @apply sm:border-b-0; }
-.confirmation-details small { @apply text-muted text-[9px]; }
-.confirmation-details strong { @apply text-[10px] leading-snug; }
-
-.detail-appointment h4 { @apply text-base font-bold my-3.5; }
-.detail-item { @apply flex flex-col gap-1 py-2.5 border-b border-line last:border-0; }
-.detail-item small { @apply text-muted text-[10px]; }
-.detail-item strong { @apply text-xs; }
+#mfields input:focus,
+#mfields select:focus {
+    border-color: #a99be0;
+    box-shadow: 0 0 0 3px rgba(118, 88, 201, 0.12);
+}
 
 /* ---------------------------------------------------------
-   2. MAPA E INTERACCIÓN DE VACUNATORIOS (CSS Puro)
+   2. MAPA E INTERACCIÓN DE VACUNATORIOS
    --------------------------------------------------------- */
 .clinic-map {
     height: 290px;
@@ -139,7 +91,7 @@ body {
     border-radius: 50% 50% 50% 4px;
     transform: rotate(-45deg);
     border: 2px solid white;
-    background: #477da8; /* Color azul marca */
+    background: #477da8;
     color: white;
     font-size: 11px;
     font-weight: 800;
@@ -156,7 +108,7 @@ body {
 }
 
 .map-pin.active {
-    background: #7658c9; /* Color violeta marca */
+    background: #7658c9;
     width: 37px;
     height: 37px;
     z-index: 20;
@@ -166,61 +118,11 @@ body {
 .pin-one { top: 34%; left: 27%; }
 .pin-two { top: 57%; left: 63%; }
 .pin-three { top: 20%; left: 73%; }
+
 /* ---------------------------------------------------------
-   3. PRÓXIMO TURNO DESTACADO (Inyectado por script.js)
+   3. VACUNATORIOS · BUSCADOR Y TARJETAS
    --------------------------------------------------------- */
-.next-label {
-    @apply inline-flex items-center gap-2 text-[10px] font-extrabold tracking-wider text-bluebrand bg-white/90 border border-line rounded-full px-3 py-1 mb-2 shadow-xs;
-}
-
-.next-dot {
-    @apply w-2 h-2 rounded-full bg-redbrand animate-pulse;
-}
-
-.next-appointment-content h2 {
-    @apply text-xl sm:text-2xl font-extrabold text-ink tracking-tight my-1;
-}
-
-.next-appointment-content > p {
-    @apply text-xs text-muted mb-4;
-}
-
-/* Grilla de detalles en tarjetas blancas traslúcidas */
-.next-details {
-    @apply grid grid-cols-1 sm:grid-cols-3 gap-2.5 my-4;
-}
-
-.next-details > div {
-    @apply bg-white/80 backdrop-blur-xs border border-line/80 rounded-xl p-3 space-y-1;
-}
-
-.next-details span {
-    @apply block text-[9px] text-muted font-extrabold tracking-wider uppercase mb-0.5;
-}
-
-.next-details strong {
-    @apply block text-xs font-bold text-ink leading-snug;
-}
-
-/* Botones de acción */
-.next-actions {
-    @apply flex items-center gap-3 mt-4 flex-wrap;
-}
-
-.next-actions button, 
-.next-actions .primary {
-    @apply bg-violetbrand text-white rounded-lg px-4 py-2.5 text-xs font-bold hover:bg-opacity-90 transition shadow-xs border-0;
-}
-
-.next-cancel {
-    @apply text-redbrand text-xs font-bold hover:underline bg-transparent border-0 p-2 cursor-pointer ml-auto !important;
-}
-/* ---------------------------------------------------------
-   2. VACUNATORIOS · BUSCADOR Y TARJETAS (CSS Puro)
-   --------------------------------------------------------- */
-
-/* Corrección del contenedor del ícono de búsqueda */
-.search-symbol, 
+.search-symbol,
 .map-icon {
     width: 40px;
     height: 40px;
@@ -236,7 +138,6 @@ body {
     font-weight: 700;
 }
 
-/* Tarjeta individual de vacunatorio */
 .clinic-card {
     background: #ffffff;
     border: 1px solid #e5eaf0;
@@ -254,14 +155,12 @@ body {
     box-shadow: 0 4px 16px rgba(32, 50, 71, 0.07);
 }
 
-/* Estado SELECCIONADO (Se activa al hacer clic en cualquier parte de la tarjeta) */
 .clinic-card.selected {
     background: #f8f5ff;
     border-color: #7658c9;
     box-shadow: 0 0 0 3px rgba(118, 88, 201, 0.18), 0 4px 14px rgba(118, 88, 201, 0.08);
 }
 
-/* Badge indicadora dentro de la tarjeta seleccionada */
 .clinic-card.selected::before {
     content: "✓ Seleccionado";
     position: absolute;

@@ -222,19 +222,29 @@
                 </div>
                 <button class="w-[31px] h-[31px] flex-shrink-0 border-0 rounded-lg bg-[#f3f5f8] text-muted text-[21px] cursor-pointer hover:bg-rs hover:text-redbrand transition" onclick="closeBookingModal()">×</button>
             </div>
-
+            
             <!-- INDICADOR DE PASOS -->
             <div class="flex items-center justify-center my-6">
-                <div class="booking-step active" id="stepIndicator1">
-                    <span>1</span><small>Servicio</small>
+                <div class="group active flex flex-col items-center gap-1.5 min-w-[68px]" id="stepIndicator1">
+                    <span
+                        class="w-[30px] h-[30px] grid place-items-center rounded-full bg-[#f0f2f5] text-muted text-[11px] font-extrabold transition-colors group-[.active]:bg-violetbrand group-[.active]:text-white group-[.done]:bg-bs group-[.done]:text-bluebrand">1</span>
+                    <small
+                        class="text-[10px] text-muted whitespace-nowrap group-[.active]:text-violetbrand group-[.active]:font-extrabold group-[.done]:text-bluebrand group-[.done]:font-bold">Servicio</small>
                 </div>
-                <div class="booking-step-line"></div>
-                <div class="booking-step" id="stepIndicator2">
-                    <span>2</span><small>Fecha y hora</small>
+                <div class="h-[2px] flex-1 max-w-[65px] mx-1.5 mb-[18px] bg-line"></div>
+                <div class="group flex flex-col items-center gap-1.5 min-w-[68px]" id="stepIndicator2">
+                    <span
+                        class="w-[30px] h-[30px] grid place-items-center rounded-full bg-[#f0f2f5] text-muted text-[11px] font-extrabold transition-colors group-[.active]:bg-violetbrand group-[.active]:text-white group-[.done]:bg-bs group-[.done]:text-bluebrand">2</span>
+                    <small
+                        class="text-[10px] text-muted whitespace-nowrap group-[.active]:text-violetbrand group-[.active]:font-extrabold group-[.done]:text-bluebrand group-[.done]:font-bold">Fecha
+                        y hora</small>
                 </div>
-                <div class="booking-step-line"></div>
-                <div class="booking-step" id="stepIndicator3">
-                    <span>3</span><small>Confirmación</small>
+                <div class="h-[2px] flex-1 max-w-[65px] mx-1.5 mb-[18px] bg-line"></div>
+                <div class="group flex flex-col items-center gap-1.5 min-w-[68px]" id="stepIndicator3">
+                    <span
+                        class="w-[30px] h-[30px] grid place-items-center rounded-full bg-[#f0f2f5] text-muted text-[11px] font-extrabold transition-colors group-[.active]:bg-violetbrand group-[.active]:text-white group-[.done]:bg-bs group-[.done]:text-bluebrand">3</span>
+                    <small
+                        class="text-[10px] text-muted whitespace-nowrap group-[.active]:text-violetbrand group-[.active]:font-extrabold group-[.done]:text-bluebrand group-[.done]:font-bold">Confirmación</small>
                 </div>
             </div>
 

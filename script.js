@@ -651,27 +651,32 @@ function renderBookingStep() {
 
     if (!content) return;
 
+    const fieldClass = "w-full h-[42px] px-3 border border-line rounded-lg bg-white text-ink text-xs outline-none focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 transition";
+    const labelClass = "text-[11px] font-bold text-ink mt-1";
+
     if (bookingStep === 1) {
         if (title) title.textContent = "Seleccioná el servicio";
         if (description) description.textContent = "Indicá para quién es el turno y qué vacunación necesita.";
         content.innerHTML = `
-            <div class="booking-fields">
-                <label for="bookingMember">Integrante de la familia</label>
-                <select id="bookingMember">
+            <div class="grid gap-2">
+                <label class="${labelClass}" for="bookingMember">Integrante de la familia</label>
+                <select id="bookingMember" class="${fieldClass}">
                     <option value="">Seleccionar integrante</option>
                     <option value="María Quintana">María Quintana</option>
                     <option value="Tomás">Tomás</option>
                     <option value="Ana">Ana</option>
                 </select>
-                <label for="bookingCenter">Vacunatorio</label>
-                <select id="bookingCenter">
+
+                <label class="${labelClass}" for="bookingCenter">Vacunatorio</label>
+                <select id="bookingCenter" class="${fieldClass}">
                     <option value="">Seleccionar vacunatorio</option>
                     <option value="Centro de Salud San Justo">Centro de Salud San Justo</option>
                     <option value="Hospital Italiano de San Justo">Hospital Italiano de San Justo</option>
                     <option value="Vacunatorio Municipal">Vacunatorio Municipal</option>
                 </select>
-                <label for="bookingVaccine">Vacuna</label>
-                <select id="bookingVaccine">
+
+                <label class="${labelClass}" for="bookingVaccine">Vacuna</label>
+                <select id="bookingVaccine" class="${fieldClass}">
                     <option value="">Seleccionar vacuna</option>
                     <option value="Antigripal">Antigripal</option>
                     <option value="Hepatitis B">Hepatitis B</option>
@@ -680,8 +685,9 @@ function renderBookingStep() {
                     <option value="COVID-19">COVID-19</option>
                     <option value="Otra vacuna">Otra vacuna</option>
                 </select>
-                <label for="bookingService">Tipo de servicio</label>
-                <select id="bookingService">
+
+                <label class="${labelClass}" for="bookingService">Tipo de servicio</label>
+                <select id="bookingService" class="${fieldClass}">
                     <option value="">Seleccionar servicio</option>
                     <option value="Primera dosis">Primera dosis</option>
                     <option value="Segunda dosis">Segunda dosis</option>
@@ -697,16 +703,18 @@ function renderBookingStep() {
         if (title) title.textContent = "Elegí fecha y horario";
         if (description) description.textContent = "Seleccioná una fecha y un horario para tu visita.";
         content.innerHTML = `
-            <div class="booking-fields">
-                <div class="booking-selected-center">
-                    <span>VACUNATORIO SELECCIONADO</span>
-                    <strong>${bookingData.center}</strong>
-                    <small>${bookingData.vaccine} · ${bookingData.member}</small>
+            <div class="grid gap-2">
+                <div class="grid gap-1 p-3.5 rounded-xl bg-bs border border-bluebrand/20 mb-1">
+                    <span class="text-bluebrand text-[9px] font-extrabold tracking-wider uppercase">VACUNATORIO SELECCIONADO</span>
+                    <strong class="text-xs font-bold text-ink">${bookingData.center}</strong>
+                    <small class="text-[11px] text-muted">${bookingData.vaccine} · ${bookingData.member}</small>
                 </div>
-                <label for="bookingDate">Fecha del turno</label>
-                <input type="date" id="bookingDate" value="${bookingData.date}">
-                <label for="bookingTime">Horario disponible</label>
-                <select id="bookingTime">
+
+                <label class="${labelClass}" for="bookingDate">Fecha del turno</label>
+                <input type="date" id="bookingDate" value="${bookingData.date}" class="${fieldClass}">
+
+                <label class="${labelClass}" for="bookingTime">Horario disponible</label>
+                <select id="bookingTime" class="${fieldClass}">
                     <option value="">Seleccionar horario</option>
                     <option value="09:00">09:00 hs</option>
                     <option value="09:30">09:30 hs</option>
@@ -718,7 +726,10 @@ function renderBookingStep() {
                     <option value="14:30">14:30 hs</option>
                     <option value="15:00">15:00 hs</option>
                 </select>
-                <p class="booking-note">Los horarios disponibles son ilustrativos y forman parte de la demostración del prototipo.</p>
+
+                <p class="text-[11px] leading-relaxed text-muted bg-bglight border border-[#e9eef4] rounded-xl p-3 mt-2">
+                    Los horarios disponibles son ilustrativos y forman parte de la demostración del prototipo.
+                </p>
             </div>
         `;
         const bDate = document.getElementById("bookingDate");
@@ -733,18 +744,20 @@ function renderBookingStep() {
         if (description) description.textContent = "Revisá que todos los datos sean correctos antes de finalizar.";
         const dateInfo = formatAppointmentDate(bookingData.date);
         content.innerHTML = `
-            <div class="booking-confirmation">
-                <div class="confirmation-icon">✓</div>
-                <h4>Resumen de la reserva</h4>
-                <div class="confirmation-details">
-                    <div><small>Integrante</small><strong>${bookingData.member}</strong></div>
-                    <div><small>Vacunatorio</small><strong>${bookingData.center}</strong></div>
-                    <div><small>Vacuna</small><strong>${bookingData.vaccine}</strong></div>
-                    <div><small>Servicio</small><strong>${bookingData.service}</strong></div>
-                    <div><small>Fecha</small><strong>${dateInfo.formatted || bookingData.date}</strong></div>
-                    <div><small>Horario</small><strong>${bookingData.time} hs</strong></div>
+            <div class="text-center">
+                <div class="w-11 h-11 grid place-items-center rounded-2xl bg-vs text-violetbrand text-xl font-extrabold mx-auto mb-3">✓</div>
+                <h4 class="text-sm font-bold text-ink mb-4">Resumen de la reserva</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-[1px] bg-line border border-line rounded-xl overflow-hidden text-left">
+                    <div class="bg-white p-3 flex flex-col gap-1"><small class="text-muted text-[10px] font-semibold">Integrante</small><strong class="text-ink text-xs font-bold">${bookingData.member}</strong></div>
+                    <div class="bg-white p-3 flex flex-col gap-1"><small class="text-muted text-[10px] font-semibold">Vacunatorio</small><strong class="text-ink text-xs font-bold">${bookingData.center}</strong></div>
+                    <div class="bg-white p-3 flex flex-col gap-1"><small class="text-muted text-[10px] font-semibold">Vacuna</small><strong class="text-ink text-xs font-bold">${bookingData.vaccine}</strong></div>
+                    <div class="bg-white p-3 flex flex-col gap-1"><small class="text-muted text-[10px] font-semibold">Servicio</small><strong class="text-ink text-xs font-bold">${bookingData.service}</strong></div>
+                    <div class="bg-white p-3 flex flex-col gap-1"><small class="text-muted text-[10px] font-semibold">Fecha</small><strong class="text-ink text-xs font-bold">${dateInfo.formatted || bookingData.date}</strong></div>
+                    <div class="bg-white p-3 flex flex-col gap-1"><small class="text-muted text-[10px] font-semibold">Horario</small><strong class="text-ink text-xs font-bold">${bookingData.time} hs</strong></div>
                 </div>
-                <p class="booking-note">Al confirmar, el turno quedará registrado en tu lista de turnos como pendiente de confirmación.</p>
+                <p class="text-[11px] leading-relaxed text-muted bg-bglight border border-[#e9eef4] rounded-xl p-3 mt-3 text-left">
+                    Al confirmar, el turno quedará registrado en tu lista de turnos como pendiente de confirmación.
+                </p>
             </div>
         `;
         if (next) next.textContent = "Confirmar turno ✓";
