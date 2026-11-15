@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>VacuRed | Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración centralizada de colores -->
+    <script src="tailwind-config.js"></script>
+    <!-- CSS centralizado (Fuentes y reglas @apply) -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-bglight text-ink antialiased">
+    <div class="min-h-screen md:grid md:grid-cols-[238px_1fr]">
+        
+        <!-- SIDEBAR -->
+        <aside class="hidden md:flex flex-col justify-between bg-white border-r border-line p-5 h-screen sticky top-0">
+            <div class="space-y-6">
+                <!-- Brand -->
+                <div class="flex items-center gap-2.5 px-2 font-extrabold text-xl tracking-tight">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violetbrand to-redbrand grid place-items-center text-white text-lg">✳</div>
+                    <div>Vacu<span class="text-redbrand">Red</span><small class="block text-[10px] text-muted font-medium tracking-wide">Tu salud, en red.</small></div>
+                </div>
+                
+                <!-- Nav -->
+                <div>
+                    <p class="text-[10px] text-[#9aa6b4] tracking-widest font-extrabold px-3 mb-2">MENÚ PRINCIPAL</p>
+                    <nav class="grid gap-1">
+                        <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold bg-vs text-violetbrand" data-page="Inicio" onclick="go('Inicio')">
+                            <span class="w-5 text-center text-base">⌂</span>Inicio
+                        </button>
+                        <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Carnet familiar" onclick="go('Carnet familiar')">
+                            <span class="w-5 text-center text-base">▤</span>Carnet familiar
+                        </button>
+                        <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Vacunatorios" onclick="go('Vacunatorios')">
+                            <span class="w-5 text-center text-base">⌖</span>Vacunatorios
+                        </button>
+                        <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Turnos" onclick="go('Turnos')">
+                            <span class="w-5 text-center text-base">▦</span>Turnos
+                        </button>
+                        <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Notificaciones" onclick="toast('Notificaciones de demostración')">
+                            <span class="w-5 text-center text-base">♧</span>Notificaciones 
+                            <span class="ml-auto bg-rs text-redbrand rounded-full px-2 py-0.5 text-[10px]">2</span>
+                        </button>
+                        <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Mi cuenta" onclick="go('Mi cuenta')">
+                            <span class="w-5 text-center text-base">◉</span>Mi cuenta
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Bottom sidebar -->
+            <div class="space-y-4">
+                <div class="bg-gradient-to-br from-[#eef4fa] to-[#f5f2fc] border border-line rounded-2xl p-3.5 space-y-2">
+                    <b class="text-xs font-bold block">¿Necesitás ayuda?</b>
+                    <p class="text-[11px] text-muted leading-relaxed">Encontrá respuestas sobre vacunas, carnets y el uso de VacuRed.</p>
+                    <button class="bg-white border-0 rounded-lg px-2.5 py-1.5 text-bluebrand text-[11px] font-bold" onclick="toast('Preguntas frecuentes: sección de demostración')">
+                        Ver preguntas frecuentes ↗
+                    </button>
+                </div>
+                <div class="flex items-center gap-2.5 p-2 bg-gradient-to-r from-[#f3f0fc] to-[#eaf3f9] border border-[#dcd3f5] rounded-xl text-xs font-bold">
+                    <div class="w-8.5 h-8.5 rounded-full bg-[#e8e2f7] text-violetbrand flex items-center justify-center font-bold text-xs">MQ</div>
+                    <div>
+                        María Quintana
+                        <small class="block text-muted font-normal text-[10px] mt-0.5">Cuenta familiar (Titular)</small>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="max-w-[1500px] w-full mx-auto p-4 md:p-8 lg:p-12 space-y-6">
+            
+            <!-- TOPBAR -->
+            <div class="flex justify-between items-center mb-6">
+                <div class="md:hidden flex items-center gap-2 font-extrabold text-lg">
+                    <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-violetbrand to-[#a99be0] grid place-items-center text-white text-xs">✳</div>
+                    VacuRed
+                </div>
+                <div class="hidden md:block text-xs text-muted">VacuRed / <b class="text-ink">Inicio</b></div>
+                <div class="flex items-center gap-2">
+                    <button class="hidden md:flex border border-line bg-white rounded-xl px-3 py-2 text-[#566b80] text-xs" onclick="locationModal()">
+                        ⌖ &nbsp;San Justo, Buenos Aires ▾
+                    </button>
+                    <button class="w-9 h-9 border border-line bg-white rounded-xl grid place-items-center text-[#566b80] text-base" onclick="searchModal()" aria-label="Buscar">⌕</button>
+                    <button class="w-9 h-9 border border-line bg-white rounded-xl grid place-items-center text-[#566b80] text-base relative" onclick="toast('Tenés 2 notificaciones pendientes')" aria-label="Notificaciones">
+                        ♧<i class="absolute top-1.5 right-2 w-1.5 h-1.5 bg-redbrand border border-white rounded-full"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- WELCOME -->
+            <section class="flex flex-col sm:flex-row justify-between sm:items-end gap-3 mb-6">
+                <div>
+                    <div class="text-[10px] text-bluebrand tracking-widest font-extrabold uppercase mb-1">TU ESPACIO FAMILIAR DE VACUNACIÓN</div>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">¡Hola, María! <span class="text-violetbrand">Qué bueno verte.</span></h1>
+                    <p class="text-xs sm:text-sm text-muted mt-1">Acá tenés todo lo importante para cuidar la vacunación de tu familia.</p>
+                </div>
+                <div class="text-[10px] text-muted whitespace-nowrap">MARTES, 10 DE NOVIEMBRE DE 2026</div>
+            </section>
+
+            <!-- HERO REESTRUCTURADO: Bloques apilados en ancho completo -->
+            <section class="space-y-4">
+                <div class="relative bg-gradient-to-r from-[#ffdfe1] to-[#deedf8] rounded-2xl p-6 sm:p-8 flex items-center shadow-sm overflow-hidden min-h-[200px]">
+                    <div class="relative z-10 max-w-full sm:max-w-[60%] space-y-3">
+                        <span class="inline-block bg-white/80 text-bluebrand rounded-full px-2.5 py-1 text-[10px] font-bold">✦ Información para tu familia</span>
+                        <h2 class="text-xl sm:text-2xl font-bold tracking-tight leading-snug">La vacunación al día, un cuidado compartido.</h2>
+                        <p class="text-xs text-[#536d82] leading-relaxed">Consultá los calendarios, organizá los carnets y encontrá centros de vacunación cerca tuyo.</p>
+                        <button class="bg-redbrand text-white rounded-lg px-3.5 py-2.5 text-xs font-bold hover:bg-opacity-90 transition" onclick="go('Carnet familiar')">
+                            Ver carnet familiar &nbsp; ↗
+                        </button>
+                    </div>
+                    <img class="absolute right-0 top-0 w-1/2 sm:w-2/5 h-full object-cover opacity-30 sm:opacity-100 [mask-image:linear-gradient(90deg,transparent,black_28%)]"
+                        src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=900&q=85" alt="Profesional de salud">
+                </div>
+
+                <div class="bg-white border border-line rounded-2xl p-5 shadow-sm flex flex-col justify-between space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] text-muted font-extrabold tracking-wider">RECURSO DESTACADO</span>
+                        <span class="w-8 h-8 rounded-xl bg-vs text-violetbrand grid place-items-center font-bold">✚</span>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold mb-1">Calendario Nacional de Vacunación</h3>
+                        <p class="text-xs text-muted leading-relaxed">Conocé qué vacunas corresponden en cada etapa de la vida, según las recomendaciones oficiales.</p>
+                        <button class="text-bluebrand text-xs font-bold mt-3 hover:underline" onclick="toast('Consultá el calendario oficial en argentina.gob.ar/salud/vacunas')">
+                            Consultar calendario oficial →
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RESUMEN -->
+            <div class="flex justify-between items-center pt-2">
+                <h3 class="text-base font-bold">Resumen de tu familia</h3>
+                <a class="text-xs text-bluebrand font-bold cursor-pointer hover:underline" onclick="go('Carnet familiar')">Ver carnet familiar →</a>
+            </div>
+            
+            <section class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="bg-white border border-line rounded-2xl p-4 flex items-center gap-3 shadow-sm">
+                    <div class="w-10 h-10 rounded-xl bg-vs text-violetbrand grid place-items-center text-lg">♧</div>
+                    <div><small class="block text-muted text-[10px]">Integrantes registrados</small><strong class="text-xl font-bold">3</strong><em class="not-italic text-muted text-[10px] ml-1">personas</em></div>
+                </div>
+                <div class="bg-white border border-line rounded-2xl p-4 flex items-center gap-3 shadow-sm">
+                    <div class="w-10 h-10 rounded-xl bg-bs text-bluebrand grid place-items-center text-lg">✓</div>
+                    <div><small class="block text-muted text-[10px]">Vacunas registradas</small><strong class="text-xl font-bold">24</strong><em class="not-italic text-muted text-[10px] ml-1">en total</em></div>
+                </div>
+                <div class="bg-white border border-line rounded-2xl p-4 flex items-center gap-3 shadow-sm">
+                    <div class="w-10 h-10 rounded-xl bg-rs text-redbrand grid place-items-center text-lg">◷</div>
+                    <div><small class="block text-muted text-[10px]">Próximas dosis</small><strong class="text-xl font-bold">2</strong><em class="not-italic text-muted text-[10px] ml-1">por revisar</em></div>
+                </div>
+            </section>
+
+            <!-- PRÓXIMAS DOSIS CON IMAGEN INTERNA -->
+            <section>
+                <div class="bg-white border border-line rounded-2xl p-5 shadow-sm space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-sm font-bold">Próximas dosis y recordatorios</h3>
+                        <button class="text-bluebrand text-xs font-bold hover:underline" onclick="go('Notificaciones')">Ver todos →</button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-[1fr_220px] gap-5 items-center">
+                        <div class="space-y-2.5">
+                            <div class="grid grid-cols-[42px_1fr_auto] items-center gap-3 border border-[#edf0f4] rounded-xl p-2.5">
+                                <div class="bg-bs text-bluebrand rounded-lg text-center p-1.5">
+                                    <b class="block text-sm font-bold leading-none">18</b>
+                                    <small class="text-[9px] font-extrabold">NOV</small>
+                                </div>
+                                <div>
+                                    <b class="block text-xs font-bold">Refuerzo de calendario</b>
+                                    <small class="text-muted text-[10px]">Tomás · Revisar dosis correspondiente</small>
+                                </div>
+                                <span class="text-[9px] text-[#b76a37] bg-[#fff1e9] rounded-full px-2 py-1 whitespace-nowrap">Próximamente</span>
+                            </div>
+
+                            <div class="grid grid-cols-[42px_1fr_auto] items-center gap-3 border border-[#edf0f4] rounded-xl p-2.5">
+                                <div class="bg-bs text-bluebrand rounded-lg text-center p-1.5">
+                                    <b class="block text-sm font-bold leading-none">02</b>
+                                    <small class="text-[9px] font-extrabold">DIC</small>
+                                </div>
+                                <div>
+                                    <b class="block text-xs font-bold">Control de carnet</b>
+                                    <small class="text-muted text-[10px]">María · Verificar registro de vacunación</small>
+                                </div>
+                                <span class="text-[9px] text-violetbrand bg-vs rounded-full px-2 py-1 whitespace-nowrap">Pendiente</span>
+                            </div>
+                            
+                            <p class="text-[10px] text-muted leading-relaxed">Los recordatorios son orientativos. Verificá las indicaciones con un centro de salud.</p>
+                        </div>
+
+                        <div class="hidden md:block h-36">
+                            <img class="w-full h-full object-cover rounded-xl shadow-sm" src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=500&q=85" alt="Insumos médicos">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ACCESOS RÁPIDOS EN BARRA HORIZONTAL FINA -->
+            <section>
+                <div class="bg-white border border-line rounded-2xl p-4 shadow-sm space-y-3">
+                    <h3 class="text-sm font-bold">Accesos rápidos</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                        <button class="flex items-center gap-2.5 bg-slate-50 border border-line rounded-xl p-2.5 text-left hover:bg-vs hover:border-[#c8b9ed] transition" onclick="go('Carnet familiar')">
+                            <span class="w-7 h-7 rounded-lg bg-bs text-bluebrand grid place-items-center font-bold text-xs">＋</span>
+                            <b class="text-xs text-ink font-bold">Registrar vacuna</b>
+                        </button>
+                        <button class="flex items-center gap-2.5 bg-slate-50 border border-line rounded-xl p-2.5 text-left hover:bg-vs hover:border-[#c8b9ed] transition" onclick="go('Vacunatorios')">
+                            <span class="w-7 h-7 rounded-lg bg-bs text-bluebrand grid place-items-center font-bold text-xs">⌖</span>
+                            <b class="text-xs text-ink font-bold">Buscar vacunatorios</b>
+                        </button>
+                        <button class="flex items-center gap-2.5 bg-slate-50 border border-line rounded-xl p-2.5 text-left hover:bg-vs hover:border-[#c8b9ed] transition" onclick="go('Turnos')">
+                            <span class="w-7 h-7 rounded-lg bg-bs text-bluebrand grid place-items-center font-bold text-xs">▦</span>
+                            <b class="text-xs text-ink font-bold">Gestionar turnos</b>
+                        </button>
+                        <button class="flex items-center gap-2.5 bg-slate-50 border border-line rounded-xl p-2.5 text-left hover:bg-vs hover:border-[#c8b9ed] transition" onclick="toast('Calendario Nacional de Vacunación')">
+                            <span class="w-7 h-7 rounded-lg bg-bs text-bluebrand grid place-items-center font-bold text-xs">▤</span>
+                            <b class="text-xs text-ink font-bold">Ver calendario</b>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- INTEGRANTES Y CAMPAÑAS -->
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <!-- INTEGRANTES DE TU FAMILIA -->
+                <div class="bg-white border border-line rounded-2xl p-5 shadow-sm space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-sm font-bold">Integrantes de tu familia</h3>
+                        <button class="text-bluebrand text-xs font-bold hover:underline" onclick="go('Mi cuenta')">Administrar →</button>
+                    </div>
+
+                    <!-- RESPONSABLE DESTACADO CON FONDO DISTINTO -->
+                    <div class="flex items-center gap-3 p-3 bg-gradient-to-r from-[#f3f0fc] to-[#eaf3f9] border border-[#dcd3f5] rounded-xl">
+                        <div class="w-8 h-8 rounded-full bg-[#f1eff9] text-violetbrand grid place-items-center text-xs font-extrabold">MQ</div>
+                        <div class="flex-1">
+                            <b class="block text-xs font-bold">María Quintana</b>
+                            <small class="text-muted text-[10px]">Adulta · Responsable de la cuenta (Titular)</small>
+                        </div>
+                        <span class="text-[9px] text-greenbrand bg-[#eaf5f1] px-2 py-1 rounded-full font-bold">Carnet activo</span>
+                    </div>
+
+                    <div class="flex items-center gap-3 py-2 border-b border-slate-100">
+                        <div class="w-8 h-8 rounded-full bg-[#e9f2f8] text-bluebrand grid place-items-center text-xs font-extrabold">JT</div>
+                        <div class="flex-1">
+                            <b class="block text-xs font-bold">Tomás</b>
+                            <small class="text-muted text-[10px]">Adolescente · Integrante familiar</small>
+                        </div>
+                        <span class="text-[9px] text-greenbrand bg-[#eaf5f1] px-2 py-1 rounded-full font-bold">Carnet activo</span>
+                    </div>
+
+                    <div class="flex items-center gap-3 py-2">
+                        <div class="w-8 h-8 rounded-full bg-[#fceff0] text-redbrand grid place-items-center text-xs font-extrabold">AL</div>
+                        <div class="flex-1">
+                            <b class="block text-xs font-bold">Ana</b>
+                            <small class="text-muted text-[10px]">Niña · Integrante familiar</small>
+                        </div>
+                        <span class="text-[9px] text-greenbrand bg-[#eaf5f1] px-2 py-1 rounded-full font-bold">Carnet activo</span>
+                    </div>
+                </div>
+
+                <!-- INFORMACIÓN Y CAMPAÑAS -->
+                <div class="bg-white border border-line rounded-2xl p-5 shadow-sm space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-sm font-bold">Información y campañas</h3>
+                        <button class="text-bluebrand text-xs font-bold hover:underline" onclick="toast('Información y recursos')">Ver recursos →</button>
+                    </div>
+                    <div class="grid grid-cols-[90px_1fr] sm:grid-cols-[100px_1fr] gap-3 items-center">
+                        <img class="w-full h-24 object-cover rounded-xl" src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=400&q=85" alt="Profesional de salud">
+                        <div>
+                            <span class="text-[9px] text-redbrand font-extrabold tracking-wider uppercase">INFORMACIÓN OFICIAL</span>
+                            <h4 class="text-xs font-bold my-1">Vacunarse en cada etapa de la vida</h4>
+                            <p class="text-[10px] text-muted leading-relaxed">Conocé las recomendaciones y consultá fuentes oficiales para mantener tus vacunas al día.</p>
+                            <a class="inline-block text-[10px] text-bluebrand font-bold mt-1.5 hover:underline" href="https://www.argentina.gob.ar/salud/vacunas" target="_blank" rel="noopener">Consultar información ↗</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STRIP -->
+            <div class="flex items-center gap-3 bg-vs border border-[#e8e1fa] rounded-2xl p-4">
+                <span class="w-8 h-8 rounded-xl bg-white text-violetbrand grid place-items-center font-bold">⌖</span>
+                <div class="flex-1">
+                    <b class="text-xs font-bold block">Vacunatorios cerca de tu zona</b>
+                    <p class="text-[10px] text-[#716b84] mt-0.5">Ubicación de referencia: San Justo, La Matanza. Podés cambiarla cuando quieras.</p>
+                </div>
+                <button class="border border-[#d9cff3] bg-white text-violetbrand rounded-lg px-2.5 py-1.5 text-[10px] font-bold whitespace-nowrap" onclick="go('Vacunatorios')">
+                    Ver mapa
+                </button>
+            </div>
+
+            <footer class="text-center text-[9px] text-[#9aa6b4] pt-4">
+                VacuRed · Información orientativa. Consultá siempre fuentes oficiales y profesionales de salud.
+            </footer>
+        </main>
+    </div>
+
+    <!-- TOAST & MODAL -->
+    <div class="fixed bottom-5 right-5 bg-ink text-white px-4 py-3 rounded-xl text-xs opacity-0 translate-y-2 transition-all duration-200 pointer-events-none" id="toast"></div>
+    
+    <div class="hidden fixed inset-0 bg-slate-900/40 items-center justify-center p-5 z-50" id="modal">
+        <div class="bg-white rounded-2xl p-6 w-full max-w-md space-y-3">
+            <h3 class="text-lg font-bold" id="mtitle"></h3>
+            <p class="text-xs text-muted" id="mdesc"></p>
+            <div id="mfields" class="space-y-2 text-xs"></div>
+            <div class="flex justify-end gap-2 pt-3">
+                <button class="border border-line bg-white rounded-lg px-3 py-2 text-xs text-muted" onclick="closeModal()">Cancelar</button>
+                <button class="bg-violetbrand text-white rounded-lg px-3.5 py-2 text-xs font-bold" onclick="submitModal()">Continuar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

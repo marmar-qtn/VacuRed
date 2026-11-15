@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VacuRed | Vacunatorios</title>
+<!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración centralizada de colores -->
+    <script src="tailwind-config.js"></script>
+    <!-- CSS centralizado (Fuentes y reglas @apply) -->
+    <link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body data-page="vacunatorios" class="bg-bglight text-ink antialiased">
+
+<div class="min-h-screen md:grid md:grid-cols-[238px_1fr]">
+
+  <!-- SIDEBAR -->
+  <aside class="hidden md:flex flex-col justify-between bg-white border-r border-line p-5 h-screen sticky top-0">
+    <div class="space-y-6">
+      <!-- Brand -->
+      <div class="flex items-center gap-2.5 px-2 font-extrabold text-xl tracking-tight">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violetbrand to-redbrand grid place-items-center text-white text-lg">✳</div>
+        <div>Vacu<span class="text-redbrand">Red</span><small class="block text-[10px] text-muted font-medium tracking-wide">Tu salud, en red.</small></div>
+      </div>
+      
+      <!-- Nav -->
+      <div>
+        <p class="text-[10px] text-[#9aa6b4] tracking-widest font-extrabold px-3 mb-2">MENÚ PRINCIPAL</p>
+        <nav class="grid gap-1">
+          <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Inicio" onclick="go('Inicio')">
+            <span class="w-5 text-center text-base">⌂</span>Inicio
+          </button>
+          <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Carnet familiar" onclick="go('Carnet familiar')">
+            <span class="w-5 text-center text-base">▤</span>Carnet familiar
+          </button>
+          <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold bg-vs text-violetbrand" data-page="Vacunatorios" onclick="go('Vacunatorios')">
+            <span class="w-5 text-center text-base">⌖</span>Vacunatorios
+          </button>
+          <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Turnos" onclick="go('Turnos')">
+            <span class="w-5 text-center text-base">▦</span>Turnos
+          </button>
+          <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Notificaciones" onclick="toast('Notificaciones de demostración')">
+            <span class="w-5 text-center text-base">♧</span>Notificaciones 
+            <span class="ml-auto bg-rs text-redbrand rounded-full px-2 py-0.5 text-[10px]">2</span>
+          </button>
+          <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Mi cuenta" onclick="go('Mi cuenta')">
+            <span class="w-5 text-center text-base">◉</span>Mi cuenta
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Bottom sidebar -->
+    <div class="space-y-4">
+      <div class="bg-gradient-to-br from-[#eef4fa] to-[#f5f2fc] border border-line rounded-2xl p-3.5 space-y-2">
+        <b class="text-xs font-bold block">¿Necesitás ayuda?</b>
+        <p class="text-[11px] text-muted leading-relaxed">Encontrá respuestas sobre vacunas, carnets y el uso de VacuRed.</p>
+        <button class="bg-white border-0 rounded-lg px-2.5 py-1.5 text-bluebrand text-[11px] font-bold" onclick="toast('Preguntas frecuentes: sección de demostración')">
+          Ver preguntas frecuentes ↗
+        </button>
+      </div>
+      <div class="flex items-center gap-2.5 p-2 bg-gradient-to-r from-[#f3f0fc] to-[#eaf3f9] border border-[#dcd3f5] rounded-xl text-xs font-bold">
+        <div class="w-8.5 h-8.5 rounded-full bg-[#e8e2f7] text-violetbrand flex items-center justify-center font-bold text-xs">MQ</div>
+        <div>
+          María Quintana
+          <small class="block text-muted font-normal text-[10px] mt-0.5">Cuenta familiar</small>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="max-w-[1500px] w-full mx-auto p-4 md:p-8 lg:p-12 space-y-6">
+
+    <!-- TOPBAR -->
+    <div class="flex justify-between items-center mb-6">
+      <div class="md:hidden flex items-center gap-2 font-extrabold text-lg">
+        <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-violetbrand to-[#a99be0] grid place-items-center text-white text-xs">✳</div>
+        VacuRed
+      </div>
+      <div class="hidden md:block text-xs text-muted"><a href="index.html" class="text-muted hover:underline">VacuRed</a> / <b class="text-ink">Vacunatorios</b></div>
+      <div class="flex items-center gap-2">
+        <button class="hidden md:flex border border-line bg-white rounded-xl px-3 py-2 text-[#566b80] text-xs" onclick="locationModal()">
+          ⌖ &nbsp;<span id="currentLocation">San Justo, Buenos Aires</span> ▾
+        </button>
+        <button class="w-9 h-9 border border-line bg-white rounded-xl grid place-items-center text-[#566b80] text-base" onclick="searchModal()" aria-label="Buscar">⌕</button>
+        <button class="w-9 h-9 border border-line bg-white rounded-xl grid place-items-center text-[#566b80] text-base relative" onclick="toast('Tenés 2 notificaciones pendientes')" aria-label="Notificaciones">
+          ♧<i class="absolute top-1.5 right-2 w-1.5 h-1.5 bg-redbrand border border-white rounded-full"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- INTRODUCCIÓN -->
+    <section class="flex flex-col md:flex-row justify-between md:items-end gap-4 mb-6">
+      <div>
+        <div class="text-[10px] text-violetbrand tracking-widest font-extrabold uppercase mb-1">CENTROS DE VACUNACIÓN</div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Encontrá tu vacunatorio</h1>
+        <p class="text-xs sm:text-sm text-muted mt-1">Descubrí centros de vacunación cerca de tu zona y consultá sus servicios, horarios e información de contacto.</p>
+      </div>
+
+      <div class="flex items-center gap-3 p-3 bg-white border border-line rounded-xl shadow-sm self-start md:self-auto">
+        <span class="text-xl text-bluebrand">⌖</span>
+        <div>
+          <small class="block text-muted text-[9px] font-bold tracking-wider">UBICACIÓN DE REFERENCIA</small>
+          <b class="block text-xs mt-0.5" id="locationDescription">San Justo, La Matanza</b>
+        </div>
+        <button class="bg-bs text-bluebrand px-2.5 py-1.5 rounded-lg text-xs font-bold hover:bg-opacity-80 transition" onclick="locationModal()">Cambiar</button>
+      </div>
+    </section>
+
+    <!-- BUSCADOR CON ÍCONO CORREGIDO -->
+<div class="bg-white border border-line rounded-2xl p-5 shadow-sm mb-5">
+    <div class="flex justify-between items-center mb-4">
+        <div>
+            <h3 class="text-base font-bold text-ink m-0">¿Dónde querés vacunarte?</h3>
+            <p class="text-xs text-muted mt-1 m-0">Buscá centros de salud, vacunatorios públicos y privados cerca de tu zona.</p>
+        </div>
+        <!-- Ícono en casilla cuadrada de 40x40px -->
+        <div class="w-10 h-10 min-w-[40px] rounded-xl bg-bs text-bluebrand flex items-center justify-center font-bold text-lg flex-shrink-0">
+            ⌕
+        </div>
+    </div>
+
+    <!-- Campos de búsqueda -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_auto] gap-2.5">
+        <div class="relative">
+            <input type="search" id="clinicSearch" placeholder="Buscar por nombre o dirección..." oninput="filterClinics()" class="w-full h-10 pl-3 pr-3 border border-line rounded-lg text-xs outline-none focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10">
+        </div>
+        <select id="clinicType" onchange="filterClinics()" class="w-full h-10 px-3 border border-line rounded-lg text-xs outline-none focus:border-[#a99be0]">
+            <option value="all">Todos los tipos</option>
+            <option value="health">Centro de salud</option>
+            <option value="public">Hospital público</option>
+            <option value="private">Centro privado</option>
+        </select>
+        <select id="clinicService" onchange="filterClinics()" class="w-full h-10 px-3 border border-line rounded-lg text-xs outline-none focus:border-[#a99be0]">
+            <option value="all">Todos los servicios</option>
+            <option value="child">Vacunación infantil</option>
+            <option value="adult">Vacunación adultos</option>
+            <option value="calendar">Calendario nacional</option>
+        </select>
+        <button class="bg-violetbrand text-white rounded-lg px-4 h-10 text-xs font-bold hover:bg-opacity-90 transition" onclick="filterClinics()">
+            Buscar
+        </button>
+    </div>
+</div>
+
+    <!-- RESULTADOS Y MAPA -->
+    <section class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.15fr)_minmax(300px,0.85fr)] gap-5 items-start">
+
+      <!-- LISTA DE VACUNATORIOS -->
+<div class="space-y-3" id="clinicList">
+
+    <!-- Tarjeta 1 -->
+    <article class="clinic-card selected" data-clinic="1" onclick="selectClinic(1)">
+        <div class="text-[10px] font-extrabold tracking-wider text-violetbrand uppercase mb-1">
+            Centro de Salud
+        </div>
+        <h4 class="text-base font-bold text-ink m-0 mb-1">Centro de Salud Familiar Norte</h4>
+        <p class="text-xs text-muted m-0 mb-3">📍 Av. Principal 1250 · San Justo</p>
+        
+        <div class="flex flex-wrap gap-1.5 mb-3">
+            <span class="bg-bs text-bluebrand px-2.5 py-1 rounded-md text-[10px] font-bold">Vacunación infantil</span>
+            <span class="bg-bs text-bluebrand px-2.5 py-1 rounded-md text-[10px] font-bold">Adultos</span>
+            <span class="bg-bs text-bluebrand px-2.5 py-1 rounded-md text-[10px] font-bold">Calendario nacional</span>
+        </div>
+
+        <div class="flex items-center justify-between pt-2 border-t border-line/60 text-xs">
+            <span class="text-muted text-[11px]">Ver ubicación en mapa</span>
+            <span class="text-bluebrand font-bold hover:underline">Ver detalle ↗</span>
+        </div>
+    </article>
+
+    <!-- Tarjeta 2 -->
+    <article class="clinic-card" data-clinic="2" onclick="selectClinic(2)">
+        <div class="text-[10px] font-extrabold tracking-wider text-violetbrand uppercase mb-1">
+            Hospital Público
+        </div>
+        <h4 class="text-base font-bold text-ink m-0 mb-1">Hospital General Metropolitano</h4>
+        <p class="text-xs text-muted m-0 mb-3">📍 Calle Central 840 · Ramos Mejía</p>
+        
+        <div class="flex flex-wrap gap-1.5 mb-3">
+            <span class="bg-bs text-bluebrand px-2.5 py-1 rounded-md text-[10px] font-bold">Vacunación infantil</span>
+            <span class="bg-bs text-bluebrand px-2.5 py-1 rounded-md text-[10px] font-bold">Adultos</span>
+        </div>
+
+        <div class="flex items-center justify-between pt-2 border-t border-line/60 text-xs">
+            <span class="text-muted text-[11px]">Ver ubicación en mapa</span>
+            <span class="text-bluebrand font-bold hover:underline">Ver detalle ↗</span>
+        </div>
+    </article>
+
+    <!-- Tarjeta 3 -->
+    <article class="clinic-card" data-clinic="3" onclick="selectClinic(3)">
+        <div class="text-[10px] font-extrabold tracking-wider text-violetbrand uppercase mb-1">
+            Centro Privado
+        </div>
+        <h4 class="text-base font-bold text-ink m-0 mb-1">Centro Integral de Salud</h4>
+        <p class="text-xs text-muted m-0 mb-3">📍 Av. Rivadavia 15200 · Ramos Mejía</p>
+        
+        <div class="flex flex-wrap gap-1.5 mb-3">
+            <span class="bg-bs text-bluebrand px-2.5 py-1 rounded-md text-[10px] font-bold">Vacunación adultos</span>
+            <span class="bg-bs text-bluebrand px-2.5 py-1 rounded-md text-[10px] font-bold">Calendario nacional</span>
+        </div>
+
+        <div class="flex items-center justify-between pt-2 border-t border-line/60 text-xs">
+            <span class="text-muted text-[11px]">Ver ubicación en mapa</span>
+            <span class="text-bluebrand font-bold hover:underline">Ver detalle ↗</span>
+        </div>
+    </article>
+
+</div>
+
+      <!-- MAPA -->
+      <div class="space-y-4 min-w-0">
+        <div class="bg-white border border-line rounded-2xl p-4 shadow-sm">
+          <div class="flex justify-between items-center mb-3">
+            <div>
+              <h3 class="text-sm font-bold">Mapa de vacunatorios</h3>
+              <p class="text-[10px] text-muted">Ubicaciones ilustrativas de ejemplo</p>
+            </div>
+
+            <span class="w-9.5 h-9.5 rounded-xl bg-bs text-bluebrand grid place-items-center text-xl">⌖</span>
+          </div>
+
+          <!-- MAPA ILUSTRATIVO -->
+          <div class="clinic-map">
+            <!-- Manzanas / Bloques -->
+            <div class="map-block block-one"></div>
+            <div class="map-block block-two"></div>
+            <div class="map-block block-three"></div>
+            <div class="map-block block-four"></div>
+            <div class="map-block block-five"></div>
+          
+            <!-- Calles -->
+            <div class="map-road road-one"></div>
+            <div class="map-road road-two"></div>
+            <div class="map-road road-three"></div>
+            <div class="map-road road-four"></div>
+          
+            <!-- Pines interactivos -->
+            <button class="map-pin pin-one active" onclick="selectClinic(1)"><span>1</span></button>
+            <button class="map-pin pin-two" onclick="selectClinic(2)"><span>2</span></button>
+            <button class="map-pin pin-three" onclick="selectClinic(3)"><span>3</span></button>
+          </div>
+
+          <div class="flex items-center gap-1.5 text-muted text-[9px] leading-relaxed mt-2.5">
+            <span>ⓘ</span>
+            Mapa demostrativo. Las ubicaciones no representan establecimientos reales.
+          </div>
+        </div>
+
+        <!-- DETALLE DEL CENTRO SELECCIONADO -->
+        <div class="bg-white border border-line rounded-2xl p-4 shadow-sm space-y-3" id="clinicDetail">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="w-8 h-8 rounded-lg bg-vs text-violetbrand grid place-items-center text-base">⌖</span>
+            <span class="text-violetbrand text-[9px] font-extrabold tracking-wider uppercase">CENTRO SELECCIONADO</span>
+          </div>
+
+          <h3 class="text-sm font-bold leading-snug" id="detailName">Centro de Salud Familiar Norte</h3>
+
+          <p class="text-xs text-muted" id="detailAddress">
+            Av. Principal 1250 · San Justo
+          </p>
+
+          <div class="border-t border-line my-3"></div>
+
+          <div class="flex items-start gap-2.5 text-xs">
+            <span class="text-bluebrand text-base">◷</span>
+            <div>
+              <small class="block text-[8px] text-muted font-extrabold tracking-wider">HORARIOS</small>
+              <b class="block text-xs font-semibold leading-normal" id="detailHours">A confirmar</b>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-2.5 text-xs">
+            <span class="text-bluebrand text-base">✚</span>
+            <div>
+              <small class="block text-[8px] text-muted font-extrabold tracking-wider">SERVICIOS</small>
+              <b class="block text-xs font-semibold leading-normal" id="detailServices">Vacunación infantil y adultos</b>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-2.5 text-xs">
+            <span class="text-bluebrand text-base">☎</span>
+            <div>
+              <small class="block text-[8px] text-muted font-extrabold tracking-wider">CONTACTO</small>
+              <b class="block text-xs font-semibold leading-normal" id="detailPhone">Consultar establecimiento</b>
+            </div>
+          </div>
+
+          <button class="w-full h-10 bg-violetbrand text-white rounded-lg text-xs font-bold hover:bg-opacity-90 transition mt-2" onclick="openClinicDirections()">
+            Cómo llegar ↗
+          </button>
+
+          <button class="w-full h-10 border border-line bg-white text-bluebrand rounded-lg text-xs font-bold hover:bg-bs transition" onclick="requestClinicAppointment()">
+            Consultar turnos
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- AVISO -->
+    <section class="flex items-start gap-3 p-4 bg-[#f0f5f9] border border-[#e3edf4] rounded-xl text-xs mt-6">
+      <div class="w-7 h-7 rounded-full bg-white text-bluebrand font-extrabold grid place-items-center flex-shrink-0">i</div>
+      <div class="space-y-1">
+        <b class="block font-bold text-xs">Información importante</b>
+        <p class="text-[10px] text-muted leading-relaxed">
+          Los centros y datos de esta demostración son ficticios. En la versión real, la información deberá obtenerse de registros oficiales y actualizarse periódicamente. La disponibilidad de vacunas y los horarios deben confirmarse directamente con cada establecimiento.
+        </p>
+      </div>
+    </section>
+
+    <footer class="text-center text-[9px] text-[#9aa6b4] pt-4">
+      VacuRed · Información orientativa. Consultá siempre fuentes oficiales y profesionales de salud.
+    </footer>
+
+  </main>
+</div>
+
+<!-- NOTIFICACIONES Y MODAL GLOBAL -->
+<div class="fixed bottom-5 right-5 bg-ink text-white px-4 py-3 rounded-xl text-xs opacity-0 translate-y-2 transition-all duration-200 pointer-events-none [&.show]:opacity-100 [&.show]:translate-y-0" id="toast"></div>
+
+<div class="hidden fixed inset-0 bg-[#17263866] items-center justify-center p-5 z-40 [&.open]:flex" id="modal">
+  <div class="bg-white rounded-2xl p-6 w-full max-w-md space-y-3">
+    <h3 class="text-lg font-bold" id="mtitle"></h3>
+    <p class="text-xs text-muted" id="mdesc"></p>
+
+    <div id="mfields" class="space-y-2 text-xs"></div>
+
+    <div class="flex justify-end gap-2 pt-4">
+      <button class="border border-line bg-white rounded-lg px-3 py-2 text-xs text-[#647589]" onclick="closeModal()">Cancelar</button>
+      <button class="bg-violetbrand text-white rounded-lg px-3.5 py-2 text-xs font-bold" onclick="submitModal()">Continuar</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

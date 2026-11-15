@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VacuRed | Mi cuenta</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración centralizada de colores -->
+    <script src="tailwind-config.js"></script>
+    <!-- CSS centralizado (Fuentes y reglas @apply) -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-bglight text-ink antialiased">
+    <div class="min-h-screen md:grid md:grid-cols-[238px_1fr]">
+        
+        <!-- SIDEBAR -->
+        <aside class="hidden md:flex flex-col justify-between bg-white border-r border-line p-5 h-screen sticky top-0">
+            <div class="space-y-6">
+                <!-- Brand -->
+                <div class="flex items-center gap-2.5 px-2 font-extrabold text-xl tracking-tight">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violetbrand to-redbrand grid place-items-center text-white text-lg">✳</div>
+                    <div>Vacu<span class="text-redbrand">Red</span><small class="block text-[10px] text-muted font-medium tracking-wide">Tu salud, en red.</small></div>
+                </div>
+                
+                <!-- Nav -->
+                <div>
+                    <p class="text-[10px] text-[#9aa6b4] tracking-widest font-extrabold px-3 mb-2">MENÚ PRINCIPAL</p>
+                    <nav class="grid gap-1">
+                        <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Inicio" onclick="go('Inicio')">
+                            <span class="w-5 text-center text-base">⌂</span>Inicio
+                        </button>
+                        <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Carnet familiar" onclick="go('Carnet familiar')">
+                            <span class="w-5 text-center text-base">▤</span>Carnet familiar
+                        </button>
+                        <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Vacunatorios" onclick="go('Vacunatorios')">
+                            <span class="w-5 text-center text-base">⌖</span>Vacunatorios
+                        </button>
+                        <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Turnos" onclick="go('Turnos')">
+                            <span class="w-5 text-center text-base">▦</span>Turnos
+                        </button>
+                        <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Notificaciones" onclick="toast('Notificaciones de demostración')">
+                            <span class="w-5 text-center text-base">♧</span>Notificaciones 
+                            <span class="ml-auto bg-rs text-redbrand rounded-full px-2 py-0.5 text-[10px]">2</span>
+                        </button>
+                        <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold bg-vs text-violetbrand" data-page="Mi cuenta" onclick="go('Mi cuenta')">
+                            <span class="w-5 text-center text-base">◉</span>Mi cuenta
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Bottom sidebar -->
+            <div class="space-y-4">
+                <div class="bg-gradient-to-br from-[#eef4fa] to-[#f5f2fc] border border-line rounded-2xl p-3.5 space-y-2">
+                    <b class="text-xs font-bold block">¿Necesitás ayuda?</b>
+                    <p class="text-[11px] text-muted leading-relaxed">Encontrá respuestas sobre vacunas, carnets y el uso de VacuRed.</p>
+                    <button class="bg-white border-0 rounded-lg px-2.5 py-1.5 text-bluebrand text-[11px] font-bold" onclick="toast('Preguntas frecuentes: sección de demostración')">
+                        Ver preguntas frecuentes ↗
+                    </button>
+                </div>
+                <div class="flex items-center gap-2.5 p-2 bg-gradient-to-r from-[#f3f0fc] to-[#eaf3f9] border border-[#dcd3f5] rounded-xl text-xs font-bold">
+                    <div class="w-8.5 h-8.5 rounded-full bg-[#e8e2f7] text-violetbrand flex items-center justify-center font-bold text-xs">MQ</div>
+                    <div>
+                        María Quintana
+                        <small class="block text-muted font-normal text-[10px] mt-0.5">Cuenta familiar (Titular)</small>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="max-w-[1500px] w-full mx-auto p-4 md:p-8 lg:p-12 space-y-6">
+            
+            <!-- TOPBAR -->
+            <div class="flex justify-between items-center mb-6">
+                <div class="md:hidden flex items-center gap-2 font-extrabold text-lg">
+                    <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-violetbrand to-[#a99be0] grid place-items-center text-white text-xs">✳</div>
+                    VacuRed
+                </div>
+                <div class="hidden md:block text-xs text-muted"><a href="index.html" class="text-muted hover:underline">VacuRed</a> / <b class="text-ink">Mi cuenta</b></div>
+                <div class="flex items-center gap-2">
+                    <button class="hidden md:flex border border-line bg-white rounded-xl px-3 py-2 text-[#566b80] text-xs" onclick="locationModal()">
+                        ⌖ &nbsp;San Justo, Buenos Aires ▾
+                    </button>
+                    <button class="w-9 h-9 border border-line bg-white rounded-xl grid place-items-center text-[#566b80] text-base" onclick="searchModal()" aria-label="Buscar">⌕</button>
+                    <button class="w-9 h-9 border border-line bg-white rounded-xl grid place-items-center text-[#566b80] text-base relative" onclick="toast('Tenés 2 notificaciones pendientes')" aria-label="Notificaciones">
+                        ♧<i class="absolute top-1.5 right-2 w-1.5 h-1.5 bg-redbrand border border-white rounded-full"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- INTRODUCCIÓN -->
+            <section class="flex flex-col sm:flex-row justify-between sm:items-end gap-4 mb-6">
+                <div>
+                    <div class="text-[10px] text-violetbrand tracking-widest font-extrabold uppercase mb-1">CONFIGURACIÓN Y PERFIL</div>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Mi cuenta</h1>
+                    <p class="text-xs sm:text-sm text-muted mt-1">Administrá tus datos personales, la seguridad y las preferencias de tu cuenta familiar.</p>
+                </div>
+                <button class="bg-violetbrand text-white rounded-lg px-4 py-2.5 text-xs font-bold hover:bg-opacity-90 transition whitespace-nowrap self-start sm:self-auto" onclick="toast('Cambios guardados correctamente')">
+                    Guardar cambios
+                </button>
+            </section>
+
+            <!-- PESTAÑAS DE CONFIGURACIÓN -->
+            <div class="flex items-center gap-2 flex-wrap border-b border-line pb-3 mb-4" id="accountTabs">
+                <button class="family-tab active border border-transparent bg-transparent text-[#68798b] rounded-lg px-3.5 py-2 text-xs font-semibold hover:bg-white hover:border-line hover:text-ink transition" onclick="switchAccountTab('perfil', this)">Perfil y datos</button>
+                <button class="family-tab border border-transparent bg-transparent text-[#68798b] rounded-lg px-3.5 py-2 text-xs font-semibold hover:bg-white hover:border-line hover:text-ink transition" onclick="switchAccountTab('seguridad', this)">Seguridad y acceso</button>
+                <button class="family-tab border border-transparent bg-transparent text-[#68798b] rounded-lg px-3.5 py-2 text-xs font-semibold hover:bg-white hover:border-line hover:text-ink transition" onclick="switchAccountTab('notificaciones', this)">Notificaciones</button>
+                <button class="family-tab border border-transparent bg-transparent text-[#68798b] rounded-lg px-3.5 py-2 text-xs font-semibold hover:bg-white hover:border-line hover:text-ink transition" onclick="switchAccountTab('privacidad', this)">Privacidad y datos</button>
+            </div>
+
+            <!-- SECCIÓN 1: PERFIL Y DATOS -->
+            <div class="account-section space-y-5" id="tab-perfil">
+                <section class="grid grid-cols-1 md:grid-cols-[1.55fr_0.8fr] gap-3">
+                    <div class="bg-white border border-line rounded-2xl p-4 flex items-center gap-3 shadow-sm">
+                        <div class="w-12 h-12 rounded-2xl bg-[#e8e2f7] text-violetbrand grid place-items-center font-extrabold text-sm flex-shrink-0">MQ</div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="text-sm font-bold truncate">María Quintana</h3>
+                            <p class="text-xs text-muted truncate">maria.quintana@email.com · Cuenta familiar principal</p>
+                        </div>
+                        <div class="ml-auto">
+                            <button class="border border-line bg-white text-bluebrand rounded-lg px-3 py-2 text-xs font-bold hover:bg-slate-50 transition whitespace-nowrap" onclick="toast('Función para cambiar foto de perfil')">Cambiar foto</button>
+                        </div>
+                    </div>
+                    <div class="bg-white border border-line rounded-2xl p-4 flex items-center justify-between gap-3 shadow-sm">
+                        <div>
+                            <small class="block text-muted text-[10px]">Rol de cuenta</small>
+                            <strong class="text-2xl font-extrabold tracking-tight block my-0.5">Titular</strong>
+                            <span class="block text-muted text-[10px]">Responsable principal</span>
+                        </div>
+                        <div class="w-11 h-11 rounded-xl bg-vs text-violetbrand grid place-items-center text-xl font-bold">✓</div>
+                    </div>
+                </section>
+
+                <section class="bg-white border border-line rounded-2xl p-5 shadow-sm space-y-4">
+                    <div>
+                        <h3 class="text-sm font-bold">Información personal</h3>
+                        <p class="text-xs text-muted mt-1">Actualizá tus datos de contacto y zona de referencia.</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <div class="space-y-1">
+                            <label class="block font-bold text-ink">Nombre y apellido</label>
+                            <input type="text" value="María Quintana" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block font-bold text-ink">Correo electrónico</label>
+                            <input type="email" value="maria.quintana@email.com" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block font-bold text-ink">Teléfono de contacto</label>
+                            <input type="text" value="+54 11 4455-6677" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block font-bold text-ink">Localidad de referencia</label>
+                            <input type="text" value="San Justo, La Matanza" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- SECCIÓN 2: SEGURIDAD Y ACCESO -->
+            <div class="account-section space-y-5" id="tab-seguridad" style="display: none;">
+                <section class="bg-white border border-line rounded-2xl p-5 shadow-sm space-y-4">
+                    <div>
+                        <h3 class="text-sm font-bold">Seguridad de la cuenta</h3>
+                        <p class="text-xs text-muted mt-1">Gestioná tu contraseña y métodos de acceso seguro.</p>
+                    </div>
+                    <div class="max-w-md space-y-3 text-xs">
+                        <div class="space-y-1">
+                            <label class="block font-bold text-ink">Contraseña actual</label>
+                            <input type="password" placeholder="••••••••" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
+                        </div>
+                        
+                        <div class="space-y-1">
+                            <label class="block font-bold text-ink">Nueva contraseña</label>
+                            <input type="password" placeholder="Mínimo 8 caracteres" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="block font-bold text-ink">Confirmar nueva contraseña</label>
+                            <input type="password" placeholder="Repetir nueva contraseña" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
+                        </div>
+
+                        <button class="bg-violetbrand text-white rounded-lg px-4 py-2.5 text-xs font-bold hover:bg-opacity-90 transition mt-3" onclick="toast('Contraseña actualizada con éxito')">
+                            Actualizar contraseña
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- SECCIÓN 3: NOTIFICACIONES -->
+            <div class="account-section space-y-5" id="tab-notificaciones" style="display: none;">
+                <section class="bg-white border border-line rounded-2xl p-5 shadow-sm space-y-4">
+                    <div>
+                        <h3 class="text-sm font-bold">Preferencias de notificaciones</h3>
+                        <p class="text-xs text-muted mt-1">Elegí cómo y cuándo querés recibir avisos sobre dosis y turnos.</p>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-3 p-3 border border-[#edf0f4] rounded-xl hover:border-[#d9e4ed] transition">
+                            <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0">♧</div>
+                            <div class="flex-1 min-w-0">
+                                <b class="block text-xs font-bold">Recordatorios de próximas dosis</b>
+                                <small class="block text-muted text-[10px]">Avisos anticipados sobre refuerzos de carnet y calendario.</small>
+                            </div>
+                            <input type="checkbox" checked class="w-4.5 h-4.5 accent-violetbrand rounded cursor-pointer" onchange="toast('Preferencia actualizada')">
+                        </div>
+
+                        <div class="flex items-center gap-3 p-3 border border-[#edf0f4] rounded-xl hover:border-[#d9e4ed] transition">
+                            <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0">▦</div>
+                            <div class="flex-1 min-w-0">
+                                <b class="block text-xs font-bold">Confirmaciones de turnos</b>
+                                <small class="block text-muted text-[10px]">Notificaciones sobre el estado de tus reservas en vacunatorios.</small>
+                            </div>
+                            <input type="checkbox" checked class="w-4.5 h-4.5 accent-violetbrand rounded cursor-pointer" onchange="toast('Preferencia actualizada')">
+                        </div>
+
+                        <div class="flex items-center gap-3 p-3 border border-[#edf0f4] rounded-xl hover:border-[#d9e4ed] transition">
+                            <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0">✦</div>
+                            <div class="flex-1 min-w-0">
+                                <b class="block text-xs font-bold">Campañas de vacunación</b>
+                                <small class="block text-muted text-[10px]">Novedades sobre operativos sanitarios en la zona de La Matanza.</small>
+                            </div>
+                            <input type="checkbox" class="w-4.5 h-4.5 accent-violetbrand rounded cursor-pointer" onchange="toast('Preferencia actualizada')">
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- SECCIÓN 4: PRIVACIDAD Y DATOS -->
+            <div class="account-section space-y-5" id="tab-privacidad" style="display: none;">
+                <section class="bg-white border border-line rounded-2xl p-5 shadow-sm space-y-4">
+                    <div>
+                        <h3 class="text-sm font-bold">Privacidad y gestión de datos</h3>
+                        <p class="text-xs text-muted mt-1">Controlá el tratamiento de tu información y registros familiares.</p>
+                    </div>
+                    
+                    <div class="flex items-start gap-3 p-3.5 bg-bglight border border-[#e9eef4] rounded-xl text-xs">
+                        <div class="w-7 h-7 rounded-xl bg-vs text-violetbrand grid place-items-center font-bold flex-shrink-0">i</div>
+                        <div class="space-y-1">
+                            <b class="block font-bold">Protección de datos personales (Ley 25.326)</b>
+                            <p class="text-[10px] text-muted leading-relaxed">VacuRed opera bajo estrictos criterios de confidencialidad orientados a la organización familiar. Tus datos no se comparten con terceros sin autorización.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2.5 flex-wrap pt-2">
+                        <button class="border border-line bg-white text-bluebrand rounded-lg px-3 py-2 text-xs font-bold hover:bg-slate-50 transition" onclick="toast('Descarga de datos iniciada')">
+                            Descargar copia de mis datos ↗
+                        </button>
+                        <button class="border border-redbrand/30 bg-white text-redbrand rounded-lg px-3 py-2 text-xs font-bold hover:bg-rs transition" onclick="toast('Acción protegida por seguridad')">
+                            Eliminar cuenta y registros
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- AVISO INFORMATIVO GENERAL -->
+            <div class="flex items-start gap-3 p-3.5 bg-bglight border border-[#e9eef4] rounded-xl text-xs mt-6">
+                <div class="w-7 h-7 rounded-xl bg-vs text-violetbrand grid place-items-center font-bold flex-shrink-0">i</div>
+                <div class="space-y-0.5">
+                    <b class="block font-bold">Gestión centralizada de perfil</b>
+                    <p class="text-[10px] text-muted leading-relaxed">Modificar los datos en esta sección impactará de forma inmediata en las vistas de tu carnet familiar y la gestión de turnos.</p>
+                </div>
+            </div>
+
+            <footer class="text-center text-[9px] text-[#9aa6b4] pt-4">
+                VacuRed · Información orientativa. Consultá siempre fuentes oficiales y profesionales de salud.
+            </footer>
+        </main>
+    </div>
+
+    <!-- TOAST & MODAL -->
+    <div class="fixed bottom-5 right-5 bg-ink text-white px-4 py-3 rounded-xl text-xs opacity-0 translate-y-2 transition-all duration-200 pointer-events-none" id="toast"></div>
+    
+    <div class="hidden fixed inset-0 bg-slate-900/40 items-center justify-center p-5 z-50" id="modal">
+        <div class="bg-white rounded-2xl p-6 w-full max-w-md space-y-3">
+            <h3 class="text-lg font-bold" id="mtitle"></h3>
+            <p class="text-xs text-muted" id="mdesc"></p>
+            <div id="mfields" class="space-y-2 text-xs"></div>
+            <div class="flex justify-end gap-2 pt-3">
+                <button class="border border-line bg-white rounded-lg px-3 py-2 text-xs text-muted" onclick="closeModal()">Cancelar</button>
+                <button class="bg-violetbrand text-white rounded-lg px-3.5 py-2 text-xs font-bold" onclick="submitModal()">Continuar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
