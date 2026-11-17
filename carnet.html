@@ -30,23 +30,23 @@
           <p class="text-[10px] text-[#9aa6b4] tracking-widest font-extrabold px-3 mb-2">MENÚ PRINCIPAL</p>
           <nav class="grid gap-1">
             <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Inicio" onclick="go('Inicio')">
-              <span class="w-5 text-center text-base">⌂</span>Inicio
+              <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11 12 4l8 7"/><path d="M6 10v9.5h4.5V14h3v5.5H18V10"/></svg></span>Inicio
             </button>
             <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold bg-vs text-violetbrand" data-page="Carnet familiar" onclick="go('Carnet familiar')">
-              <span class="w-5 text-center text-base">▤</span>Carnet familiar
+              <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 2.5h6v3H9z"/><path d="m9 13 2 2 4-4"/></svg></span>Carnet familiar
             </button>
             <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Vacunatorios" onclick="go('Vacunatorios')">
-              <span class="w-5 text-center text-base">⌖</span>Vacunatorios
+              <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>Vacunatorios
             </button>
             <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Turnos" onclick="go('Turnos')">
-              <span class="w-5 text-center text-base">▦</span>Turnos
+              <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>Turnos
             </button>
             <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Notificaciones" onclick="toast('Notificaciones de demostración')">
-              <span class="w-5 text-center text-base">♧</span>Notificaciones 
+              <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 2 7H4c.5-1.5 2-3 2-7Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></span>Notificaciones 
               <span class="ml-auto bg-rs text-redbrand rounded-full px-2 py-0.5 text-[10px]">2</span>
             </button>
             <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Mi cuenta" onclick="go('Mi cuenta')">
-              <span class="w-5 text-center text-base">◉</span>Mi cuenta
+              <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c0-3.9 3.1-6 7-6s7 2.1 7 6"/></svg></span>Mi cuenta
             </button>
           </nav>
         </div>
@@ -57,9 +57,9 @@
         <div class="bg-gradient-to-br from-[#eef4fa] to-[#f5f2fc] border border-line rounded-2xl p-3.5 space-y-2">
           <b class="text-xs font-bold block">¿Necesitás ayuda?</b>
           <p class="text-[11px] text-muted leading-relaxed">Encontrá respuestas sobre vacunas, carnets y el uso de VacuRed.</p>
-          <a href="preguntas-frecuentes.html" class="inline-block bg-white border border-violetbrand rounded-lg px-2.5 py-1.5 text-violetbrand text-[11px] font-bold hover:bg-vs transition">
+          <button class="bg-white border-0 rounded-lg px-2.5 py-1.5 text-bluebrand text-[11px] font-bold" onclick="location.href='info-preguntas.html'">
             Ver preguntas frecuentes ↗
-          </a>
+          </button>
         </div>
         <div class="flex items-center gap-2.5 p-2 bg-gradient-to-r from-[#f3f0fc] to-[#eaf3f9] border border-[#dcd3f5] rounded-xl text-xs font-bold">
           <div class="w-8.5 h-8.5 rounded-full bg-[#e8e2f7] text-violetbrand flex items-center justify-center font-bold text-xs">MQ</div>
@@ -82,12 +82,12 @@
         </div>
         <div class="hidden md:block text-xs text-muted"><a href="index.html" class="text-muted hover:underline">VacuRed</a> / <b class="text-ink">Carnet familiar</b></div>
         <div class="flex items-center gap-2">
-          <button class="hidden md:flex border border-line bg-white rounded-xl px-3 py-2 text-[#566b80] text-xs" onclick="locationModal()">
-            ⌖ &nbsp;San Justo, Buenos Aires ▾
+          <button class="hidden md:flex items-center gap-1.5 border border-line bg-white rounded-xl px-3 py-2 text-[#566b80] text-xs" onclick="locationModal()">
+            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>San Justo, Buenos Aires ▾
           </button>
-          <button class="w-9 h-9 border border-line bg-white rounded-xl grid place-items-center text-[#566b80] text-base" onclick="searchModal()" aria-label="Buscar">⌕</button>
+          <button class="w-9 h-9 border border-line bg-white rounded-xl grid place-items-center text-[#566b80] text-base" onclick="searchModal()" aria-label="Buscar"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
           <button class="w-9 h-9 border border-line bg-white rounded-xl grid place-items-center text-[#566b80] text-base relative" onclick="toast('Tenés 2 notificaciones pendientes')" aria-label="Notificaciones">
-            ♧<i class="absolute top-1.5 right-2 w-1.5 h-1.5 bg-redbrand border border-white rounded-full"></i>
+            <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 2 7H4c.5-1.5 2-3 2-7Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><i class="absolute top-1.5 right-2 w-1.5 h-1.5 bg-redbrand border border-white rounded-full"></i>
           </button>
         </div>
       </div>
@@ -100,7 +100,7 @@
           <p class="text-xs sm:text-sm text-muted mt-1">Consultá y organizá el historial de vacunas de cada integrante de tu familia.</p>
         </div>
         <button class="bg-violetbrand text-white rounded-lg px-4 py-2.5 text-xs font-bold hover:bg-opacity-90 transition whitespace-nowrap self-start sm:self-auto" onclick="openVaccineModal()">
-          ＋ &nbsp;Agregar vacuna
+          <svg class="w-3.5 h-3.5 inline-block align-[-2px] mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Agregar vacuna
         </button>
       </section>
 
@@ -133,7 +133,7 @@
               <i class="block w-[72%] h-full bg-violetbrand rounded-full"></i>
             </div>
           </div>
-          <div class="w-11 h-11 rounded-xl bg-vs text-violetbrand grid place-items-center text-xl font-bold">✓</div>
+          <div class="w-11 h-11 rounded-xl bg-vs text-violetbrand grid place-items-center text-xl"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.3 2.4 2.4 4.6-5"/></svg></div>
         </div>
       </section>
 
@@ -163,7 +163,7 @@
         <!-- LISTA DE VACUNAS -->
         <div class="space-y-2" id="vaccineList">
           <div class="vaccine-row grid grid-cols-[36px_1fr_auto_auto] sm:grid-cols-[36px_1fr_125px_auto] items-center gap-3 p-3 border border-[#edf0f4] rounded-xl bg-white hover:border-[#d9e4ed] transition" data-person="Maria" data-status="ok">
-            <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0">✚</div>
+            <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.5 19.5a2.1 2.1 0 0 1-3 0l-1-1a2.1 2.1 0 0 1 0-3L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg></div>
             <div class="min-w-0">
               <b class="block text-xs font-bold">Antigripal</b>
               <small class="block text-muted text-[10px]">María Quintana · Dosis anual</small>
@@ -176,7 +176,7 @@
           </div>
 
           <div class="vaccine-row grid grid-cols-[36px_1fr_auto_auto] sm:grid-cols-[36px_1fr_125px_auto] items-center gap-3 p-3 border border-[#edf0f4] rounded-xl bg-white hover:border-[#d9e4ed] transition" data-person="Maria" data-status="ok">
-            <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0">✚</div>
+            <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.5 19.5a2.1 2.1 0 0 1-3 0l-1-1a2.1 2.1 0 0 1 0-3L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg></div>
             <div class="min-w-0">
               <b class="block text-xs font-bold">Hepatitis B</b>
               <small class="block text-muted text-[10px]">María Quintana · Esquema registrado</small>
@@ -189,7 +189,7 @@
           </div>
 
           <div class="vaccine-row grid grid-cols-[36px_1fr_auto_auto] sm:grid-cols-[36px_1fr_125px_auto] items-center gap-3 p-3 border border-[#edf0f4] rounded-xl bg-white hover:border-[#d9e4ed] transition" data-person="Tomas" data-status="ok">
-            <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0">✚</div>
+            <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.5 19.5a2.1 2.1 0 0 1-3 0l-1-1a2.1 2.1 0 0 1 0-3L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg></div>
             <div class="min-w-0">
               <b class="block text-xs font-bold">Triple bacteriana acelular</b>
               <small class="block text-muted text-[10px]">Tomás · Refuerzo</small>
@@ -202,7 +202,7 @@
           </div>
 
           <div class="vaccine-row grid grid-cols-[36px_1fr_auto_auto] sm:grid-cols-[36px_1fr_125px_auto] items-center gap-3 p-3 border border-[#edf0f4] rounded-xl bg-white hover:border-[#d9e4ed] transition" data-person="Tomas" data-status="pending">
-            <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0">✚</div>
+            <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.5 19.5a2.1 2.1 0 0 1-3 0l-1-1a2.1 2.1 0 0 1 0-3L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg></div>
             <div class="min-w-0">
               <b class="block text-xs font-bold">Vacuna del calendario</b>
               <small class="block text-muted text-[10px]">Tomás · Revisar documentación</small>
@@ -215,7 +215,7 @@
           </div>
 
           <div class="vaccine-row grid grid-cols-[36px_1fr_auto_auto] sm:grid-cols-[36px_1fr_125px_auto] items-center gap-3 p-3 border border-[#edf0f4] rounded-xl bg-white hover:border-[#d9e4ed] transition" data-person="Ana" data-status="ok">
-            <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0">✚</div>
+            <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.5 19.5a2.1 2.1 0 0 1-3 0l-1-1a2.1 2.1 0 0 1 0-3L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg></div>
             <div class="min-w-0">
               <b class="block text-xs font-bold">Triple viral</b>
               <small class="block text-muted text-[10px]">Ana · Dosis registrada</small>
@@ -228,7 +228,7 @@
           </div>
 
           <div class="vaccine-row grid grid-cols-[36px_1fr_auto_auto] sm:grid-cols-[36px_1fr_125px_auto] items-center gap-3 p-3 border border-[#edf0f4] rounded-xl bg-white hover:border-[#d9e4ed] transition" data-person="Ana" data-status="ok">
-            <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0">✚</div>
+            <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.5 19.5a2.1 2.1 0 0 1-3 0l-1-1a2.1 2.1 0 0 1 0-3L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg></div>
             <div class="min-w-0">
               <b class="block text-xs font-bold">Poliomielitis</b>
               <small class="block text-muted text-[10px]">Ana · Dosis registrada</small>

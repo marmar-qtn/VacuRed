@@ -33,23 +33,23 @@
         <p class="text-[10px] text-[#9aa6b4] tracking-widest font-extrabold px-3 mb-2">MENÚ PRINCIPAL</p>
         <nav class="grid gap-1">
           <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Inicio" onclick="go('Inicio')">
-            <span class="w-5 text-center text-base">⌂</span>Inicio
+            <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11 12 4l8 7"/><path d="M6 10v9.5h4.5V14h3v5.5H18V10"/></svg></span>Inicio
           </button>
           <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Carnet familiar" onclick="go('Carnet familiar')">
-            <span class="w-5 text-center text-base">▤</span>Carnet familiar
+            <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 2.5h6v3H9z"/><path d="m9 13 2 2 4-4"/></svg></span>Carnet familiar
           </button>
           <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold bg-vs text-violetbrand" data-page="Vacunatorios" onclick="go('Vacunatorios')">
-            <span class="w-5 text-center text-base">⌖</span>Vacunatorios
+            <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>Vacunatorios
           </button>
           <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Turnos" onclick="go('Turnos')">
-            <span class="w-5 text-center text-base">▦</span>Turnos
+            <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>Turnos
           </button>
           <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Notificaciones" onclick="toast('Notificaciones de demostración')">
-            <span class="w-5 text-center text-base">♧</span>Notificaciones 
+            <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 2 7H4c.5-1.5 2-3 2-7Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></span>Notificaciones 
             <span class="ml-auto bg-rs text-redbrand rounded-full px-2 py-0.5 text-[10px]">2</span>
           </button>
           <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Mi cuenta" onclick="go('Mi cuenta')">
-            <span class="w-5 text-center text-base">◉</span>Mi cuenta
+            <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c0-3.9 3.1-6 7-6s7 2.1 7 6"/></svg></span>Mi cuenta
           </button>
         </nav>
       </div>
@@ -60,9 +60,9 @@
       <div class="bg-gradient-to-br from-[#eef4fa] to-[#f5f2fc] border border-line rounded-2xl p-3.5 space-y-2">
         <b class="text-xs font-bold block">¿Necesitás ayuda?</b>
         <p class="text-[11px] text-muted leading-relaxed">Encontrá respuestas sobre vacunas, carnets y el uso de VacuRed.</p>
-        <a href="preguntas-frecuentes.html" class="inline-block bg-white border border-violetbrand rounded-lg px-2.5 py-1.5 text-violetbrand text-[11px] font-bold hover:bg-vs transition">
+        <button class="bg-white border-0 rounded-lg px-2.5 py-1.5 text-bluebrand text-[11px] font-bold" onclick="location.href='info-preguntas.html'">
           Ver preguntas frecuentes ↗
-        </a>
+        </button>
       </div>
       <div class="flex items-center gap-2.5 p-2 bg-gradient-to-r from-[#f3f0fc] to-[#eaf3f9] border border-[#dcd3f5] rounded-xl text-xs font-bold">
         <div class="w-8.5 h-8.5 rounded-full bg-[#e8e2f7] text-violetbrand flex items-center justify-center font-bold text-xs">MQ</div>
@@ -85,12 +85,12 @@
       </div>
       <div class="hidden md:block text-xs text-muted"><a href="index.html" class="text-muted hover:underline">VacuRed</a> / <b class="text-ink">Vacunatorios</b></div>
       <div class="flex items-center gap-2">
-        <button class="hidden md:flex border border-line bg-white rounded-xl px-3 py-2 text-[#566b80] text-xs" onclick="locationModal()">
-          ⌖ &nbsp;<span id="currentLocation">San Justo, Buenos Aires</span> ▾
+        <button class="hidden md:flex items-center gap-1.5 border border-line bg-white rounded-xl px-3 py-2 text-[#566b80] text-xs" onclick="locationModal()">
+          <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span id="currentLocation">San Justo, Buenos Aires</span> ▾
         </button>
-        <button class="w-9 h-9 border border-line bg-white rounded-xl grid place-items-center text-[#566b80] text-base" onclick="searchModal()" aria-label="Buscar">⌕</button>
+        <button class="w-9 h-9 border border-line bg-white rounded-xl grid place-items-center text-[#566b80] text-base" onclick="searchModal()" aria-label="Buscar"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
         <button class="w-9 h-9 border border-line bg-white rounded-xl grid place-items-center text-[#566b80] text-base relative" onclick="toast('Tenés 2 notificaciones pendientes')" aria-label="Notificaciones">
-          ♧<i class="absolute top-1.5 right-2 w-1.5 h-1.5 bg-redbrand border border-white rounded-full"></i>
+          <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 2 7H4c.5-1.5 2-3 2-7Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><i class="absolute top-1.5 right-2 w-1.5 h-1.5 bg-redbrand border border-white rounded-full"></i>
         </button>
       </div>
     </div>
@@ -104,7 +104,7 @@
       </div>
 
       <div class="flex items-center gap-3 p-3 bg-white border border-line rounded-xl shadow-sm self-start md:self-auto">
-        <span class="text-xl text-bluebrand">⌖</span>
+        <span class="text-xl text-bluebrand"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
         <div>
           <small class="block text-muted text-[9px] font-bold tracking-wider">UBICACIÓN DE REFERENCIA</small>
           <b class="block text-xs mt-0.5" id="locationDescription">San Justo, La Matanza</b>
@@ -122,7 +122,7 @@
         </div>
         <!-- Ícono en casilla cuadrada de 40x40px -->
         <div class="w-10 h-10 min-w-[40px] rounded-xl bg-bs text-bluebrand flex items-center justify-center font-bold text-lg flex-shrink-0">
-            ⌕
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
         </div>
     </div>
 
@@ -224,7 +224,7 @@
               <p class="text-[10px] text-muted">Ubicaciones ilustrativas de ejemplo</p>
             </div>
 
-            <span class="w-9.5 h-9.5 rounded-xl bg-bs text-bluebrand grid place-items-center text-xl">⌖</span>
+            <span class="w-9.5 h-9.5 rounded-xl bg-bs text-bluebrand grid place-items-center text-xl"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
           </div>
 
           <!-- MAPA ILUSTRATIVO -->
@@ -249,7 +249,7 @@
           </div>
 
           <div class="flex items-center gap-1.5 text-muted text-[9px] leading-relaxed mt-2.5">
-            <span>ⓘ</span>
+            <span class="shrink-0"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></span>
             Mapa demostrativo. Las ubicaciones no representan establecimientos reales.
           </div>
         </div>
@@ -257,7 +257,7 @@
         <!-- DETALLE DEL CENTRO SELECCIONADO -->
         <div class="bg-white border border-line rounded-2xl p-4 shadow-sm space-y-3" id="clinicDetail">
           <div class="flex items-center gap-2 mb-1">
-            <span class="w-8 h-8 rounded-lg bg-vs text-violetbrand grid place-items-center text-base">⌖</span>
+            <span class="w-8 h-8 rounded-lg bg-vs text-violetbrand grid place-items-center text-base"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
             <span class="text-violetbrand text-[9px] font-extrabold tracking-wider uppercase">CENTRO SELECCIONADO</span>
           </div>
 
@@ -270,7 +270,7 @@
           <div class="border-t border-line my-3"></div>
 
           <div class="flex items-start gap-2.5 text-xs">
-            <span class="text-bluebrand text-base">◷</span>
+            <span class="text-bluebrand text-base"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
             <div>
               <small class="block text-[8px] text-muted font-extrabold tracking-wider">HORARIOS</small>
               <b class="block text-xs font-semibold leading-normal" id="detailHours">A confirmar</b>
@@ -278,7 +278,7 @@
           </div>
 
           <div class="flex items-start gap-2.5 text-xs">
-            <span class="text-bluebrand text-base">✚</span>
+            <span class="text-bluebrand text-base"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg></span>
             <div>
               <small class="block text-[8px] text-muted font-extrabold tracking-wider">SERVICIOS</small>
               <b class="block text-xs font-semibold leading-normal" id="detailServices">Vacunación infantil y adultos</b>
@@ -286,7 +286,7 @@
           </div>
 
           <div class="flex items-start gap-2.5 text-xs">
-            <span class="text-bluebrand text-base">☎</span>
+            <span class="text-bluebrand text-base"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></span>
             <div>
               <small class="block text-[8px] text-muted font-extrabold tracking-wider">CONTACTO</small>
               <b class="block text-xs font-semibold leading-normal" id="detailPhone">Consultar establecimiento</b>

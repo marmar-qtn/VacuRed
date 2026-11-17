@@ -173,3 +173,160 @@ body {
     padding: 3px 8px;
     border-radius: 20px;
 }
+
+
+
+/* =========================================================
+   VacuRed · estilos de las vistas públicas (landing + info)
+   Si tu CSS actual ya define colores/tipografía, cambiá SOLO
+   las variables de :root para que coincida con el resto.
+   ========================================================= */
+:root {
+  --color-fondo: #f6f5fc;
+  --color-superficie: #ffffff;
+  --color-primario: #5b45d6;
+  --color-primario-oscuro: #2a1f6b;
+  --color-suave: #eeebfc;
+  --color-acento: #0f8a5f;
+  --color-texto: #1c1b3a;
+  --color-texto-suave: #5d5b7a;
+  --color-borde: #e2dff5;
+  --radio: 16px;
+  --sombra: 0 6px 20px rgba(42, 31, 107, 0.08);
+  --fuente: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--fuente);
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  line-height: 1.6;
+}
+
+a { color: var(--color-primario); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.contenedor { width: min(1100px, 92%); margin-inline: auto; }
+
+/* ---------- Header / navegación ---------- */
+.header {
+  background: var(--color-primario-oscuro);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.header .contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 14px;
+  flex-wrap: wrap;
+}
+.logo { color: #fff; font-weight: 700; font-size: 1.25rem; }
+.logo:hover { text-decoration: none; }
+.nav { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+.nav a { color: #e7e3ff; font-weight: 500; }
+.nav a.activo { color: #fff; border-bottom: 2px solid #fff; }
+
+/* ---------- Botones ---------- */
+.boton {
+  display: inline-block;
+  padding: 11px 22px;
+  border-radius: 999px;
+  font-weight: 600;
+  border: 2px solid var(--color-primario);
+  background: var(--color-primario);
+  color: #fff;
+  cursor: pointer;
+}
+.boton:hover { text-decoration: none; background: #4a36b8; }
+.boton.secundario { background: transparent; color: var(--color-primario); }
+.boton.secundario:hover { background: var(--color-suave); }
+.header .boton { padding: 8px 18px; background: #fff; color: var(--color-primario-oscuro); border-color: #fff; }
+
+/* ---------- Secciones ---------- */
+.seccion { padding-block: 56px; }
+.seccion h2 { font-size: 1.7rem; margin-bottom: 8px; color: var(--color-primario-oscuro); }
+.seccion .bajada { color: var(--color-texto-suave); margin-bottom: 28px; max-width: 60ch; }
+
+.hero {
+  background: linear-gradient(135deg, var(--color-primario-oscuro), var(--color-primario));
+  color: #fff;
+  padding-block: 80px;
+}
+.hero h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; margin-bottom: 16px; }
+.hero p { max-width: 58ch; color: #e7e3ff; margin-bottom: 28px; font-size: 1.1rem; }
+.hero .acciones { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero .boton { background: #fff; color: var(--color-primario-oscuro); border-color: #fff; }
+.hero .boton.secundario { background: transparent; color: #fff; border-color: #fff; }
+.hero .boton.secundario:hover { background: rgba(255, 255, 255, 0.15); }
+
+/* ---------- Tarjetas ---------- */
+.grilla { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+
+.tarjeta {
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  padding: 22px;
+  box-shadow: var(--sombra);
+}
+.tarjeta h3 { font-size: 1.1rem; margin-bottom: 6px; color: var(--color-primario-oscuro); }
+.tarjeta p, .tarjeta li { color: var(--color-texto-suave); font-size: 0.97rem; }
+.tarjeta ul { padding-left: 18px; }
+
+.icono {
+  width: 46px; height: 46px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--color-suave);
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+}
+.tarjeta.verde .icono { background: #dcf3ea; }
+a.tarjeta { color: inherit; display: block; }
+a.tarjeta:hover { text-decoration: none; transform: translateY(-3px); transition: transform 0.15s; }
+
+/* ---------- Llamado a registrarse ---------- */
+.cta {
+  background: var(--color-suave);
+  border-radius: var(--radio);
+  padding: 40px 28px;
+  text-align: center;
+}
+.cta h2 { margin-bottom: 8px; }
+.cta p { color: var(--color-texto-suave); margin-bottom: 20px; }
+
+/* ---------- Tabla calendario ---------- */
+.tabla-wrap { overflow-x: auto; border-radius: var(--radio); border: 1px solid var(--color-borde); background: #fff; box-shadow: var(--sombra); }
+table { width: 100%; border-collapse: collapse; min-width: 480px; }
+th, td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--color-borde); }
+th { background: var(--color-primario-oscuro); color: #fff; font-weight: 600; }
+tr:last-child td { border-bottom: none; }
+tbody tr:nth-child(even) { background: #faf9ff; }
+.nota { margin-top: 12px; font-size: 0.9rem; color: var(--color-texto-suave); }
+
+/* ---------- Preguntas frecuentes ---------- */
+details {
+  background: #fff;
+  border: 1px solid var(--color-borde);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+summary { cursor: pointer; font-weight: 600; color: var(--color-primario-oscuro); }
+details[open] summary { margin-bottom: 8px; }
+details p { color: var(--color-texto-suave); }
+
+/* ---------- Footer ---------- */
+.footer { background: var(--color-primario-oscuro); color: #cfc9f5; padding-block: 28px; margin-top: 40px; text-align: center; font-size: 0.92rem; }
+.footer a { color: #fff; }
+
+@media (max-width: 600px) {
+  .hero { padding-block: 56px; }
+  .seccion { padding-block: 40px; }
+}
