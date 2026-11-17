@@ -11,6 +11,15 @@
     <script src="tailwind-config.js"></script>
     <!-- CSS centralizado (Fuentes y reglas @apply) -->
     <link rel="stylesheet" href="styles.css">
+    <script>
+        // Protección de sesión: redirigir a login si no hay usuario autenticado
+        (function() {
+            const user = localStorage.getItem('vacured_user');
+            if (!user) {
+                window.location.href = 'login.html';
+            }
+        })();
+    </script>
 </head>
 
 <body class="bg-bglight text-ink antialiased">
@@ -42,7 +51,7 @@
                             <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>Turnos
                         </button>
                         <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Notificaciones" onclick="toast('Notificaciones de demostración')">
-                            <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 2 7H4c.5-1.5 2-3 2-7Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></span>Notificaciones 
+                            <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 2 7H4c.5-1.5 2-3 2-7Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></span>Notificaciones 
                             <span class="ml-auto bg-rs text-redbrand rounded-full px-2 py-0.5 text-[10px]">2</span>
                         </button>
                         <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Mi cuenta" onclick="go('Mi cuenta')">
@@ -57,16 +66,17 @@
                 <div class="bg-gradient-to-br from-[#eef4fa] to-[#f5f2fc] border border-line rounded-2xl p-3.5 space-y-2">
                     <b class="text-xs font-bold block">¿Necesitás ayuda?</b>
                     <p class="text-[11px] text-muted leading-relaxed">Encontrá respuestas sobre vacunas, carnets y el uso de VacuRed.</p>
-                    <button class="bg-white border-0 rounded-lg px-2.5 py-1.5 text-bluebrand text-[11px] font-bold" onclick="location.href='info-preguntas.html'">
+                    <a href="preguntas-frecuentes.html" class="inline-block bg-white border border-violetbrand rounded-lg px-2.5 py-1.5 text-violetbrand text-[11px] font-bold hover:bg-vs transition">
                         Ver preguntas frecuentes ↗
-                    </button>
+                    </a>
                 </div>
                 <div class="flex items-center gap-2.5 p-2 bg-gradient-to-r from-[#f3f0fc] to-[#eaf3f9] border border-[#dcd3f5] rounded-xl text-xs font-bold">
                     <div class="w-8.5 h-8.5 rounded-full bg-[#e8e2f7] text-violetbrand flex items-center justify-center font-bold text-xs">MQ</div>
-                    <div>
+                    <div class="flex-1">
                         María Quintana
                         <small class="block text-muted font-normal text-[10px] mt-0.5">Cuenta familiar (Titular)</small>
                     </div>
+                    <button onclick="logout()" class="text-violetbrand hover:text-redbrand transition font-bold text-sm" title="Cerrar sesión" aria-label="Cerrar sesión"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4H6.5A1.5 1.5 0 0 0 5 5.5v13A1.5 1.5 0 0 0 6.5 20H10"/><path d="M15 8l4 4-4 4M19 12H9"/></svg></button>
                 </div>
             </div>
         </aside>
@@ -87,7 +97,7 @@
                     </button>
                     <button class="w-9 h-9 border border-line bg-white rounded-xl grid place-items-center text-[#566b80] text-base" onclick="searchModal()" aria-label="Buscar"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
                     <button class="w-9 h-9 border border-line bg-white rounded-xl grid place-items-center text-[#566b80] text-base relative" onclick="toast('Tenés 2 notificaciones pendientes')" aria-label="Notificaciones">
-                        <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 2 7H4c.5-1.5 2-3 2-7Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><i class="absolute top-1.5 right-2 w-1.5 h-1.5 bg-redbrand border border-white rounded-full"></i>
+                        <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 2 7H4c.5-1.5 2-3 2-7Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><i class="absolute top-1.5 right-2 w-1.5 h-1.5 bg-redbrand border border-white rounded-full"></i>
                     </button>
                 </div>
             </div>
@@ -140,7 +150,7 @@
             
             <section class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div class="bg-white border border-line rounded-2xl p-4 flex items-center gap-3 shadow-sm">
-                    <div class="w-10 h-10 rounded-xl bg-vs text-violetbrand grid place-items-center text-lg"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 19c0-3.3 2.7-5 6-5s6 1.7 6 5"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.2c3 0 5 1.5 5 4.3"/></svg></div>
+                    <div class="w-10 h-10 rounded-xl bg-vs text-violetbrand grid place-items-center text-lg"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 19c0-3.3 2.7-5 6-5s6 1.7 6 5"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.2c3 0 5 1.5 5 4.3"/></svg></div>
                     <div><small class="block text-muted text-[10px]">Integrantes registrados</small><strong class="text-xl font-bold">3</strong><em class="not-italic text-muted text-[10px] ml-1">personas</em></div>
                 </div>
                 <div class="bg-white border border-line rounded-2xl p-4 flex items-center gap-3 shadow-sm">
@@ -213,7 +223,7 @@
                             <span class="w-7 h-7 rounded-lg bg-bs text-bluebrand grid place-items-center font-bold text-xs"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>
                             <b class="text-xs text-ink font-bold">Gestionar turnos</b>
                         </button>
-                        <button class="flex items-center gap-2.5 bg-slate-50 border border-line rounded-xl p-2.5 text-left hover:bg-vs hover:border-[#c8b9ed] transition" onclick="location.href='info-preguntas.html#calendario'">
+                        <button class="flex items-center gap-2.5 bg-slate-50 border border-line rounded-xl p-2.5 text-left hover:bg-vs hover:border-[#c8b9ed] transition" onclick="toast('Calendario Nacional de Vacunación')">
                             <span class="w-7 h-7 rounded-lg bg-bs text-bluebrand grid place-items-center font-bold text-xs"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 2.5h6v3H9z"/><path d="m9 13 2 2 4-4"/></svg></span>
                             <b class="text-xs text-ink font-bold">Ver calendario</b>
                         </button>
