@@ -376,47 +376,48 @@
                     <p class="text-[11px] text-muted mt-0.5">Seleccioná una campaña para ver su detalle y acceder a los recursos oficiales.</p>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-3.5 items-stretch">
+                <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] gap-3.5 items-stretch">
                     
-                    <!-- COLUMNA IZQUIERDA (Compacta y con fondo pastel según la campaña) -->
+                    <!-- COLUMNA IZQUIERDA (Foto más amplia con categoría + tag translúcido encima) -->
                     <article id="featuredCampaignCard" class="flex flex-col bg-rs border border-redbrand/25 rounded-2xl overflow-hidden shadow-2xs transition-colors duration-300">
-                        <!-- Banner superior más bajo -->
-                        <div id="featuredCampaignBanner" class="w-full h-16 sm:h-20 overflow-hidden relative border-b border-redbrand/20">
+                        <!-- Banner superior ampliado -->
+                        <div id="featuredCampaignBanner" class="w-full h-28 sm:h-32 overflow-hidden relative border-b border-redbrand/20 flex flex-col justify-end p-3.5 sm:p-4">
                             <img id="featuredCampaignImg"
                                 src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=900&q=85"
                                 alt="Profesional de salud"
-                                class="w-full h-full object-cover object-center transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-b from-slate-900/10 to-slate-900/20"></div>
-                        </div>
-
-                        <!-- Contenido ampliado compacto -->
-                        <div id="featuredCampaignBody" class="p-3.5 sm:p-4 flex-1 flex flex-col justify-between space-y-2.5 panel-fade-in">
-                            <div class="space-y-1.5">
-                                <span id="featuredCampaignTag" class="inline-flex items-center bg-white/75 border border-redbrand/25 rounded-full px-2.5 py-0.5 text-[9px] font-extrabold text-redbrand tracking-wider uppercase">
+                                class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-900/30 to-transparent"></div>
+                            
+                            <!-- Categoría a color + Tag translúcido sin prefijo -->
+                            <div class="relative z-10 flex flex-col items-start gap-1.5 max-w-full">
+                                <span id="featuredCampaignTag" class="inline-flex items-center bg-white/95 rounded-full px-2.5 py-0.5 text-[9px] font-extrabold text-redbrand tracking-wider uppercase shadow-2xs">
                                     INFORMACIÓN OFICIAL
                                 </span>
+                                <div class="inline-flex items-center bg-white/20 backdrop-blur-md border border-white/35 rounded-full px-3 py-1 max-w-full">
+                                    <p id="featuredCampaignMetaText" class="text-[11px] font-medium text-white truncate">
+                                        Gratuitas, sin orden médica y presentando DNI y carnet.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contenido sobre fondo pastel con más aire -->
+                        <div id="featuredCampaignBody" class="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-4 panel-fade-in">
+                            <div class="space-y-1.5">
                                 <h4 id="featuredCampaignTitle" class="text-sm sm:text-base font-extrabold text-ink tracking-tight leading-snug">
                                     Vacunarse en cada etapa de la vida
                                 </h4>
-                                <p id="featuredCampaignDesc" class="text-[11px] text-slate-700 leading-relaxed line-clamp-2">
-                                    Las vacunas acompañan cada etapa desde el nacimiento hasta la adultez mayor, previniendo enfermedades graves.
+                                <p id="featuredCampaignDesc" class="text-[11px] sm:text-xs text-slate-700 leading-relaxed">
+                                    Las vacunas acompañan cada etapa desde el nacimiento hasta la adultez mayor, previniendo enfermedades graves y protegiendo a toda la comunidad.
                                 </p>
                             </div>
 
-                            <!-- Etiqueta translúcida compacta (1 renglón) -->
-                            <div id="featuredCampaignMetaBox" class="bg-white/45 backdrop-blur-xs border border-redbrand/20 rounded-xl px-3 py-2 flex items-center gap-2 transition-colors duration-300">
-                                <small id="featuredCampaignMetaLabel" class="text-[9px] text-slate-600 font-extrabold tracking-wider uppercase shrink-0">CLAVE:</small>
-                                <p id="featuredCampaignMetaText" class="text-[11px] font-semibold text-ink truncate">
-                                    Gratuitas, sin orden médica y presentando DNI y carnet.
-                                </p>
-                            </div>
-
-                            <div class="pt-0.5 flex items-center justify-between gap-2 flex-wrap">
+                            <div class="flex items-center justify-between gap-2 flex-wrap">
                                 <a id="featuredCampaignLink"
                                     href="https://www.argentina.gob.ar/salud/vacunas"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    class="inline-flex items-center gap-1.5 bg-redbrand text-white rounded-lg px-3 py-1.5 text-[11px] font-bold hover:bg-opacity-90 transition shadow-2xs">
+                                    class="inline-flex items-center gap-1.5 bg-redbrand text-white rounded-lg px-3.5 py-2 text-[11px] font-bold hover:bg-opacity-90 transition shadow-2xs">
                                     <span id="featuredCampaignLinkText">Consultar información oficial</span> ↗
                                 </a>
                                 <span class="text-[10px] font-semibold text-slate-600">Fuente oficial</span>
@@ -424,22 +425,21 @@
                         </div>
                     </article>
 
-                    <!-- COLUMNA DERECHA (Misma altura compacta, con scroll interno) -->
+                    <!-- COLUMNA DERECHA (Sin descripciones, solo categoría y título) -->
                     <div class="lg:relative min-h-[220px]">
-                        <div id="campaignSelectorList" class="max-h-[250px] lg:max-h-none lg:absolute lg:inset-0 overflow-y-auto pr-1.5 space-y-2 custom-scrollbar">
+                        <div id="campaignSelectorList" class="max-h-[255px] lg:max-h-none lg:absolute lg:inset-0 overflow-y-auto pr-1.5 space-y-2 custom-scrollbar">
                             
                             <!-- Campaña 1 (Rojo) -->
                             <button type="button"
                                 data-campaign="0"
                                 onclick="selectCampaign(0)"
-                                class="campaign-selector-card active w-full text-left border-2 border-slate-500 bg-slate-50/90 rounded-xl p-2.5 grid grid-cols-[68px_1fr] gap-2.5 items-center transition cursor-pointer shadow-2xs">
-                                <img class="w-full h-14 object-cover rounded-lg"
+                                class="campaign-selector-card active w-full text-left border-2 border-slate-500 bg-slate-50/90 rounded-xl p-2.5 grid grid-cols-[60px_1fr] gap-3 items-center transition cursor-pointer shadow-2xs">
+                                <img class="w-full h-12 object-cover rounded-lg"
                                     src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=400&q=85"
                                     alt="Profesional de salud">
                                 <div class="min-w-0">
                                     <span class="text-[9px] text-redbrand font-extrabold tracking-wider uppercase block">INFORMACIÓN OFICIAL</span>
-                                    <h4 class="text-xs font-bold text-ink my-0.5 leading-snug truncate">Vacunarse en cada etapa de la vida</h4>
-                                    <p class="text-[10px] text-muted leading-snug line-clamp-2">Conocé las recomendaciones y consultá fuentes oficiales para mantener tus vacunas al día.</p>
+                                    <h4 class="text-xs font-bold text-ink mt-0.5 leading-snug line-clamp-2">Vacunarse en cada etapa de la vida</h4>
                                 </div>
                             </button>
 
@@ -447,14 +447,13 @@
                             <button type="button"
                                 data-campaign="1"
                                 onclick="selectCampaign(1)"
-                                class="campaign-selector-card w-full text-left border border-line bg-white hover:border-slate-400 hover:bg-slate-50/50 rounded-xl p-2.5 grid grid-cols-[68px_1fr] gap-2.5 items-center transition cursor-pointer">
-                                <img class="w-full h-14 object-cover rounded-lg"
+                                class="campaign-selector-card w-full text-left border border-line bg-white hover:border-slate-400 hover:bg-slate-50/50 rounded-xl p-2.5 grid grid-cols-[60px_1fr] gap-3 items-center transition cursor-pointer">
+                                <img class="w-full h-12 object-cover rounded-lg"
                                     src="https://images.unsplash.com/photo-1632053002928-1919605ee6f7?auto=format&fit=crop&w=400&q=85"
                                     alt="Control pediátrico y vacunación infantil">
                                 <div class="min-w-0">
                                     <span class="text-[9px] text-violetbrand font-extrabold tracking-wider uppercase block">CAMPAÑA PREVENTIVA</span>
-                                    <h4 class="text-xs font-bold text-ink my-0.5 leading-snug truncate">Vacunación infantil e ingreso escolar</h4>
-                                    <p class="text-[10px] text-muted leading-snug line-clamp-2">Verificá los refuerzos obligatorios para niños y adolescentes antes del inicio de clases.</p>
+                                    <h4 class="text-xs font-bold text-ink mt-0.5 leading-snug line-clamp-2">Vacunación infantil e ingreso escolar</h4>
                                 </div>
                             </button>
 
@@ -462,14 +461,13 @@
                             <button type="button"
                                 data-campaign="2"
                                 onclick="selectCampaign(2)"
-                                class="campaign-selector-card w-full text-left border border-line bg-white hover:border-slate-400 hover:bg-slate-50/50 rounded-xl p-2.5 grid grid-cols-[68px_1fr] gap-2.5 items-center transition cursor-pointer">
-                                <img class="w-full h-14 object-cover rounded-lg"
+                                class="campaign-selector-card w-full text-left border border-line bg-white hover:border-slate-400 hover:bg-slate-50/50 rounded-xl p-2.5 grid grid-cols-[60px_1fr] gap-3 items-center transition cursor-pointer">
+                                <img class="w-full h-12 object-cover rounded-lg"
                                     src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=400&q=85"
                                     alt="Campaña antigripal y prevención">
                                 <div class="min-w-0">
                                     <span class="text-[9px] text-bluebrand font-extrabold tracking-wider uppercase block">CAMPAÑA ESTACIONAL</span>
-                                    <h4 class="text-xs font-bold text-ink my-0.5 leading-snug truncate">Prevención antigripal y refuerzos</h4>
-                                    <p class="text-[10px] text-muted leading-snug line-clamp-2">Información sobre dosis anuales recomendadas para embarazadas, niños y adultos mayores.</p>
+                                    <h4 class="text-xs font-bold text-ink mt-0.5 leading-snug line-clamp-2">Prevención antigripal y refuerzos</h4>
                                 </div>
                             </button>
 
@@ -477,14 +475,13 @@
                             <button type="button"
                                 data-campaign="3"
                                 onclick="selectCampaign(3)"
-                                class="campaign-selector-card w-full text-left border border-line bg-white hover:border-slate-400 hover:bg-slate-50/50 rounded-xl p-2.5 grid grid-cols-[68px_1fr] gap-2.5 items-center transition cursor-pointer">
-                                <img class="w-full h-14 object-cover rounded-lg"
+                                class="campaign-selector-card w-full text-left border border-line bg-white hover:border-slate-400 hover:bg-slate-50/50 rounded-xl p-2.5 grid grid-cols-[60px_1fr] gap-3 items-center transition cursor-pointer">
+                                <img class="w-full h-12 object-cover rounded-lg"
                                     src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=400&q=85"
                                     alt="Cuidado materno y embarazo">
                                 <div class="min-w-0">
                                     <span class="text-[9px] text-[#2b7a67] font-extrabold tracking-wider uppercase block">CUIDADO INTEGRAL</span>
-                                    <h4 class="text-xs font-bold text-ink my-0.5 leading-snug truncate">Vacunas durante el embarazo</h4>
-                                    <p class="text-[10px] text-muted leading-snug line-clamp-2">Protección clave para la persona gestante y el bebé desde los primeros meses de vida.</p>
+                                    <h4 class="text-xs font-bold text-ink mt-0.5 leading-snug line-clamp-2">Vacunas durante el embarazo</h4>
                                 </div>
                             </button>
 
@@ -492,14 +489,13 @@
                             <button type="button"
                                 data-campaign="4"
                                 onclick="selectCampaign(4)"
-                                class="campaign-selector-card w-full text-left border border-line bg-white hover:border-slate-400 hover:bg-slate-50/50 rounded-xl p-2.5 grid grid-cols-[68px_1fr] gap-2.5 items-center transition cursor-pointer">
-                                <img class="w-full h-14 object-cover rounded-lg"
+                                class="campaign-selector-card w-full text-left border border-line bg-white hover:border-slate-400 hover:bg-slate-50/50 rounded-xl p-2.5 grid grid-cols-[60px_1fr] gap-3 items-center transition cursor-pointer">
+                                <img class="w-full h-12 object-cover rounded-lg"
                                     src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=400&q=85"
                                     alt="Vacunación en adultos mayores">
                                 <div class="min-w-0">
                                     <span class="text-[9px] text-violetbrand font-extrabold tracking-wider uppercase block">SALUD PREVENTIVA</span>
-                                    <h4 class="text-xs font-bold text-ink my-0.5 leading-snug truncate">Esquemas para personas mayores</h4>
-                                    <p class="text-[10px] text-muted leading-snug line-clamp-2">Dosis recomendadas contra neumococo, gripe y refuerzos de doble adultos.</p>
+                                    <h4 class="text-xs font-bold text-ink mt-0.5 leading-snug line-clamp-2">Esquemas para personas mayores</h4>
                                 </div>
                             </button>
 

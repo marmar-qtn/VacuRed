@@ -1079,15 +1079,13 @@ function switchFamilySummaryTab(tabKey) {
 const dashboardCampaigns = [
     {
         tag: 'INFORMACIÓN OFICIAL',
-        tagClass: 'border-redbrand/25 text-redbrand',
+        tagTextClass: 'text-redbrand',
         cardBg: 'bg-rs',
         cardBorder: 'border-redbrand/25',
         bannerBorder: 'border-redbrand/20',
-        metaBoxBorder: 'border-redbrand/20',
         btnClass: 'bg-redbrand',
         title: 'Vacunarse en cada etapa de la vida',
-        desc: 'Las vacunas acompañan cada etapa desde el nacimiento hasta la adultez mayor, previniendo enfermedades graves.',
-        metaLabel: 'CLAVE:',
+        desc: 'Las vacunas acompañan cada etapa desde el nacimiento hasta la adultez mayor, previniendo enfermedades graves y protegiendo a toda la comunidad.',
         metaText: 'Gratuitas, sin orden médica y presentando DNI y carnet.',
         image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=900&q=85',
         imageAlt: 'Profesional de salud',
@@ -1096,15 +1094,13 @@ const dashboardCampaigns = [
     },
     {
         tag: 'CAMPAÑA PREVENTIVA',
-        tagClass: 'border-violetbrand/25 text-violetbrand',
+        tagTextClass: 'text-violetbrand',
         cardBg: 'bg-vs',
         cardBorder: 'border-violetbrand/25',
         bannerBorder: 'border-violetbrand/20',
-        metaBoxBorder: 'border-violetbrand/20',
         btnClass: 'bg-violetbrand',
         title: 'Vacunación infantil e ingreso escolar',
         desc: 'Revisá los esquemas de los 5 y 11 años antes de clases para proteger contra sarampión, rubéola, poliomielitis y VPH.',
-        metaLabel: 'PRIORIDAD:',
         metaText: 'Refuerzos obligatorios a los 5 y 11 años antes de clases.',
         image: 'https://images.unsplash.com/photo-1632053002928-1919605ee6f7?auto=format&fit=crop&w=900&q=85',
         imageAlt: 'Control pediátrico y vacunación infantil',
@@ -1113,15 +1109,13 @@ const dashboardCampaigns = [
     },
     {
         tag: 'CAMPAÑA ESTACIONAL',
-        tagClass: 'border-bluebrand/25 text-bluebrand',
+        tagTextClass: 'text-bluebrand',
         cardBg: 'bg-bs',
         cardBorder: 'border-bluebrand/25',
         bannerBorder: 'border-bluebrand/20',
-        metaBoxBorder: 'border-bluebrand/20',
         btnClass: 'bg-bluebrand',
         title: 'Prevención antigripal y refuerzos',
-        desc: 'La vacunación anual reduce complicaciones respiratorias y hospitalizaciones en los grupos con mayor riesgo.',
-        metaLabel: 'ALCANCE:',
+        desc: 'La vacunación anual reduce complicaciones respiratorias y hospitalizaciones en los grupos con mayor riesgo durante los meses fríos.',
         metaText: 'Dosis anual gratuita para embarazadas, niños y +65 años.',
         image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=900&q=85',
         imageAlt: 'Campaña antigripal y prevención',
@@ -1130,15 +1124,13 @@ const dashboardCampaigns = [
     },
     {
         tag: 'CUIDADO INTEGRAL',
-        tagClass: 'border-[#2b7a67]/25 text-[#2b7a67]',
+        tagTextClass: 'text-[#2b7a67]',
         cardBg: 'bg-gs',
         cardBorder: 'border-[#2b7a67]/25',
         bannerBorder: 'border-[#2b7a67]/20',
-        metaBoxBorder: 'border-[#2b7a67]/20',
         btnClass: 'bg-[#2b7a67]',
         title: 'Vacunas durante el embarazo',
         desc: 'Aplicarse las dosis indicadas en la gestación transfiere anticuerpos al bebé y lo protege desde el nacimiento.',
-        metaLabel: 'DOSIS:',
         metaText: 'Triple bacteriana acelular (sem. 20), antigripal y VSR.',
         image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=900&q=85',
         imageAlt: 'Cuidado materno y embarazo',
@@ -1147,15 +1139,13 @@ const dashboardCampaigns = [
     },
     {
         tag: 'SALUD PREVENTIVA',
-        tagClass: 'border-violetbrand/25 text-violetbrand',
+        tagTextClass: 'text-violetbrand',
         cardBg: 'bg-vs',
         cardBorder: 'border-violetbrand/25',
         bannerBorder: 'border-violetbrand/20',
-        metaBoxBorder: 'border-violetbrand/20',
         btnClass: 'bg-violetbrand',
         title: 'Esquemas para personas mayores',
-        desc: 'A partir de los 65 años es clave mantener al día las vacunas contra el neumococo, la gripe y doble adultos.',
-        metaLabel: 'REFUERZO:',
+        desc: 'A partir de los 65 años es clave mantener al día las vacunas contra el neumococo, la gripe y el refuerzo de doble adultos.',
         metaText: 'Antigripal anual, neumococo y doble adultos cada 10 años.',
         image: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=900&q=85',
         imageAlt: 'Vacunación en adultos mayores',
@@ -1186,8 +1176,6 @@ function selectCampaign(index) {
     const tagEl = document.getElementById('featuredCampaignTag');
     const titleEl = document.getElementById('featuredCampaignTitle');
     const descEl = document.getElementById('featuredCampaignDesc');
-    const metaBoxEl = document.getElementById('featuredCampaignMetaBox');
-    const metaLabelEl = document.getElementById('featuredCampaignMetaLabel');
     const metaTextEl = document.getElementById('featuredCampaignMetaText');
     const linkEl = document.getElementById('featuredCampaignLink');
     const linkTextEl = document.getElementById('featuredCampaignLinkText');
@@ -1197,7 +1185,7 @@ function selectCampaign(index) {
     }
 
     if (bannerEl) {
-        bannerEl.className = `w-full h-16 sm:h-20 overflow-hidden relative border-b ${campaign.bannerBorder}`;
+        bannerEl.className = `w-full h-28 sm:h-32 overflow-hidden relative border-b ${campaign.bannerBorder} flex flex-col justify-end p-3.5 sm:p-4`;
     }
 
     if (imgEl) {
@@ -1207,22 +1195,16 @@ function selectCampaign(index) {
 
     if (tagEl) {
         tagEl.textContent = campaign.tag;
-        tagEl.className = `inline-flex items-center bg-white/75 border rounded-full px-2.5 py-0.5 text-[9px] font-extrabold tracking-wider uppercase ${campaign.tagClass}`;
+        tagEl.className = `inline-flex items-center bg-white/95 rounded-full px-2.5 py-0.5 text-[9px] font-extrabold tracking-wider uppercase shadow-2xs ${campaign.tagTextClass}`;
     }
 
     if (titleEl) titleEl.textContent = campaign.title;
     if (descEl) descEl.textContent = campaign.desc;
-
-    if (metaBoxEl) {
-        metaBoxEl.className = `bg-white/45 backdrop-blur-xs border ${campaign.metaBoxBorder} rounded-xl px-3 py-2 flex items-center gap-2 transition-colors duration-300`;
-    }
-
-    if (metaLabelEl) metaLabelEl.textContent = campaign.metaLabel;
     if (metaTextEl) metaTextEl.textContent = campaign.metaText;
 
     if (linkEl) {
         linkEl.href = campaign.link;
-        linkEl.className = `inline-flex items-center gap-1.5 ${campaign.btnClass} text-white rounded-lg px-3 py-1.5 text-[11px] font-bold hover:bg-opacity-90 transition shadow-2xs`;
+        linkEl.className = `inline-flex items-center gap-1.5 ${campaign.btnClass} text-white rounded-lg px-3.5 py-2 text-[11px] font-bold hover:bg-opacity-90 transition shadow-2xs`;
     }
 
     if (linkTextEl) linkTextEl.textContent = campaign.linkText;
