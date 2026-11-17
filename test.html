@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>VacuRed | Test de Autenticación</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-gradient-to-br from-violetbrand/5 via-bglight to-redbrand/5 antialiased">
+    <div class="min-h-screen flex flex-col items-center justify-center px-4 py-8">
+        
+        <div class="w-full max-w-2xl">
+            
+            <!-- Header -->
+            <div class="text-center mb-10">
+                <div class="flex items-center justify-center mb-4">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-violetbrand to-redbrand grid place-items-center text-white text-4xl shadow-lg">✳</div>
+                </div>
+                <h1 class="text-3xl font-extrabold text-ink mb-2">Vacu<span class="text-redbrand">Red</span></h1>
+                <p class="text-sm text-muted">Test del Sistema de Autenticación</p>
+            </div>
+
+            <!-- Test Panel -->
+            <div class="bg-white rounded-2xl shadow-lg border border-line p-8 mb-6">
+                
+                <h2 class="text-xl font-bold text-ink mb-6">🧪 Panel de Pruebas</h2>
+
+                <!-- Estado de Sesión -->
+                <div class="mb-6 p-4 bg-vs border border-line rounded-xl">
+                    <p class="text-xs font-bold text-ink uppercase tracking-wider mb-2">Estado de Sesión</p>
+                    <div id="sessionStatus" class="text-sm text-muted font-mono bg-white p-3 rounded-lg border border-line">
+                        Cargando...
+                    </div>
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                    
+                    <!-- Ir a Registro -->
+                    <a href="registro.html" class="flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-violetbrand to-redbrand text-white font-bold rounded-xl hover:shadow-lg transition transform hover:scale-105 duration-300">
+                        ✍️ Ir a Registro
+                    </a>
+
+                    <!-- Ir a Login -->
+                    <a href="login.html" class="flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-violetbrand to-redbrand text-white font-bold rounded-xl hover:shadow-lg transition transform hover:scale-105 duration-300">
+                        🔐 Ir a Login
+                    </a>
+
+                    <!-- Ir a Recuperar -->
+                    <a href="recuperar.html" class="flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-violetbrand to-redbrand text-white font-bold rounded-xl hover:shadow-lg transition transform hover:scale-105 duration-300">
+                        🔑 Recuperar Contraseña
+                    </a>
+
+                    <!-- Ir a Dashboard (si hay sesión) -->
+                    <a href="index.html" class="flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-violetbrand to-redbrand text-white font-bold rounded-xl hover:shadow-lg transition transform hover:scale-105 duration-300">
+                        📊 Ir a Dashboard
+                    </a>
+
+                </div>
+
+                <!-- Acciones de Prueba -->
+                <div class="bg-gradient-to-br from-[#eef4fa] to-[#f5f2fc] border border-line rounded-xl p-4 space-y-3">
+                    <p class="text-xs font-bold text-ink uppercase tracking-wider">Acciones de Prueba</p>
+                    
+                    <button onclick="createTestSession()" class="w-full text-left px-4 py-3 bg-white border border-line rounded-lg hover:bg-vs transition text-sm text-ink font-medium">
+                        ✓ Crear sesión de prueba
+                    </button>
+                    
+                    <button onclick="clearSession()" class="w-full text-left px-4 py-3 bg-white border border-line rounded-lg hover:bg-vs transition text-sm text-ink font-medium">
+                        ✗ Limpiar sesión
+                    </button>
+                    
+                    <button onclick="showSessionData()" class="w-full text-left px-4 py-3 bg-white border border-line rounded-lg hover:bg-vs transition text-sm text-ink font-medium">
+                        📄 Ver datos de sesión
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- Checklist -->
+            <div class="bg-white rounded-2xl shadow-lg border border-line p-8">
+                
+                <h3 class="text-lg font-bold text-ink mb-4">✅ Checklist de Pruebas</h3>
+
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3 p-3 border border-line rounded-lg hover:bg-vs transition cursor-pointer" onclick="toggleCheck(this)">
+                        <input type="checkbox" class="w-5 h-5 accent-violetbrand">
+                        <span class="text-sm text-muted font-medium">Página de registro se abre correctamente</span>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 border border-line rounded-lg hover:bg-vs transition cursor-pointer" onclick="toggleCheck(this)">
+                        <input type="checkbox" class="w-5 h-5 accent-violetbrand">
+                        <span class="text-sm text-muted font-medium">Página de login se abre correctamente</span>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 border border-line rounded-lg hover:bg-vs transition cursor-pointer" onclick="toggleCheck(this)">
+                        <input type="checkbox" class="w-5 h-5 accent-violetbrand">
+                        <span class="text-sm text-muted font-medium">Página de recuperación se abre correctamente</span>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 border border-line rounded-lg hover:bg-vs transition cursor-pointer" onclick="toggleCheck(this)">
+                        <input type="checkbox" class="w-5 h-5 accent-violetbrand">
+                        <span class="text-sm text-muted font-medium">Crear cuenta funciona y guarda datos</span>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 border border-line rounded-lg hover:bg-vs transition cursor-pointer" onclick="toggleCheck(this)">
+                        <input type="checkbox" class="w-5 h-5 accent-violetbrand">
+                        <span class="text-sm text-muted font-medium">Login funciona y redirige al dashboard</span>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 border border-line rounded-lg hover:bg-vs transition cursor-pointer" onclick="toggleCheck(this)">
+                        <input type="checkbox" class="w-5 h-5 accent-violetbrand">
+                        <span class="text-sm text-muted font-medium">Dashboard está protegido sin sesión</span>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 border border-line rounded-lg hover:bg-vs transition cursor-pointer" onclick="toggleCheck(this)">
+                        <input type="checkbox" class="w-5 h-5 accent-violetbrand">
+                        <span class="text-sm text-muted font-medium">Botón de logout funciona</span>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 border border-line rounded-lg hover:bg-vs transition cursor-pointer" onclick="toggleCheck(this)">
+                        <input type="checkbox" class="w-5 h-5 accent-violetbrand">
+                        <span class="text-sm text-muted font-medium">Formularios validan correctamente</span>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 border border-line rounded-lg hover:bg-vs transition cursor-pointer" onclick="toggleCheck(this)">
+                        <input type="checkbox" class="w-5 h-5 accent-violetbrand">
+                        <span class="text-sm text-muted font-medium">Diseño es responsive en mobile</span>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 border border-line rounded-lg hover:bg-vs transition cursor-pointer" onclick="toggleCheck(this)">
+                        <input type="checkbox" class="w-5 h-5 accent-violetbrand">
+                        <span class="text-sm text-muted font-medium">Los colores y estilos son consistentes</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="hidden fixed inset-0 bg-slate-900/40 items-center justify-center p-5 z-50">
+        <div class="bg-white rounded-2xl p-6 w-full max-w-md space-y-3">
+            <h3 class="text-lg font-bold" id="modalTitle"></h3>
+            <p class="text-xs text-muted" id="modalContent"></p>
+            <button onclick="closeModal()" class="w-full bg-violetbrand text-white font-bold py-2 rounded-lg hover:shadow-lg transition">
+                Cerrar
+            </button>
+        </div>
+    </div>
+
+    <script src="test.js"></script>
+
+</body>
+
+</html>
