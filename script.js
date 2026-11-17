@@ -432,14 +432,14 @@ function renderAppointments() {
             <article class="${cardStyle} border rounded-xl p-4 sm:p-4.5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition shadow-xs">
                 <!-- Icono + Información Principal -->
                 <div class="flex items-start sm:items-center gap-3.5 min-w-0 flex-1">
-                    <div class="w-10 h-10 rounded-xl bg-white text-violetbrand grid place-items-center text-lg font-bold flex-shrink-0 shadow-xs">
-                        ✚
+                    <div class="w-10 h-10 rounded-xl bg-white text-violetbrand grid place-items-center flex-shrink-0 shadow-xs">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.5 19.5a2.1 2.1 0 0 1-3 0l-1-1a2.1 2.1 0 0 1 0-3L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg>
                     </div>
                     <div class="min-w-0 space-y-0.5">
                         <h4 class="text-sm sm:text-base font-bold text-ink leading-snug">${a.vaccine}</h4>
                         <p class="text-xs text-muted font-medium">${a.member} · <span class="text-ink/80">${a.service}</span></p>
                         <p class="text-xs text-muted flex items-center gap-1 truncate">
-                            <span class="text-violetbrand">⌖</span> ${a.center}
+                            <span class="text-violetbrand shrink-0"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span> ${a.center}
                         </p>
                     </div>
                 </div>
@@ -753,7 +753,7 @@ function renderBookingStep() {
         const dateInfo = formatAppointmentDate(bookingData.date);
         content.innerHTML = `
             <div class="text-center">
-                <div class="w-11 h-11 grid place-items-center rounded-2xl bg-vs text-violetbrand text-xl font-extrabold mx-auto mb-3">✓</div>
+                <div class="w-11 h-11 grid place-items-center rounded-2xl bg-vs text-violetbrand mx-auto mb-3"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.3 2.4 2.4 4.6-5"/></svg></div>
                 <h4 class="text-sm font-bold text-ink mb-4">Resumen de la reserva</h4>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-[1px] bg-line border border-line rounded-xl overflow-hidden text-left">
                     <div class="bg-white p-3 flex flex-col gap-1"><small class="text-muted text-[10px] font-semibold">Integrante</small><strong class="text-ink text-xs font-bold">${bookingData.member}</strong></div>
@@ -768,7 +768,7 @@ function renderBookingStep() {
                 </p>
             </div>
         `;
-        if (next) next.textContent = "Confirmar turno ✓";
+        if (next) next.textContent = "Confirmar turno";
     }
 }
 
