@@ -268,3 +268,39 @@ body {
 .faq-answer b {
     color: #203247;
 }
+
+/* ---------------------------------------------------------
+   5. INICIO · ANIMACIÓN DE PANELES Y CAMPAÑAS
+   --------------------------------------------------------- */
+@keyframes panelFadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.panel-fade-in {
+    animation: panelFadeSlideIn 0.28s ease-out forwards;
+}
+
+/* Scrollbar sutil para la lista de campañas */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}

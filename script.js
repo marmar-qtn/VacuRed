@@ -1016,3 +1016,220 @@ function initFaqPage() {
 }
 
 initFaqPage();
+
+/* =====================================================
+   VACURED · INICIO (Resumen interactivo y Campañas)
+   ===================================================== */
+
+function switchFamilySummaryTab(tabKey) {
+    const buttons = document.querySelectorAll('#familySummaryTabs .summary-tab-btn');
+    const panels = document.querySelectorAll('.summary-panel');
+    if (!buttons.length || !panels.length) return;
+
+    const activeStyles = {
+        integrantes: ['border-2', 'border-violetbrand', 'shadow-xs'],
+        vacunas: ['border-2', 'border-bluebrand', 'shadow-xs'],
+        dosis: ['border-2', 'border-redbrand', 'shadow-xs']
+    };
+
+    const inactiveStyles = {
+        integrantes: ['border', 'border-[#dcd3f5]'],
+        vacunas: ['border', 'border-[#c8e0f2]'],
+        dosis: ['border', 'border-[#f7c7cb]']
+    };
+
+    buttons.forEach(btn => {
+        const key = btn.dataset.summaryTab;
+        const isTarget = key === tabKey;
+        const indicator = btn.querySelector('.summary-tab-indicator');
+
+        btn.classList.remove(
+            'active', 'border', 'border-2', 'shadow-xs',
+            'border-violetbrand', 'border-bluebrand', 'border-redbrand',
+            'border-[#dcd3f5]', 'border-[#c8e0f2]', 'border-[#f7c7cb]'
+        );
+
+        if (isTarget) {
+            btn.classList.add('active', ...activeStyles[key]);
+            if (indicator) {
+                indicator.textContent = '▾';
+                indicator.classList.remove('text-muted/60');
+            }
+        } else {
+            btn.classList.add(...inactiveStyles[key]);
+            if (indicator) {
+                indicator.textContent = '▸';
+                indicator.classList.add('text-muted/60');
+            }
+        }
+    });
+
+    panels.forEach(panel => {
+        if (panel.id === 'summary-panel-' + tabKey) {
+            panel.classList.remove('hidden', 'panel-fade-in');
+            void panel.offsetWidth;
+            panel.classList.add('panel-fade-in');
+        } else {
+            panel.classList.add('hidden');
+            panel.classList.remove('panel-fade-in');
+        }
+    });
+}
+
+const dashboardCampaigns = [
+    {
+        tag: 'INFORMACIÓN OFICIAL',
+        tagClass: 'border-redbrand/25 text-redbrand',
+        cardBg: 'bg-rs',
+        cardBorder: 'border-redbrand/25',
+        bannerBorder: 'border-redbrand/20',
+        metaBoxBorder: 'border-redbrand/20',
+        btnClass: 'bg-redbrand',
+        title: 'Vacunarse en cada etapa de la vida',
+        desc: 'Las vacunas acompañan cada etapa desde el nacimiento hasta la adultez mayor, previniendo enfermedades graves.',
+        metaLabel: 'CLAVE:',
+        metaText: 'Gratuitas, sin orden médica y presentando DNI y carnet.',
+        image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=900&q=85',
+        imageAlt: 'Profesional de salud',
+        link: 'https://www.argentina.gob.ar/salud/vacunas',
+        linkText: 'Consultar información oficial'
+    },
+    {
+        tag: 'CAMPAÑA PREVENTIVA',
+        tagClass: 'border-violetbrand/25 text-violetbrand',
+        cardBg: 'bg-vs',
+        cardBorder: 'border-violetbrand/25',
+        bannerBorder: 'border-violetbrand/20',
+        metaBoxBorder: 'border-violetbrand/20',
+        btnClass: 'bg-violetbrand',
+        title: 'Vacunación infantil e ingreso escolar',
+        desc: 'Revisá los esquemas de los 5 y 11 años antes de clases para proteger contra sarampión, rubéola, poliomielitis y VPH.',
+        metaLabel: 'PRIORIDAD:',
+        metaText: 'Refuerzos obligatorios a los 5 y 11 años antes de clases.',
+        image: 'https://images.unsplash.com/photo-1632053002928-1919605ee6f7?auto=format&fit=crop&w=900&q=85',
+        imageAlt: 'Control pediátrico y vacunación infantil',
+        link: 'https://www.argentina.gob.ar/salud/vacunas/calendario',
+        linkText: 'Ver esquema escolar'
+    },
+    {
+        tag: 'CAMPAÑA ESTACIONAL',
+        tagClass: 'border-bluebrand/25 text-bluebrand',
+        cardBg: 'bg-bs',
+        cardBorder: 'border-bluebrand/25',
+        bannerBorder: 'border-bluebrand/20',
+        metaBoxBorder: 'border-bluebrand/20',
+        btnClass: 'bg-bluebrand',
+        title: 'Prevención antigripal y refuerzos',
+        desc: 'La vacunación anual reduce complicaciones respiratorias y hospitalizaciones en los grupos con mayor riesgo.',
+        metaLabel: 'ALCANCE:',
+        metaText: 'Dosis anual gratuita para embarazadas, niños y +65 años.',
+        image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=900&q=85',
+        imageAlt: 'Campaña antigripal y prevención',
+        link: 'https://www.argentina.gob.ar/salud/vacunas/antigripal',
+        linkText: 'Conocer más sobre la vacuna'
+    },
+    {
+        tag: 'CUIDADO INTEGRAL',
+        tagClass: 'border-[#2b7a67]/25 text-[#2b7a67]',
+        cardBg: 'bg-gs',
+        cardBorder: 'border-[#2b7a67]/25',
+        bannerBorder: 'border-[#2b7a67]/20',
+        metaBoxBorder: 'border-[#2b7a67]/20',
+        btnClass: 'bg-[#2b7a67]',
+        title: 'Vacunas durante el embarazo',
+        desc: 'Aplicarse las dosis indicadas en la gestación transfiere anticuerpos al bebé y lo protege desde el nacimiento.',
+        metaLabel: 'DOSIS:',
+        metaText: 'Triple bacteriana acelular (sem. 20), antigripal y VSR.',
+        image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=900&q=85',
+        imageAlt: 'Cuidado materno y embarazo',
+        link: 'https://www.argentina.gob.ar/salud/vacunas/embarazadas',
+        linkText: 'Ver guía para embarazadas'
+    },
+    {
+        tag: 'SALUD PREVENTIVA',
+        tagClass: 'border-violetbrand/25 text-violetbrand',
+        cardBg: 'bg-vs',
+        cardBorder: 'border-violetbrand/25',
+        bannerBorder: 'border-violetbrand/20',
+        metaBoxBorder: 'border-violetbrand/20',
+        btnClass: 'bg-violetbrand',
+        title: 'Esquemas para personas mayores',
+        desc: 'A partir de los 65 años es clave mantener al día las vacunas contra el neumococo, la gripe y doble adultos.',
+        metaLabel: 'REFUERZO:',
+        metaText: 'Antigripal anual, neumococo y doble adultos cada 10 años.',
+        image: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=900&q=85',
+        imageAlt: 'Vacunación en adultos mayores',
+        link: 'https://www.argentina.gob.ar/salud/vacunas/adultos-mayores',
+        linkText: 'Consultar esquema adultos'
+    }
+];
+
+function selectCampaign(index) {
+    const campaign = dashboardCampaigns[index];
+    if (!campaign) return;
+
+    const cards = document.querySelectorAll('#campaignSelectorList .campaign-selector-card');
+    cards.forEach((card, idx) => {
+        if (idx === index) {
+            card.classList.add('active', 'border-2', 'border-slate-500', 'bg-slate-50/90', 'shadow-2xs');
+            card.classList.remove('border', 'border-line', 'bg-white');
+        } else {
+            card.classList.remove('active', 'border-2', 'border-slate-500', 'bg-slate-50/90', 'shadow-2xs');
+            card.classList.add('border', 'border-line', 'bg-white');
+        }
+    });
+
+    const cardEl = document.getElementById('featuredCampaignCard');
+    const bannerEl = document.getElementById('featuredCampaignBanner');
+    const imgEl = document.getElementById('featuredCampaignImg');
+    const bodyEl = document.getElementById('featuredCampaignBody');
+    const tagEl = document.getElementById('featuredCampaignTag');
+    const titleEl = document.getElementById('featuredCampaignTitle');
+    const descEl = document.getElementById('featuredCampaignDesc');
+    const metaBoxEl = document.getElementById('featuredCampaignMetaBox');
+    const metaLabelEl = document.getElementById('featuredCampaignMetaLabel');
+    const metaTextEl = document.getElementById('featuredCampaignMetaText');
+    const linkEl = document.getElementById('featuredCampaignLink');
+    const linkTextEl = document.getElementById('featuredCampaignLinkText');
+
+    if (cardEl) {
+        cardEl.className = `flex flex-col ${campaign.cardBg} border ${campaign.cardBorder} rounded-2xl overflow-hidden shadow-2xs transition-colors duration-300`;
+    }
+
+    if (bannerEl) {
+        bannerEl.className = `w-full h-16 sm:h-20 overflow-hidden relative border-b ${campaign.bannerBorder}`;
+    }
+
+    if (imgEl) {
+        imgEl.src = campaign.image;
+        imgEl.alt = campaign.imageAlt;
+    }
+
+    if (tagEl) {
+        tagEl.textContent = campaign.tag;
+        tagEl.className = `inline-flex items-center bg-white/75 border rounded-full px-2.5 py-0.5 text-[9px] font-extrabold tracking-wider uppercase ${campaign.tagClass}`;
+    }
+
+    if (titleEl) titleEl.textContent = campaign.title;
+    if (descEl) descEl.textContent = campaign.desc;
+
+    if (metaBoxEl) {
+        metaBoxEl.className = `bg-white/45 backdrop-blur-xs border ${campaign.metaBoxBorder} rounded-xl px-3 py-2 flex items-center gap-2 transition-colors duration-300`;
+    }
+
+    if (metaLabelEl) metaLabelEl.textContent = campaign.metaLabel;
+    if (metaTextEl) metaTextEl.textContent = campaign.metaText;
+
+    if (linkEl) {
+        linkEl.href = campaign.link;
+        linkEl.className = `inline-flex items-center gap-1.5 ${campaign.btnClass} text-white rounded-lg px-3 py-1.5 text-[11px] font-bold hover:bg-opacity-90 transition shadow-2xs`;
+    }
+
+    if (linkTextEl) linkTextEl.textContent = campaign.linkText;
+
+    if (bodyEl) {
+        bodyEl.classList.remove('panel-fade-in');
+        void bodyEl.offsetWidth;
+        bodyEl.classList.add('panel-fade-in');
+    }
+}

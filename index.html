@@ -108,249 +108,424 @@
                 <div class="text-[10px] text-muted whitespace-nowrap">MARTES, 10 DE NOVIEMBRE DE 2026</div>
             </section>
 
-            <!-- HERO REESTRUCTURADO: Bloques apilados en ancho completo -->
-            <section class="space-y-4">
-                <div class="relative bg-gradient-to-r from-vs to-gs rounded-2xl p-6 sm:p-8 flex items-center shadow-sm overflow-hidden min-h-[200px]">
-                    <div class="relative z-10 max-w-full sm:max-w-[60%] space-y-3">
-                        <span class="inline-block bg-white/80 text-bluebrand rounded-full px-2.5 py-1 text-[10px] font-bold">Información para tu familia</span>
-                        <h2 class="text-xl sm:text-2xl font-bold tracking-tight leading-snug">La vacunación al día, un cuidado compartido.</h2>
-                        <p class="text-xs text-[#536d82] leading-relaxed">Consultá los calendarios, organizá los carnets y encontrá centros de vacunación cerca tuyo.</p>
-                        <button class="bg-redbrand text-white rounded-lg px-3.5 py-2.5 text-xs font-bold hover:bg-opacity-90 transition" onclick="go('Carnet familiar')">
-                            Ver carnet familiar &nbsp; ↗
-                        </button>
+           <!-- HERO PRINCIPAL -->
+            <section>
+                <div class="relative bg-violetbrand rounded-2xl p-7 sm:p-9 flex items-center shadow-sm overflow-hidden min-h-[240px] sm:min-h-[255px]">
+                    <div class="relative z-10 max-w-full sm:max-w-[54%] space-y-3.5">
+                        <span class="inline-block bg-white/15 text-white border border-white/25 rounded-full px-3 py-1 text-[10px] font-bold tracking-wide">Información para tu familia</span>
+                        <h2 class="text-xl sm:text-2xl lg:text-[26px] font-extrabold text-white tracking-tight leading-snug">La vacunación al día, un cuidado compartido.</h2>
+                        <p class="text-xs sm:text-[13px] text-white/85 leading-relaxed">Consultá los calendarios, organizá los carnets y encontrá centros de vacunación cerca tuyo.</p>
+                        <div class="pt-0.5">
+                            <button class="bg-redbrand text-white rounded-xl px-4 py-2.5 text-xs font-bold hover:bg-opacity-90 transition shadow-sm" onclick="go('Carnet familiar')">
+                                Ver carnet familiar &nbsp; ↗
+                            </button>
+                        </div>
                     </div>
-                    <img class="absolute right-0 top-0 w-1/2 sm:w-2/5 h-full object-cover opacity-30 sm:opacity-100 [mask-image:linear-gradient(90deg,transparent,black_28%)]"
-                        src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=900&q=85" alt="Profesional de salud">
+                    <img class="absolute right-0 top-0 w-[56%] sm:w-[49%] md:w-[50%] h-full object-cover opacity-35 sm:opacity-95 [mask-image:linear-gradient(90deg,transparent,black_27%)]"
+                        src="https://images.pexels.com/photos/7659684/pexels-photo-7659684.jpeg?_gl=1*yycu75*_ga*MTQzNzgyNDI2Mi4xNzk0ODg4MDIz*_ga_8JE65Q40S6*czE3OTQ5MTk3ODMkbzQkZzEkdDE3OTQ5MTk5MTIkajU5JGwwJGgw" alt="Profesional de salud">
                 </div>
+            </section>
 
-                <div class="bg-white border border-line rounded-2xl p-5 shadow-sm flex flex-col justify-between space-y-3">
-                    <div class="flex justify-between items-center">
-                        <span class="text-[10px] text-muted font-extrabold tracking-wider">RECURSO DESTACADO</span>
-                        <span class="w-8 h-8 rounded-xl bg-vs text-violetbrand grid place-items-center font-bold"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10.5 5.2 8.3 4.5 5 4.5v13c3.3 0 5.5.7 7 2 1.5-1.3 3.7-2 7-2v-13c-3.3 0-5.5.7-7 2Z"/><path d="M12 6.5v13"/></svg></span>
-                    </div>
+            <!-- RESUMEN DE TU FAMILIA (Ancho completo con mini navegación expandible) -->
+            <section class="bg-white border border-line rounded-2xl p-5 sm:p-6 shadow-sm space-y-5">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div>
-                        <h3 class="text-base font-bold mb-1">Calendario Nacional de Vacunación</h3>
-                        <p class="text-xs text-muted leading-relaxed">Conocé qué vacunas corresponden en cada etapa de la vida, según las recomendaciones oficiales.</p>
-                        <button class="text-bluebrand text-xs font-bold mt-3 hover:underline" onclick="toast('Consultá el calendario oficial en argentina.gob.ar/salud/vacunas')">
-                            Consultar calendario oficial →
-                        </button>
+                        <h3 class="text-base font-bold text-ink">Resumen de tu familia</h3>
+                        <p class="text-xs text-muted mt-0.5">Seleccioná una tarjeta para explorar el detalle rápido de tu grupo familiar.</p>
                     </div>
+                </div>
+
+                <!-- 3 Tarjetas de navegación -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="familySummaryTabs">
+                    <!-- Tab 1: Integrantes registrados -->
+                    <button type="button"
+                        data-summary-tab="integrantes"
+                        onclick="switchFamilySummaryTab('integrantes')"
+                        class="summary-tab-btn active group bg-vs border-2 border-violetbrand rounded-2xl p-4 flex items-center gap-3.5 text-left transition shadow-xs cursor-pointer">
+                        <div class="w-11 h-11 rounded-xl bg-white text-violetbrand grid place-items-center shadow-2xs group-hover:scale-105 transition shrink-0">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="9" cy="8" r="3" />
+                                <path d="M3 19c0-3.3 2.7-5 6-5s6 1.7 6 5" />
+                                <circle cx="17" cy="9" r="2.5" />
+                                <path d="M16 14.2c3 0 5 1.5 5 4.3" />
+                            </svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <strong class="block text-2xl font-extrabold text-ink leading-none">3</strong>
+                            <span class="block text-xs font-bold text-ink mt-1">Integrantes registrados</span>
+                        </div>
+                        <span class="summary-tab-indicator text-violetbrand text-xs font-extrabold">▾</span>
+                    </button>
+
+                    <!-- Tab 2: Vacunas registradas -->
+                    <button type="button"
+                        data-summary-tab="vacunas"
+                        onclick="switchFamilySummaryTab('vacunas')"
+                        class="summary-tab-btn group bg-bs border border-[#c8e0f2] hover:border-bluebrand/60 rounded-2xl p-4 flex items-center gap-3.5 text-left transition cursor-pointer">
+                        <div class="w-11 h-11 rounded-xl bg-white text-bluebrand grid place-items-center shadow-2xs group-hover:scale-105 transition shrink-0">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="12" cy="12" r="9" />
+                                <path d="m8.5 12.3 2.4 2.4 4.6-5" />
+                            </svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <strong class="block text-2xl font-extrabold text-ink leading-none">24</strong>
+                            <span class="block text-xs font-bold text-ink mt-1">Vacunas registradas</span>
+                        </div>
+                        <span class="summary-tab-indicator text-muted/60 text-xs font-extrabold">▸</span>
+                    </button>
+
+                    <!-- Tab 3: Próximas dosis -->
+                    <button type="button"
+                        data-summary-tab="dosis"
+                        onclick="switchFamilySummaryTab('dosis')"
+                        class="summary-tab-btn group bg-rs border border-[#f7c7cb] hover:border-redbrand/60 rounded-2xl p-4 flex items-center gap-3.5 text-left transition cursor-pointer">
+                        <div class="w-11 h-11 rounded-xl bg-white text-redbrand grid place-items-center shadow-2xs group-hover:scale-105 transition shrink-0">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="12" cy="12" r="9" />
+                                <path d="M12 7v5l3 2" />
+                            </svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <strong class="block text-2xl font-extrabold text-ink leading-none">2</strong>
+                            <span class="block text-xs font-bold text-ink mt-1">Próximas dosis</span>
+                        </div>
+                        <span class="summary-tab-indicator text-muted/60 text-xs font-extrabold">▸</span>
+                    </button>
+                </div>
+
+                <!-- CONTENIDO EXPANDIDO DE LA MINI NAVEGACIÓN -->
+                <div class="border-t border-line pt-4">
+                    
+                    <!-- PANEL 1: INTEGRANTES DE TU FAMILIA -->
+                    <div id="summary-panel-integrantes" class="summary-panel panel-fade-in space-y-3">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-1">
+                            <h4 class="text-sm font-bold text-ink">Integrantes de tu familia</h4>
+                            <button onclick="go('Mi cuenta')" class="inline-flex items-center gap-1.5 bg-vs text-violetbrand hover:bg-violetbrand hover:text-white rounded-lg px-3 py-1.5 text-xs font-bold transition self-start sm:self-auto">
+                                Administrar en Mi cuenta ↗
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <!-- Responsable destacado -->
+                            <div class="flex items-center gap-3 p-3.5 bg-gradient-to-r from-[#f3f0fc] to-[#eaf3f9] border border-[#dcd3f5] rounded-xl">
+                                <div class="w-9 h-9 rounded-full bg-white text-violetbrand grid place-items-center text-xs font-extrabold shrink-0 shadow-2xs">MQ</div>
+                                <div class="flex-1 min-w-0">
+                                    <b class="block text-xs font-bold truncate">María Quintana</b>
+                                    <small class="block text-muted text-[10px] truncate">Adulta · Responsable (Titular)</small>
+                                </div>
+                                <span class="text-[9px] text-greenbrand bg-[#eaf5f1] px-2 py-1 rounded-full font-bold whitespace-nowrap">Carnet activo</span>
+                            </div>
+
+                            <!-- Tomás -->
+                            <div class="flex items-center gap-3 p-3.5 bg-bglight/70 border border-line rounded-xl">
+                                <div class="w-9 h-9 rounded-full bg-[#e9f2f8] text-bluebrand grid place-items-center text-xs font-extrabold shrink-0">JT</div>
+                                <div class="flex-1 min-w-0">
+                                    <b class="block text-xs font-bold truncate">Tomás</b>
+                                    <small class="block text-muted text-[10px] truncate">Adolescente · Integrante familiar</small>
+                                </div>
+                                <span class="text-[9px] text-greenbrand bg-[#eaf5f1] px-2 py-1 rounded-full font-bold whitespace-nowrap">Carnet activo</span>
+                            </div>
+
+                            <!-- Ana -->
+                            <div class="flex items-center gap-3 p-3.5 bg-bglight/70 border border-line rounded-xl">
+                                <div class="w-9 h-9 rounded-full bg-[#fceff0] text-redbrand grid place-items-center text-xs font-extrabold shrink-0">AL</div>
+                                <div class="flex-1 min-w-0">
+                                    <b class="block text-xs font-bold truncate">Ana</b>
+                                    <small class="block text-muted text-[10px] truncate">Niña · Integrante familiar</small>
+                                </div>
+                                <span class="text-[9px] text-greenbrand bg-[#eaf5f1] px-2 py-1 rounded-full font-bold whitespace-nowrap">Carnet activo</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PANEL 2: ÚLTIMAS VACUNAS REGISTRADAS -->
+                    <div id="summary-panel-vacunas" class="summary-panel hidden space-y-3">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-1">
+                            <h4 class="text-sm font-bold text-ink">Tus últimas vacunas registradas</h4>
+                            <button onclick="go('Carnet familiar')" class="inline-flex items-center gap-1.5 bg-bs text-bluebrand hover:bg-bluebrand hover:text-white rounded-lg px-3 py-1.5 text-xs font-bold transition self-start sm:self-auto">
+                                Ir a Carnet familiar ↗
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <!-- Vacuna 1 -->
+                            <div class="border border-line bg-bglight/50 rounded-xl p-3.5 space-y-2">
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-[10px] font-extrabold text-bluebrand bg-bs px-2.5 py-0.5 rounded-full">María Quintana</span>
+                                    <span class="text-[11px] font-bold text-muted">12/03/2026</span>
+                                </div>
+                                <div>
+                                    <b class="block text-xs font-bold text-ink">Hepatitis B (Segunda dosis)</b>
+                                    <p class="text-[11px] text-muted mt-1 flex items-center gap-1">
+                                        <svg class="w-3.5 h-3.5 text-violetbrand shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                                        Centro de Salud San Justo
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Vacuna 2 -->
+                            <div class="border border-line bg-bglight/50 rounded-xl p-3.5 space-y-2">
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-[10px] font-extrabold text-redbrand bg-rs px-2.5 py-0.5 rounded-full">Ana</span>
+                                    <span class="text-[11px] font-bold text-muted">20/02/2026</span>
+                                </div>
+                                <div>
+                                    <b class="block text-xs font-bold text-ink">Triple viral (Dosis registrada)</b>
+                                    <p class="text-[11px] text-muted mt-1 flex items-center gap-1">
+                                        <svg class="w-3.5 h-3.5 text-violetbrand shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                                        Vacunatorio Municipal · San Justo
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Vacuna 3 -->
+                            <div class="border border-line bg-bglight/50 rounded-xl p-3.5 space-y-2">
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-[10px] font-extrabold text-violetbrand bg-vs px-2.5 py-0.5 rounded-full">Tomás</span>
+                                    <span class="text-[11px] font-bold text-muted">15/01/2026</span>
+                                </div>
+                                <div>
+                                    <b class="block text-xs font-bold text-ink">Antigripal (Dosis anual)</b>
+                                    <p class="text-[11px] text-muted mt-1 flex items-center gap-1">
+                                        <svg class="w-3.5 h-3.5 text-violetbrand shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                                        Centro de Salud San Justo
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PANEL 3: PRÓXIMAS DOSIS Y RECORDATORIOS -->
+                    <div id="summary-panel-dosis" class="summary-panel hidden space-y-3">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-1">
+                            <h4 class="text-sm font-bold text-ink">Próximas dosis y recordatorios</h4>
+                            <button onclick="go('Turnos')" class="inline-flex items-center gap-1.5 bg-rs text-redbrand hover:bg-redbrand hover:text-white rounded-lg px-3 py-1.5 text-xs font-bold transition self-start sm:self-auto">
+                                Ir a Turnos para anotarse ↗
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-[1fr_210px] gap-4 items-center">
+                            <div class="space-y-2.5">
+                                <div class="grid grid-cols-[44px_1fr_auto] items-center gap-3 border border-[#edf0f4] rounded-xl p-3">
+                                    <div class="bg-bs text-bluebrand rounded-lg text-center p-1.5">
+                                        <b class="block text-sm font-bold leading-none">18</b>
+                                        <small class="text-[9px] font-extrabold">NOV</small>
+                                    </div>
+                                    <div class="min-w-0">
+                                        <b class="block text-xs font-bold truncate">Refuerzo de calendario</b>
+                                        <small class="block text-muted text-[10px] truncate">Tomás · Revisar dosis correspondiente</small>
+                                    </div>
+                                    <span class="text-[9px] text-[#b76a37] bg-[#fff1e9] rounded-full px-2.5 py-1 font-bold whitespace-nowrap">Próximamente</span>
+                                </div>
+
+                                <div class="grid grid-cols-[44px_1fr_auto] items-center gap-3 border border-[#edf0f4] rounded-xl p-3">
+                                    <div class="bg-bs text-bluebrand rounded-lg text-center p-1.5">
+                                        <b class="block text-sm font-bold leading-none">02</b>
+                                        <small class="text-[9px] font-extrabold">DIC</small>
+                                    </div>
+                                    <div class="min-w-0">
+                                        <b class="block text-xs font-bold truncate">Control de carnet</b>
+                                        <small class="block text-muted text-[10px] truncate">María · Verificar registro de vacunación</small>
+                                    </div>
+                                    <span class="text-[9px] text-violetbrand bg-vs rounded-full px-2.5 py-1 font-bold whitespace-nowrap">Pendiente</span>
+                                </div>
+
+                                <p class="text-[10px] text-muted leading-relaxed">Los recordatorios son orientativos. Verificá las indicaciones con un centro de salud.</p>
+                            </div>
+
+                            <div class="hidden md:block h-36">
+                                <img class="w-full h-full object-cover rounded-xl shadow-sm"
+                                    src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=500&q=85"
+                                    alt="Insumos médicos">
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </section>
 
-            <!-- RESUMEN Y PRÓXIMAS DOSIS -->
-            <section class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
-            
-                <!-- COLUMNA IZQUIERDA (5/12): RESUMEN DE TU FAMILIA -->
-                <div
-                    class="lg:col-span-5 bg-white border border-line rounded-2xl p-5 shadow-sm flex flex-col justify-between gap-4">
-                    <div class="flex justify-between items-center gap-2">
-                        <h3 class="text-sm font-bold">Resumen de tu familia</h3>
-                        <a href="carnet.html" class="text-xs text-bluebrand font-bold hover:underline whitespace-nowrap">Ver carnet
-                            →</a>
-                    </div>
-            
-                    <div class="grid grid-cols-3 gap-2.5 my-auto">
-                        <!-- Integrantes registrados -> Mi cuenta -->
-                        <a href="mi-cuenta.html"
-                            class="group bg-vs border border-[#dcd3f5] hover:border-violetbrand/50 rounded-2xl p-3 xl:aspect-square flex flex-col items-center justify-center text-center gap-1.5 transition hover:-translate-y-0.5 hover:shadow-xs">
-                            <div
-                                class="w-8 h-8 rounded-xl bg-white text-violetbrand grid place-items-center shadow-2xs group-hover:scale-105 transition shrink-0">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                    <circle cx="9" cy="8" r="3" />
-                                    <path d="M3 19c0-3.3 2.7-5 6-5s6 1.7 6 5" />
-                                    <circle cx="17" cy="9" r="2.5" />
-                                    <path d="M16 14.2c3 0 5 1.5 5 4.3" />
-                                </svg>
-                            </div>
-                            <strong class="block text-xl font-extrabold text-ink leading-none pt-0.5">3</strong>
-                            <span class="block text-[10px] font-bold text-ink leading-tight">Integrantes registrados</span>
-                            <small class="block text-[9px] text-muted leading-none">personas</small>
-                        </a>
-            
-                        <!-- Vacunas registradas -> Carnet familiar -->
-                        <a href="carnet.html"
-                            class="group bg-bs border border-[#c8e0f2] hover:border-bluebrand/50 rounded-2xl p-3 xl:aspect-square flex flex-col items-center justify-center text-center gap-1.5 transition hover:-translate-y-0.5 hover:shadow-xs">
-                            <div
-                                class="w-8 h-8 rounded-xl bg-white text-bluebrand grid place-items-center shadow-2xs group-hover:scale-105 transition shrink-0">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                    <circle cx="12" cy="12" r="9" />
-                                    <path d="m8.5 12.3 2.4 2.4 4.6-5" />
-                                </svg>
-                            </div>
-                            <strong class="block text-xl font-extrabold text-ink leading-none pt-0.5">24</strong>
-                            <span class="block text-[10px] font-bold text-ink leading-tight">Vacunas registradas</span>
-                            <small class="block text-[9px] text-muted leading-none">en total</small>
-                        </a>
-            
-                        <!-- Próximas dosis -> Turnos -->
-                        <a href="turnos.html"
-                            class="group bg-rs border border-[#f7c7cb] hover:border-redbrand/50 rounded-2xl p-3 xl:aspect-square flex flex-col items-center justify-center text-center gap-1.5 transition hover:-translate-y-0.5 hover:shadow-xs">
-                            <div
-                                class="w-8 h-8 rounded-xl bg-white text-redbrand grid place-items-center shadow-2xs group-hover:scale-105 transition shrink-0">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                    <circle cx="12" cy="12" r="9" />
-                                    <path d="M12 7v5l3 2" />
-                                </svg>
-                            </div>
-                            <strong class="block text-xl font-extrabold text-ink leading-none pt-0.5">2</strong>
-                            <span class="block text-[10px] font-bold text-ink leading-tight">Próximas dosis</span>
-                            <small class="block text-[9px] text-muted leading-none">por revisar</small>
-                        </a>
+            <!-- VACUNATORIOS CERCA DE TU ZONA -->
+            <div class="bg-slate-100/80 border border-slate-200/90 rounded-2xl p-4 sm:px-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="flex items-start sm:items-center gap-3.5">
+                    <span class="w-9 h-9 rounded-xl bg-slate-200/85 text-slate-600 grid place-items-center shrink-0">
+                        <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                    </span>
+                    <div>
+                        <b class="text-xs sm:text-sm font-bold text-ink block">Vacunatorios cerca de tu zona</b>
+                        <p class="text-[11px] text-muted mt-0.5">Ubicación de referencia: San Justo, La Matanza. Podés cambiarla cuando quieras.</p>
                     </div>
                 </div>
-            
-                <!-- COLUMNA DERECHA (7/12): PRÓXIMAS DOSIS Y RECORDATORIOS -->
-                <div
-                    class="lg:col-span-7 bg-white border border-line rounded-2xl p-5 shadow-sm flex flex-col justify-between space-y-4">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-sm font-bold">Próximas dosis y recordatorios</h3>
-                        <button class="text-bluebrand text-xs font-bold hover:underline" onclick="go('Notificaciones')">Ver todos
-                            →</button>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-[1fr_170px] xl:grid-cols-[1fr_200px] gap-4 items-center">
-                        <div class="space-y-2.5">
-                            <div class="grid grid-cols-[42px_1fr_auto] items-center gap-3 border border-[#edf0f4] rounded-xl p-2.5">
-                                <div class="bg-bs text-bluebrand rounded-lg text-center p-1.5">
-                                    <b class="block text-sm font-bold leading-none">18</b>
-                                    <small class="text-[9px] font-extrabold">NOV</small>
-                                </div>
-                                <div class="min-w-0">
-                                    <b class="block text-xs font-bold truncate">Refuerzo de calendario</b>
-                                    <small class="block text-muted text-[10px] truncate">Tomás · Revisar dosis
-                                        correspondiente</small>
-                                </div>
-                                <span
-                                    class="text-[9px] text-[#b76a37] bg-[#fff1e9] rounded-full px-2 py-1 whitespace-nowrap">Próximamente</span>
-                            </div>
-            
-                            <div class="grid grid-cols-[42px_1fr_auto] items-center gap-3 border border-[#edf0f4] rounded-xl p-2.5">
-                                <div class="bg-bs text-bluebrand rounded-lg text-center p-1.5">
-                                    <b class="block text-sm font-bold leading-none">02</b>
-                                    <small class="text-[9px] font-extrabold">DIC</small>
-                                </div>
-                                <div class="min-w-0">
-                                    <b class="block text-xs font-bold truncate">Control de carnet</b>
-                                    <small class="block text-muted text-[10px] truncate">María · Verificar registro de
-                                        vacunación</small>
-                                </div>
-                                <span
-                                    class="text-[9px] text-violetbrand bg-vs rounded-full px-2 py-1 whitespace-nowrap">Pendiente</span>
-                            </div>
-            
-                            <p class="text-[10px] text-muted leading-relaxed">Los recordatorios son orientativos. Verificá las
-                                indicaciones con un centro de salud.</p>
-                        </div>
-            
-                        <div class="hidden md:block h-36">
-                            <img class="w-full h-full object-cover rounded-xl shadow-sm"
-                                src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=500&q=85"
-                                alt="Insumos médicos">
-                        </div>
-                    </div>
-                </div>
-            
-            </section>
-
-            <!-- INTEGRANTES Y CAMPAÑAS -->
-            <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <!-- INTEGRANTES DE TU FAMILIA -->
-                <div class="bg-white border border-line rounded-2xl p-5 shadow-sm space-y-3">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-sm font-bold">Integrantes de tu familia</h3>
-                        <button class="text-bluebrand text-xs font-bold hover:underline" onclick="go('Mi cuenta')">Administrar →</button>
-                    </div>
-
-                    <!-- RESPONSABLE DESTACADO CON FONDO DISTINTO -->
-                    <div class="flex items-center gap-3 p-3 bg-gradient-to-r from-[#f3f0fc] to-[#eaf3f9] border border-[#dcd3f5] rounded-xl">
-                        <div class="w-8 h-8 rounded-full bg-[#f1eff9] text-violetbrand grid place-items-center text-xs font-extrabold">MQ</div>
-                        <div class="flex-1">
-                            <b class="block text-xs font-bold">María Quintana</b>
-                            <small class="text-muted text-[10px]">Adulta · Responsable de la cuenta (Titular)</small>
-                        </div>
-                        <span class="text-[9px] text-greenbrand bg-[#eaf5f1] px-2 py-1 rounded-full font-bold">Carnet activo</span>
-                    </div>
-
-                    <div class="flex items-center gap-3 py-2 border-b border-slate-100">
-                        <div class="w-8 h-8 rounded-full bg-[#e9f2f8] text-bluebrand grid place-items-center text-xs font-extrabold">JT</div>
-                        <div class="flex-1">
-                            <b class="block text-xs font-bold">Tomás</b>
-                            <small class="text-muted text-[10px]">Adolescente · Integrante familiar</small>
-                        </div>
-                        <span class="text-[9px] text-greenbrand bg-[#eaf5f1] px-2 py-1 rounded-full font-bold">Carnet activo</span>
-                    </div>
-
-                    <div class="flex items-center gap-3 py-2">
-                        <div class="w-8 h-8 rounded-full bg-[#fceff0] text-redbrand grid place-items-center text-xs font-extrabold">AL</div>
-                        <div class="flex-1">
-                            <b class="block text-xs font-bold">Ana</b>
-                            <small class="text-muted text-[10px]">Niña · Integrante familiar</small>
-                        </div>
-                        <span class="text-[9px] text-greenbrand bg-[#eaf5f1] px-2 py-1 rounded-full font-bold">Carnet activo</span>
-                    </div>
-                </div>
-
-                <!-- INFORMACIÓN Y CAMPAÑAS -->
-                <div class="bg-white border border-line rounded-2xl p-5 shadow-sm flex flex-col justify-between space-y-3">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-sm font-bold">Información y campañas</h3>
-                        <button class="text-bluebrand text-xs font-bold hover:underline" onclick="toast('Información y recursos')">Ver
-                            recursos →</button>
-                    </div>
-                
-                    <div class="space-y-3 my-auto">
-                        <!-- Campaña 1 -->
-                        <div class="grid grid-cols-[90px_1fr] sm:grid-cols-[100px_1fr] gap-3 items-center">
-                            <img class="w-full h-24 object-cover rounded-xl"
-                                src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=400&q=85"
-                                alt="Profesional de salud">
-                            <div>
-                                <span class="text-[9px] text-redbrand font-extrabold tracking-wider uppercase">INFORMACIÓN
-                                    OFICIAL</span>
-                                <h4 class="text-xs font-bold my-1">Vacunarse en cada etapa de la vida</h4>
-                                <p class="text-[10px] text-muted leading-relaxed">Conocé las recomendaciones y consultá fuentes
-                                    oficiales para mantener tus vacunas al día.</p>
-                                <a class="inline-block text-[10px] text-bluebrand font-bold mt-1.5 hover:underline"
-                                    href="https://www.argentina.gob.ar/salud/vacunas" target="_blank" rel="noopener">Consultar
-                                    información ↗</a>
-                            </div>
-                        </div>
-                
-                        <!-- Campaña 2 -->
-                        <div
-                            class="grid grid-cols-[90px_1fr] sm:grid-cols-[100px_1fr] gap-3 items-center pt-3 border-t border-slate-100">
-                            <img class="w-full h-24 object-cover rounded-xl"
-                                src="https://images.unsplash.com/photo-1632053002928-1919605ee6f7?auto=format&fit=crop&w=400&q=85"
-                                alt="Control pediátrico y vacunación infantil">
-                            <div>
-                                <span class="text-[9px] text-violetbrand font-extrabold tracking-wider uppercase">CAMPAÑA
-                                    PREVENTIVA</span>
-                                <h4 class="text-xs font-bold my-1">Vacunación infantil e ingreso escolar</h4>
-                                <p class="text-[10px] text-muted leading-relaxed">Verificá los refuerzos obligatorios para niños y
-                                    adolescentes antes del inicio de clases.</p>
-                                <a class="inline-block text-[10px] text-bluebrand font-bold mt-1.5 hover:underline"
-                                    href="https://www.argentina.gob.ar/salud/vacunas/calendario" target="_blank" rel="noopener">Ver
-                                    esquema escolar ↗</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </section>
-
-            <!-- STRIP -->
-            <div class="flex items-center gap-3 bg-vs border border-[#e8e1fa] rounded-2xl p-4">
-                <span class="w-8 h-8 rounded-xl bg-white text-violetbrand grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-                <div class="flex-1">
-                    <b class="text-xs font-bold block">Vacunatorios cerca de tu zona</b>
-                    <p class="text-[10px] text-[#716b84] mt-0.5">Ubicación de referencia: San Justo, La Matanza. Podés cambiarla cuando quieras.</p>
-                </div>
-                <button class="border border-[#d9cff3] bg-white text-violetbrand rounded-lg px-2.5 py-1.5 text-[10px] font-bold whitespace-nowrap" onclick="go('Vacunatorios')">
-                    Ver mapa
+                <button class="inline-flex items-center justify-center border border-slate-300 bg-white hover:bg-slate-200/60 text-slate-700 rounded-xl px-3.5 py-2 text-xs font-bold transition whitespace-nowrap self-start sm:self-auto shadow-2xs" onclick="go('Vacunatorios')">
+                    Ver mapa →
                 </button>
             </div>
+
+            <!-- SEPARADOR: ENLACES EXTERNOS -->
+            <div class="pt-3 flex items-center gap-3">
+                <span class="text-[10px] text-[#9aa6b4] tracking-widest font-extrabold uppercase whitespace-nowrap">
+                    ENLACES EXTERNOS Y RECURSOS
+                </span>
+                <div class="h-px bg-line flex-1"></div>
+            </div>
+
+            <!-- INFORMACIÓN Y CAMPAÑAS -->
+            <section class="bg-white border border-line rounded-2xl p-4 sm:p-5 shadow-sm space-y-3">
+                <div>
+                    <h3 class="text-sm sm:text-base font-bold text-ink">Información y campañas</h3>
+                    <p class="text-[11px] text-muted mt-0.5">Seleccioná una campaña para ver su detalle y acceder a los recursos oficiales.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-3.5 items-stretch">
+                    
+                    <!-- COLUMNA IZQUIERDA (Compacta y con fondo pastel según la campaña) -->
+                    <article id="featuredCampaignCard" class="flex flex-col bg-rs border border-redbrand/25 rounded-2xl overflow-hidden shadow-2xs transition-colors duration-300">
+                        <!-- Banner superior más bajo -->
+                        <div id="featuredCampaignBanner" class="w-full h-16 sm:h-20 overflow-hidden relative border-b border-redbrand/20">
+                            <img id="featuredCampaignImg"
+                                src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=900&q=85"
+                                alt="Profesional de salud"
+                                class="w-full h-full object-cover object-center transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-b from-slate-900/10 to-slate-900/20"></div>
+                        </div>
+
+                        <!-- Contenido ampliado compacto -->
+                        <div id="featuredCampaignBody" class="p-3.5 sm:p-4 flex-1 flex flex-col justify-between space-y-2.5 panel-fade-in">
+                            <div class="space-y-1.5">
+                                <span id="featuredCampaignTag" class="inline-flex items-center bg-white/75 border border-redbrand/25 rounded-full px-2.5 py-0.5 text-[9px] font-extrabold text-redbrand tracking-wider uppercase">
+                                    INFORMACIÓN OFICIAL
+                                </span>
+                                <h4 id="featuredCampaignTitle" class="text-sm sm:text-base font-extrabold text-ink tracking-tight leading-snug">
+                                    Vacunarse en cada etapa de la vida
+                                </h4>
+                                <p id="featuredCampaignDesc" class="text-[11px] text-slate-700 leading-relaxed line-clamp-2">
+                                    Las vacunas acompañan cada etapa desde el nacimiento hasta la adultez mayor, previniendo enfermedades graves.
+                                </p>
+                            </div>
+
+                            <!-- Etiqueta translúcida compacta (1 renglón) -->
+                            <div id="featuredCampaignMetaBox" class="bg-white/45 backdrop-blur-xs border border-redbrand/20 rounded-xl px-3 py-2 flex items-center gap-2 transition-colors duration-300">
+                                <small id="featuredCampaignMetaLabel" class="text-[9px] text-slate-600 font-extrabold tracking-wider uppercase shrink-0">CLAVE:</small>
+                                <p id="featuredCampaignMetaText" class="text-[11px] font-semibold text-ink truncate">
+                                    Gratuitas, sin orden médica y presentando DNI y carnet.
+                                </p>
+                            </div>
+
+                            <div class="pt-0.5 flex items-center justify-between gap-2 flex-wrap">
+                                <a id="featuredCampaignLink"
+                                    href="https://www.argentina.gob.ar/salud/vacunas"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="inline-flex items-center gap-1.5 bg-redbrand text-white rounded-lg px-3 py-1.5 text-[11px] font-bold hover:bg-opacity-90 transition shadow-2xs">
+                                    <span id="featuredCampaignLinkText">Consultar información oficial</span> ↗
+                                </a>
+                                <span class="text-[10px] font-semibold text-slate-600">Fuente oficial</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- COLUMNA DERECHA (Misma altura compacta, con scroll interno) -->
+                    <div class="lg:relative min-h-[220px]">
+                        <div id="campaignSelectorList" class="max-h-[250px] lg:max-h-none lg:absolute lg:inset-0 overflow-y-auto pr-1.5 space-y-2 custom-scrollbar">
+                            
+                            <!-- Campaña 1 (Rojo) -->
+                            <button type="button"
+                                data-campaign="0"
+                                onclick="selectCampaign(0)"
+                                class="campaign-selector-card active w-full text-left border-2 border-slate-500 bg-slate-50/90 rounded-xl p-2.5 grid grid-cols-[68px_1fr] gap-2.5 items-center transition cursor-pointer shadow-2xs">
+                                <img class="w-full h-14 object-cover rounded-lg"
+                                    src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=400&q=85"
+                                    alt="Profesional de salud">
+                                <div class="min-w-0">
+                                    <span class="text-[9px] text-redbrand font-extrabold tracking-wider uppercase block">INFORMACIÓN OFICIAL</span>
+                                    <h4 class="text-xs font-bold text-ink my-0.5 leading-snug truncate">Vacunarse en cada etapa de la vida</h4>
+                                    <p class="text-[10px] text-muted leading-snug line-clamp-2">Conocé las recomendaciones y consultá fuentes oficiales para mantener tus vacunas al día.</p>
+                                </div>
+                            </button>
+
+                            <!-- Campaña 2 (Violeta) -->
+                            <button type="button"
+                                data-campaign="1"
+                                onclick="selectCampaign(1)"
+                                class="campaign-selector-card w-full text-left border border-line bg-white hover:border-slate-400 hover:bg-slate-50/50 rounded-xl p-2.5 grid grid-cols-[68px_1fr] gap-2.5 items-center transition cursor-pointer">
+                                <img class="w-full h-14 object-cover rounded-lg"
+                                    src="https://images.unsplash.com/photo-1632053002928-1919605ee6f7?auto=format&fit=crop&w=400&q=85"
+                                    alt="Control pediátrico y vacunación infantil">
+                                <div class="min-w-0">
+                                    <span class="text-[9px] text-violetbrand font-extrabold tracking-wider uppercase block">CAMPAÑA PREVENTIVA</span>
+                                    <h4 class="text-xs font-bold text-ink my-0.5 leading-snug truncate">Vacunación infantil e ingreso escolar</h4>
+                                    <p class="text-[10px] text-muted leading-snug line-clamp-2">Verificá los refuerzos obligatorios para niños y adolescentes antes del inicio de clases.</p>
+                                </div>
+                            </button>
+
+                            <!-- Campaña 3 (Azul) -->
+                            <button type="button"
+                                data-campaign="2"
+                                onclick="selectCampaign(2)"
+                                class="campaign-selector-card w-full text-left border border-line bg-white hover:border-slate-400 hover:bg-slate-50/50 rounded-xl p-2.5 grid grid-cols-[68px_1fr] gap-2.5 items-center transition cursor-pointer">
+                                <img class="w-full h-14 object-cover rounded-lg"
+                                    src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=400&q=85"
+                                    alt="Campaña antigripal y prevención">
+                                <div class="min-w-0">
+                                    <span class="text-[9px] text-bluebrand font-extrabold tracking-wider uppercase block">CAMPAÑA ESTACIONAL</span>
+                                    <h4 class="text-xs font-bold text-ink my-0.5 leading-snug truncate">Prevención antigripal y refuerzos</h4>
+                                    <p class="text-[10px] text-muted leading-snug line-clamp-2">Información sobre dosis anuales recomendadas para embarazadas, niños y adultos mayores.</p>
+                                </div>
+                            </button>
+
+                            <!-- Campaña 4 (Verde) -->
+                            <button type="button"
+                                data-campaign="3"
+                                onclick="selectCampaign(3)"
+                                class="campaign-selector-card w-full text-left border border-line bg-white hover:border-slate-400 hover:bg-slate-50/50 rounded-xl p-2.5 grid grid-cols-[68px_1fr] gap-2.5 items-center transition cursor-pointer">
+                                <img class="w-full h-14 object-cover rounded-lg"
+                                    src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=400&q=85"
+                                    alt="Cuidado materno y embarazo">
+                                <div class="min-w-0">
+                                    <span class="text-[9px] text-[#2b7a67] font-extrabold tracking-wider uppercase block">CUIDADO INTEGRAL</span>
+                                    <h4 class="text-xs font-bold text-ink my-0.5 leading-snug truncate">Vacunas durante el embarazo</h4>
+                                    <p class="text-[10px] text-muted leading-snug line-clamp-2">Protección clave para la persona gestante y el bebé desde los primeros meses de vida.</p>
+                                </div>
+                            </button>
+
+                            <!-- Campaña 5 (Violeta) -->
+                            <button type="button"
+                                data-campaign="4"
+                                onclick="selectCampaign(4)"
+                                class="campaign-selector-card w-full text-left border border-line bg-white hover:border-slate-400 hover:bg-slate-50/50 rounded-xl p-2.5 grid grid-cols-[68px_1fr] gap-2.5 items-center transition cursor-pointer">
+                                <img class="w-full h-14 object-cover rounded-lg"
+                                    src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=400&q=85"
+                                    alt="Vacunación en adultos mayores">
+                                <div class="min-w-0">
+                                    <span class="text-[9px] text-violetbrand font-extrabold tracking-wider uppercase block">SALUD PREVENTIVA</span>
+                                    <h4 class="text-xs font-bold text-ink my-0.5 leading-snug truncate">Esquemas para personas mayores</h4>
+                                    <p class="text-[10px] text-muted leading-snug line-clamp-2">Dosis recomendadas contra neumococo, gripe y refuerzos de doble adultos.</p>
+                                </div>
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- CALENDARIO NACIONAL DE VACUNACIÓN -->
+            <section class="bg-slate-100/80 border border-slate-200/90 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="flex items-start sm:items-center gap-3.5">
+                    <span class="w-10 h-10 rounded-xl bg-slate-200/85 text-slate-600 grid place-items-center font-bold shrink-0">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10.5 5.2 8.3 4.5 5 4.5v13c3.3 0 5.5.7 7 2 1.5-1.3 3.7-2 7-2v-13c-3.3 0-5.5.7-7 2Z"/><path d="M12 6.5v13"/></svg>
+                    </span>
+                    <div>
+                        <span class="text-[9px] text-slate-500 font-extrabold tracking-wider uppercase block">RECURSO OFICIAL</span>
+                        <h3 class="text-sm sm:text-base font-bold text-ink">Calendario Nacional de Vacunación</h3>
+                        <p class="text-xs text-muted leading-relaxed mt-0.5">Conocé qué vacunas corresponden en cada etapa de la vida, según las recomendaciones oficiales.</p>
+                    </div>
+                </div>
+                <a href="https://www.argentina.gob.ar/salud/vacunas/calendario" target="_blank" rel="noopener noreferrer"
+                    class="inline-flex items-center justify-center border border-slate-300 bg-white hover:bg-slate-200/60 text-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold transition whitespace-nowrap self-start sm:self-auto shadow-2xs">
+                    Consultar calendario oficial →
+                </a>
+            </section>
 
             <footer class="text-center text-[9px] text-[#9aa6b4] pt-4">
                 VacuRed · Información orientativa. Consultá siempre fuentes oficiales y profesionales de salud.
@@ -359,9 +534,9 @@
     </div>
 
     <!-- TOAST & MODAL -->
-    <div class="fixed bottom-5 right-5 bg-ink text-white px-4 py-3 rounded-xl text-xs opacity-0 translate-y-2 transition-all duration-200 pointer-events-none" id="toast"></div>
+    <div class="fixed bottom-5 right-5 bg-ink text-white px-4 py-3 rounded-xl text-xs opacity-0 translate-y-2 transition-all duration-200 pointer-events-none [&.show]:opacity-100 [&.show]:translate-y-0" id="toast"></div>
     
-    <div class="hidden fixed inset-0 bg-slate-900/40 items-center justify-center p-5 z-50" id="modal">
+    <div class="hidden fixed inset-0 bg-slate-900/40 items-center justify-center p-5 z-50 [&.open]:flex" id="modal">
         <div class="bg-white rounded-2xl p-6 w-full max-w-md space-y-3">
             <h3 class="text-lg font-bold" id="mtitle"></h3>
             <p class="text-xs text-muted" id="mdesc"></p>
