@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>VacuRed | Iniciar Sesión</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración centralizada de colores -->
+    <script src="tailwind-config.js"></script>
+    <!-- CSS centralizado -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-gradient-to-br from-violetbrand/5 via-bglight to-redbrand/5 antialiased">
+    <div class="min-h-screen flex flex-col items-center justify-center px-4 py-8">
+        
+        <!-- Contenedor Principal -->
+        <div class="w-full max-w-md">
+            
+            <!-- Header con Logo -->
+            <div class="text-center mb-10">
+                <div class="flex items-center justify-center mb-4">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-violetbrand to-redbrand grid place-items-center text-white text-4xl shadow-lg">✳</div>
+                </div>
+                <h1 class="text-3xl font-extrabold text-ink mb-2">Vacu<span class="text-redbrand">Red</span></h1>
+                <p class="text-sm text-muted">Información confiable sobre vacunación</p>
+            </div>
+
+            <!-- Tarjeta de Login -->
+            <div class="bg-white rounded-2xl shadow-lg border border-line p-8 mb-6">
+                
+                <h2 class="text-xl font-bold text-ink mb-6">Iniciar Sesión</h2>
+
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    
+                    <!-- Email -->
+                    <div class="mb-5">
+                        <label for="email" class="block text-xs font-bold text-ink uppercase tracking-wider mb-2">Correo Electrónico</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            placeholder="tu@email.com"
+                            class="w-full px-4 py-3 border border-line rounded-xl text-sm bg-white focus:outline-none focus:border-violetbrand focus:ring-2 focus:ring-violetbrand/20 transition"
+                            required
+                        >
+                    </div>
+
+                    <!-- Contraseña -->
+                    <div class="mb-6">
+                        <label for="password" class="block text-xs font-bold text-ink uppercase tracking-wider mb-2">Contraseña</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            placeholder="••••••••"
+                            class="w-full px-4 py-3 border border-line rounded-xl text-sm bg-white focus:outline-none focus:border-violetbrand focus:ring-2 focus:ring-violetbrand/20 transition"
+                            required
+                        >
+                    </div>
+
+                    <!-- Recordar y Recuperar -->
+                    <div class="flex items-center justify-between mb-6">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded border-line accent-violetbrand" id="remember">
+                            <span class="text-xs text-muted font-medium">Recuérdame</span>
+                        </label>
+                        <a href="recuperar.html" class="text-xs text-violetbrand hover:text-violetbrand/80 font-semibold transition">¿Olvidaste tu contraseña?</a>
+                    </div>
+
+                    <!-- Botón Iniciar Sesión -->
+                    <button 
+                        type="submit" 
+                        class="w-full bg-gradient-to-r from-violetbrand to-redbrand text-white font-bold py-3 rounded-xl hover:shadow-lg transition transform hover:scale-105 duration-300"
+                    >
+                        Iniciar Sesión
+                    </button>
+
+                </form>
+
+                <!-- Divisor -->
+                <div class="flex items-center gap-3 my-6">
+                    <div class="flex-1 h-px bg-line"></div>
+                    <span class="text-xs text-muted font-medium">O</span>
+                    <div class="flex-1 h-px bg-line"></div>
+                </div>
+
+                <!-- Opciones Sociales (Placeholder) -->
+                <div class="grid grid-cols-2 gap-3">
+                    <button class="flex items-center justify-center gap-2 py-3 border border-line rounded-xl hover:bg-vs transition font-medium text-sm text-ink">
+                        <span>🔵</span> Google
+                    </button>
+                    <button class="flex items-center justify-center gap-2 py-3 border border-line rounded-xl hover:bg-vs transition font-medium text-sm text-ink">
+                        <span>👤</span> GitHub
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Registro -->
+            <div class="bg-white/50 backdrop-blur rounded-xl border border-line p-5 text-center">
+                <p class="text-sm text-muted">
+                    ¿No tienes cuenta?
+                    <a href="registro.html" class="text-violetbrand font-bold hover:text-redbrand transition">Regístrate aquí</a>
+                </p>
+            </div>
+
+            <!-- Footer Links -->
+            <div class="flex items-center justify-center gap-4 mt-8 text-xs text-muted">
+                <a href="#" class="hover:text-violetbrand transition font-medium">Términos de uso</a>
+                <span>•</span>
+                <a href="#" class="hover:text-violetbrand transition font-medium">Privacidad</a>
+                <span>•</span>
+                <a href="#" class="hover:text-violetbrand transition font-medium">Contacto</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-white border border-line rounded-xl shadow-lg px-6 py-4 hidden max-w-sm animate-slide-in">
+        <p class="text-sm font-medium text-ink" id="toastMessage"></p>
+    </div>
+
+    <style>
+        @keyframes slide-in {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .animate-slide-in {
+            animation: slide-in 0.3s ease-out;
+        }
+    </style>
+
+    <script src="login.js"></script>
+</body>
+
+</html>

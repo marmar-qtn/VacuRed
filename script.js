@@ -13,6 +13,14 @@ function toast(t) {
     timer = setTimeout(() => e.classList.remove('show'), 2500); 
 }
 
+function logout() {
+    localStorage.removeItem('vacured_user');
+    toast('Sesión cerrada. Redirigiendo...');
+    setTimeout(() => {
+        window.location.href = 'login.html';
+    }, 1500);
+}
+
 function go(p) {
     if (p === 'Carnet familiar') {
         window.location.href = 'carnet.html';
