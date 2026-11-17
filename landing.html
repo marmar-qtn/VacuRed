@@ -12,7 +12,10 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="bg-bglight text-ink antialiased">
+<body class="relative bg-bglight text-ink antialiased">
+
+    <!-- FONDO DEGRADADO SOLO PARA LA ZONA DEL HERO -->
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-[600px] bg-gradient-to-b from-[#475569] to-bglight -z-10"></div>
 
     <!-- HEADER PÚBLICO -->
     <header class="bg-white border-b border-line sticky top-0 z-30">
@@ -23,7 +26,7 @@
             </a>
             <nav class="flex items-center gap-2 text-xs font-semibold">
                 <a href="landing.html" class="px-3 py-2 rounded-xl bg-vs text-violetbrand">Inicio</a>
-                <a href="preguntas-frecuentes.html" class="px-3 py-2 rounded-xl text-[#607184] hover:bg-vs hover:text-violetbrand transition">Preguntas frecuentes</a>
+                <a href="preguntas-frecuentes.html?from=landing" class="px-3 py-2 rounded-xl text-[#607184] hover:bg-vs hover:text-violetbrand transition">Preguntas frecuentes</a>
                 <a href="login.html" class="px-3 py-2 rounded-xl text-[#607184] hover:bg-vs hover:text-violetbrand transition">Iniciar sesión</a>
                 <a href="registro.html" class="bg-violetbrand text-white rounded-xl px-3.5 py-2 font-bold hover:bg-opacity-90 transition">Registrarse</a>
             </nav>
@@ -34,11 +37,11 @@
 
         <!-- HERO CON IMAGEN DE FONDO -->
         <section class="relative rounded-2xl overflow-hidden shadow-sm min-h-[380px] flex items-center border border-line">
-            <img class="absolute inset-0 w-full h-full object-cover"
-                 src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1400&q=85"
+            <img class="absolute inset-0 w-full h-full object-cover object-right"
+                 src="https://images.pexels.com/photos/7659689/pexels-photo-7659689.jpeg?_gl=1*1n7plmb*_ga*MTQzNzgyNDI2Mi4xNzk0ODg4MDIz*_ga_8JE65Q40S6*czE3OTQ4ODgwMjMkbzEkZzEkdDE3OTQ4ODkxODYkajE5JGwwJGgw"
                  alt="Profesional de salud">
             <!-- Velo para que el texto se lea bien -->
-            <div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/10"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/0"></div>
 
             <div class="relative z-10 p-6 sm:p-10 max-w-xl space-y-4">
                 <span class="inline-block bg-vs text-violetbrand rounded-full px-2.5 py-1 text-[10px] font-bold">Información confiable sobre vacunación</span>

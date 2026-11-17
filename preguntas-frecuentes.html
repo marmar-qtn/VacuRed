@@ -11,29 +11,16 @@
     <script src="tailwind-config.js"></script>
     <!-- CSS centralizado (Fuentes y reglas @apply) -->
     <link rel="stylesheet" href="styles.css">
-    <style>
-        .faq-chip { border: 1px solid #e5eaf0; background: #fff; color: #68798b; border-radius: 999px; padding: 6px 13px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all .15s ease; }
-        .faq-chip:hover { border-color: #c6b9e9; color: #203247; }
-        .faq-chip.active { background: #e7e0f8; border-color: #7658c9; color: #7658c9; font-weight: 700; }
-        .faq-item { border: 1px solid #edf0f4; border-radius: 12px; transition: border-color .15s ease; }
-        .faq-item:hover, .faq-item[open] { border-color: #c6b9e9; }
-        .faq-item summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; font-size: 12.5px; font-weight: 700; color: #203247; border-radius: 12px; }
-        .faq-item summary::-webkit-details-marker { display: none; }
-        .faq-item summary:focus-visible { outline: 2px solid #7658c9; outline-offset: 2px; }
-        .faq-item summary i { font-style: normal; color: #7658c9; font-size: 14px; flex-shrink: 0; transition: transform .15s ease; }
-        .faq-item[open] summary i { transform: rotate(45deg); }
-        .faq-answer { padding: 0 14px 14px; font-size: 12px; line-height: 1.65; color: #748396; max-width: 70ch; }
-        .faq-answer a { color: #4c85b3; font-weight: 700; }
-        .faq-answer a:hover { text-decoration: underline; }
-        .faq-answer b { color: #203247; }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body class="bg-bglight text-ink antialiased">
-    <div class="min-h-screen md:grid md:grid-cols-[238px_1fr]">
+    <div id="faqLayout" class="min-h-screen md:grid md:grid-cols-[238px_1fr]">
         
         <!-- SIDEBAR -->
-        <aside class="hidden md:flex flex-col justify-between bg-white border-r border-line p-5 h-screen sticky top-0">
+        <aside id="faqSidebar" class="hidden md:flex flex-col justify-between bg-white border-r border-line p-5 h-screen sticky top-0">
             <div class="space-y-6">
                 <!-- Brand -->
                 <div class="flex items-center gap-2.5 px-2 font-extrabold text-xl tracking-tight">
@@ -46,23 +33,19 @@
                     <p class="text-[10px] text-[#9aa6b4] tracking-widest font-extrabold px-3 mb-2">MENÚ PRINCIPAL</p>
                     <nav class="grid gap-1">
                         <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Inicio" onclick="go('Inicio')">
-                            <span class="w-5 text-center text-base">⌂</span>Inicio
+                            <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11 12 4l8 7"/><path d="M6 10v9.5h4.5V14h3v5.5H18V10"/></svg></span>Inicio
                         </button>
                         <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Carnet familiar" onclick="go('Carnet familiar')">
-                            <span class="w-5 text-center text-base">▤</span>Carnet familiar
+                            <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 2.5h6v3H9z"/><path d="m9 13 2 2 4-4"/></svg></span>Carnet familiar
                         </button>
                         <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Vacunatorios" onclick="go('Vacunatorios')">
-                            <span class="w-5 text-center text-base">⌖</span>Vacunatorios
+                            <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>Vacunatorios
                         </button>
                         <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Turnos" onclick="go('Turnos')">
-                            <span class="w-5 text-center text-base">▦</span>Turnos
-                        </button>
-                        <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Notificaciones" onclick="toast('Notificaciones de demostración')">
-                            <span class="w-5 text-center text-base">♧</span>Notificaciones 
-                            <span class="ml-auto bg-rs text-redbrand rounded-full px-2 py-0.5 text-[10px]">2</span>
+                            <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>Turnos
                         </button>
                         <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Mi cuenta" onclick="go('Mi cuenta')">
-                            <span class="w-5 text-center text-base">◉</span>Mi cuenta
+                            <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c0-3.9 3.1-6 7-6s7 2.1 7 6"/></svg></span>Mi cuenta
                         </button>
                     </nav>
                 </div>
@@ -92,18 +75,22 @@
             
             <!-- TOPBAR -->
             <div class="flex justify-between items-center mb-6">
-                <div class="md:hidden flex items-center gap-2 font-extrabold text-lg">
+                <div id="mobileBrand" class="md:hidden flex items-center gap-2 font-extrabold text-lg">
                     <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-violetbrand to-[#a99be0] grid place-items-center text-white text-xs">✳</div>
                     VacuRed
                 </div>
-                <div class="hidden md:block text-xs text-muted"><a href="index.html" class="text-muted hover:underline">VacuRed</a> / <b class="text-ink">Preguntas frecuentes</b></div>
-                <div class="flex items-center gap-2">
-                    <button class="hidden md:flex border border-line bg-white rounded-xl px-3 py-2 text-[#566b80] text-xs" onclick="locationModal()">
-                        ⌖ &nbsp;San Justo, Buenos Aires ▾
+                <div id="faqBreadcrumb" class="hidden md:block text-xs text-muted">
+                    <a href="index.html" class="text-muted hover:underline">VacuRed</a> / <b class="text-ink">Preguntas frecuentes</b>
+                </div>
+                <div id="topbarActions" class="flex items-center gap-2">
+                    <button class="hidden md:flex items-center gap-1.5 border border-line bg-white rounded-xl px-3 py-2 text-[#566b80] text-xs" onclick="locationModal()">
+                        <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>San Justo, Buenos Aires ▾
                     </button>
-                    <button class="w-9 h-9 border border-line bg-white rounded-xl grid place-items-center text-[#566b80] text-base" onclick="searchModal()" aria-label="Buscar">⌕</button>
+                    <button class="w-9 h-9 border border-line bg-white rounded-xl grid place-items-center text-[#566b80] text-base" onclick="searchModal()" aria-label="Buscar">
+                        <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+                    </button>
                     <button class="w-9 h-9 border border-line bg-white rounded-xl grid place-items-center text-[#566b80] text-base relative" onclick="toast('Tenés 2 notificaciones pendientes')" aria-label="Notificaciones">
-                        ♧<i class="absolute top-1.5 right-2 w-1.5 h-1.5 bg-redbrand border border-white rounded-full"></i>
+                        <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 2 7H4c.5-1.5 2-3 2-7Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><i class="absolute top-1.5 right-2 w-1.5 h-1.5 bg-redbrand border border-white rounded-full"></i>
                     </button>
                 </div>
             </div>
@@ -115,18 +102,36 @@
                 <p class="text-xs sm:text-sm text-muted mt-1">Respuestas sobre el carnet familiar, los turnos, los vacunatorios y tu cuenta.</p>
             </section>
 
-            <!-- BUSCADOR Y CATEGORÍAS -->
-            <section class="bg-white border border-line rounded-2xl p-5 shadow-sm space-y-3">
-                <label for="faqSearch" class="block text-xs font-bold">¿Qué necesitás saber?</label>
-                <input type="search" id="faqSearch" placeholder="Ej. cancelar turno, agregar vacuna, contraseña..." class="w-full h-[42px] px-3 border border-line rounded-lg bg-white text-ink text-xs outline-none focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 transition">
-                <div class="flex items-center gap-2 flex-wrap" id="faqChips"><button type="button" class="faq-chip active" data-cat="all">Todas</button><button type="button" class="faq-chip" data-cat="carnet">Carnet familiar</button><button type="button" class="faq-chip" data-cat="turnos">Turnos</button><button type="button" class="faq-chip" data-cat="vacunatorios">Vacunatorios</button><button type="button" class="faq-chip" data-cat="cuenta">Cuenta y privacidad</button><button type="button" class="faq-chip" data-cat="vacunas">Vacunas</button></div>
+            <!-- BUSCADOR Y CATEGORÍAS (Destacado en gris) -->
+            <section class="bg-gradient-to-br from-[#bcc6d3] to-[#f8fafc] border border-line rounded-2xl p-5 sm:p-6 shadow-sm space-y-4">
+                <div class="flex justify-between items-center gap-3">
+                    <div>
+                        <label for="faqSearch" class="block text-base sm:text-lg font-bold text-ink">¿Qué necesitás saber?</label>
+                        <p class="text-xs text-slate-600 mt-0.5">Buscá por palabra clave o filtrá las preguntas por categoría.</p>
+                    </div>
+                    <div class="w-10 h-10 min-w-[40px] rounded-xl bg-vs text-violetbrand grid place-items-center flex-shrink-0">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+                    </div>
+                </div>
+
+                <input type="search" id="faqSearch" placeholder="Ej. cancelar turno, agregar vacuna, contraseña..." class="w-full h-11 px-3.5 border border-line rounded-xl bg-white text-ink text-xs outline-none focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/15 transition shadow-2xs">
+
+                <div class="flex items-center gap-2 flex-wrap pt-0.5" id="faqChips">
+                    <button type="button" class="faq-chip active" data-cat="all">Todas</button>
+                    <button type="button" class="faq-chip" data-cat="carnet">Carnet familiar</button>
+                    <button type="button" class="faq-chip" data-cat="turnos">Turnos</button>
+                    <button type="button" class="faq-chip" data-cat="vacunatorios">Vacunatorios</button>
+                    <button type="button" class="faq-chip" data-cat="cuenta">Cuenta y privacidad</button>
+                    <button type="button" class="faq-chip" data-cat="vacunas">Vacunas</button>
+                </div>
             </section>
 
             <!-- PREGUNTAS -->
-
             <section class="faq-group bg-white border border-line rounded-2xl p-5 shadow-sm" data-cat="carnet">
                 <div class="flex items-center gap-3 mb-3">
-                    <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0">▤</div>
+                    <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center flex-shrink-0">
+                        <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 2.5h6v3H9z"/><path d="m9 13 2 2 4-4"/></svg>
+                    </div>
                     <h2 class="text-sm font-bold">Carnet familiar</h2>
                 </div>
                 <div class="grid gap-2">
@@ -151,7 +156,9 @@
 
             <section class="faq-group bg-white border border-line rounded-2xl p-5 shadow-sm" data-cat="turnos">
                 <div class="flex items-center gap-3 mb-3">
-                    <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0">▦</div>
+                    <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center flex-shrink-0">
+                        <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+                    </div>
                     <h2 class="text-sm font-bold">Turnos</h2>
                 </div>
                 <div class="grid gap-2">
@@ -176,7 +183,9 @@
 
             <section class="faq-group bg-white border border-line rounded-2xl p-5 shadow-sm" data-cat="vacunatorios">
                 <div class="flex items-center gap-3 mb-3">
-                    <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0">⌖</div>
+                    <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center flex-shrink-0">
+                        <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                    </div>
                     <h2 class="text-sm font-bold">Vacunatorios</h2>
                 </div>
                 <div class="grid gap-2">
@@ -197,7 +206,9 @@
 
             <section class="faq-group bg-white border border-line rounded-2xl p-5 shadow-sm" data-cat="cuenta">
                 <div class="flex items-center gap-3 mb-3">
-                    <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0">◉</div>
+                    <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center flex-shrink-0">
+                        <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c0-3.9 3.1-6 7-6s7 2.1 7 6"/></svg>
+                    </div>
                     <h2 class="text-sm font-bold">Cuenta y privacidad</h2>
                 </div>
                 <div class="grid gap-2">
@@ -222,7 +233,9 @@
 
             <section class="faq-group bg-white border border-line rounded-2xl p-5 shadow-sm" data-cat="vacunas">
                 <div class="flex items-center gap-3 mb-3">
-                    <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0">✚</div>
+                    <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center flex-shrink-0">
+                        <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+                    </div>
                     <h2 class="text-sm font-bold">Vacunas</h2>
                 </div>
                 <div class="grid gap-2">
@@ -261,9 +274,9 @@
     </div>
 
     <!-- TOAST & MODAL -->
-    <div class="fixed bottom-5 right-5 bg-ink text-white px-4 py-3 rounded-xl text-xs opacity-0 translate-y-2 transition-all duration-200 pointer-events-none" id="toast"></div>
+    <div class="fixed bottom-5 right-5 bg-ink text-white px-4 py-3 rounded-xl text-xs opacity-0 translate-y-2 transition-all duration-200 pointer-events-none [&.show]:opacity-100 [&.show]:translate-y-0" id="toast"></div>
     
-    <div class="hidden fixed inset-0 bg-slate-900/40 items-center justify-center p-5 z-50" id="modal">
+    <div class="hidden fixed inset-0 bg-[#17263866] items-center justify-center p-5 z-40 [&.open]:flex" id="modal">
         <div class="bg-white rounded-2xl p-6 w-full max-w-md space-y-3">
             <h3 class="text-lg font-bold" id="mtitle"></h3>
             <p class="text-xs text-muted" id="mdesc"></p>
@@ -276,40 +289,5 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
-        /* VACURED · PREGUNTAS FRECUENTES (buscador y categorías) */
-        (function () {
-            const search = document.getElementById('faqSearch');
-            const chips = document.querySelectorAll('#faqChips .faq-chip');
-            const groups = document.querySelectorAll('.faq-group');
-            const empty = document.getElementById('faqEmpty');
-            let cat = 'all';
-            const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
-            function apply() {
-                const q = norm(search.value.trim());
-                let total = 0;
-                groups.forEach(g => {
-                    let visible = 0;
-                    const inCat = cat === 'all' || g.dataset.cat === cat;
-                    g.querySelectorAll('.faq-item').forEach(item => {
-                        const show = inCat && (!q || norm(item.textContent).includes(q));
-                        item.style.display = show ? '' : 'none';
-                        if (show) visible++;
-                    });
-                    g.style.display = visible ? '' : 'none';
-                    total += visible;
-                });
-                empty.classList.toggle('hidden', total > 0);
-            }
-
-            chips.forEach(c => c.addEventListener('click', () => {
-                cat = c.dataset.cat;
-                chips.forEach(x => x.classList.toggle('active', x === c));
-                apply();
-            }));
-            search.addEventListener('input', apply);
-        })();
-    </script>
 </body>
 </html>

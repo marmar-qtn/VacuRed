@@ -530,8 +530,8 @@ function renderNextAppointmentFeatured() {
     if (contentDiv) {
         contentDiv.innerHTML = `
             <div class="flex items-center justify-between gap-3 flex-wrap w-full">
-                <div class="inline-flex items-center gap-2 bg-white/95 border border-[#3d8b78]/30 rounded-full px-3 py-1 text-[10px] font-extrabold text-[#235348] shadow-xs">
-                    <span class="w-2 h-2 rounded-full bg-[#3d8b78] animate-pulse"></span>
+                <div class="inline-flex items-center gap-2 bg-white/95 border border-violetbrand/30 rounded-full px-3 py-1 text-[10px] font-extrabold text-violetbrand shadow-xs">
+                    <span class="w-2 h-2 rounded-full bg-violetbrand animate-pulse"></span>
                     PRÓXIMO TURNO (${nextAppt.status.toUpperCase()})
                 </div>
             </div>
@@ -857,3 +857,162 @@ function switchAccountTab(tabId, btnElement) {
         btnElement.classList.add('active');
     }
 }
+
+/* =====================================================
+   VACURED · CARNET FAMILIAR
+   ===================================================== */
+
+const people = {
+    Maria: { name: 'María Quintana', initials: 'MQ', desc: 'Adulta · Responsable de la cuenta' },
+    Tomas: { name: 'Tomás', initials: 'T', desc: 'Adolescente · Integrante familiar' },
+    Ana: { name: 'Ana', initials: 'A', desc: 'Niña · Integrante familiar' }
+};
+
+let selectedPerson = 'all';
+
+function selectPerson(person, btn) {
+    selectedPerson = person;
+    document.querySelectorAll('#familyTabs .family-tab').forEach(t => {
+        t.classList.remove('active', 'bg-white', 'text-violetbrand', 'border-line', 'shadow-2xs');
+        t.classList.add('border-transparent', 'bg-transparent', 'text-[#68798b]');
+    });
+
+    if (btn) {
+        btn.classList.add('active', 'bg-white', 'text-violetbrand', 'border-line', 'shadow-2xs');
+        btn.classList.remove('border-transparent', 'bg-transparent', 'text-[#68798b]');
+    }
+
+    const p = people[person];
+    const memberName = document.getElementById('memberName');
+    const memberInitials = document.getElementById('memberInitials');
+    const memberDesc = document.getElementById('memberDesc');
+
+    if (memberName) memberName.textContent = p ? p.name : 'Grupo familiar';
+    if (memberInitials) memberInitials.textContent = p ? p.initials : 'MQ';
+    if (memberDesc) memberDesc.textContent = p ? p.desc : '3 integrantes registrados · Carnets organizados en un solo lugar.';
+
+    filterVaccines();
+}
+
+function matchesTimeFilter(dateText, timeRange) {
+    if (timeRange === 'all') return true;
+    const match = dateText.trim().match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    if (!match) return false;
+
+    const [, day, month, year] = match;
+    const vaccineDate = new Date(Number(year), Number(month) - 1, Number(day));
+    const now = new Date();
+    now.setHours(23, 59, 59, 999);
+
+    const cutoff = new Date(now);
+    if (timeRange === 'week') cutoff.setDate(now.getDate() - 7);
+    if (timeRange === 'month') cutoff.setMonth(now.getMonth() - 1);
+    if (timeRange === 'year') cutoff.setFullYear(now.getFullYear() - 1);
+    cutoff.setHours(0, 0, 0, 0);
+
+    return vaccineDate >= cutoff && vaccineDate <= now;
+}
+
+function filterVaccines() {
+    const searchEl = document.getElementById('searchVaccine');
+    const timeEl = document.getElementById('timeFilter');
+    const statusEl = document.getElementById('statusFilter');
+    if (!searchEl || !timeEl || !statusEl) return;
+
+    const q = searchEl.value.toLowerCase();
+    const t = timeEl.value;
+    const s = statusEl.value;
+    let visible = 0;
+
+    document.querySelectorAll('.vaccine-row').forEach(row => {
+        const dateText = row.querySelectorAll('div')[2]?.querySelector('b')?.textContent || '';
+        const ok =
+            row.textContent.toLowerCase().includes(q) &&
+            (selectedPerson === 'all' || row.dataset.person === selectedPerson) &&
+            matchesTimeFilter(dateText, t) &&
+            (s === 'all' || row.dataset.status === s);
+
+        row.style.display = ok ? 'grid' : 'none';
+        if (ok) visible++;
+    });
+
+    const emptyState = document.getElementById('emptyState');
+    const vaccineCount = document.getElementById('vaccineCount');
+
+    if (emptyState) emptyState.style.display = visible ? 'none' : 'block';
+    if (vaccineCount) vaccineCount.textContent = visible;
+}
+
+function openVaccineModal() {
+    modal(
+        'Agregar vacuna',
+        'Ingresá los datos para sumar un registro al carnet familiar.',
+        '<label class="block font-bold mb-1">Integrante</label><select class="w-full h-10 px-3 border border-line rounded-lg bg-white mb-2"><option>María</option><option>Tomás</option><option>Ana</option></select><label class="block font-bold mb-1">Nombre de la vacuna</label><input class="w-full h-10 px-3 border border-line rounded-lg bg-white mb-2" placeholder="Ej. Antigripal"><label class="block font-bold mb-1">Fecha de aplicación</label><input class="w-full h-10 px-3 border border-line rounded-lg bg-white mb-2" type="date"><label class="block font-bold mb-1">Centro de vacunación (opcional)</label><input class="w-full h-10 px-3 border border-line rounded-lg bg-white mb-2" placeholder="Nombre del establecimiento"><label class="block font-bold mb-1">Observaciones (opcional)</label><input class="w-full h-10 px-3 border border-line rounded-lg bg-white mb-2" placeholder="Dosis, lote u otra información">'
+    );
+}
+
+/* =====================================================
+   VACURED · PREGUNTAS FRECUENTES
+   ===================================================== */
+
+function initFaqPage() {
+    const search = document.getElementById('faqSearch');
+    if (!search) return;
+
+    // 1. Detectar si el usuario llegó desde landing.html
+    const params = new URLSearchParams(window.location.search);
+    const fromLanding =
+        params.get('from') === 'landing' ||
+        document.referrer.toLowerCase().includes('landing.html');
+
+    if (fromLanding) {
+        const sidebar = document.getElementById('faqSidebar');
+        const layout = document.getElementById('faqLayout');
+        const breadcrumb = document.getElementById('faqBreadcrumb');
+        const topbarActions = document.getElementById('topbarActions');
+        const mobileBrand = document.getElementById('mobileBrand');
+
+        if (sidebar) sidebar.remove();
+        if (layout) layout.classList.remove('md:grid', 'md:grid-cols-[238px_1fr]');
+        if (topbarActions) topbarActions.remove();
+        if (mobileBrand) mobileBrand.classList.add('hidden');
+        if (breadcrumb) {
+            breadcrumb.classList.remove('hidden');
+            breadcrumb.innerHTML = '<a href="landing.html" class="text-muted hover:underline">Landing</a> / <b class="text-ink">Preguntas frecuentes</b>';
+        }
+    }
+
+    // 2. Buscador y filtros por categoría
+    const chips = document.querySelectorAll('#faqChips .faq-chip');
+    const groups = document.querySelectorAll('.faq-group');
+    const empty = document.getElementById('faqEmpty');
+    let cat = 'all';
+    const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+    function apply() {
+        const q = norm(search.value.trim());
+        let total = 0;
+        groups.forEach(g => {
+            let visible = 0;
+            const inCat = cat === 'all' || g.dataset.cat === cat;
+            g.querySelectorAll('.faq-item').forEach(item => {
+                const show = inCat && (!q || norm(item.textContent).includes(q));
+                item.style.display = show ? '' : 'none';
+                if (show) visible++;
+            });
+            g.style.display = visible ? '' : 'none';
+            total += visible;
+        });
+        if (empty) empty.classList.toggle('hidden', total > 0);
+    }
+
+    chips.forEach(c => c.addEventListener('click', () => {
+        cat = c.dataset.cat;
+        chips.forEach(x => x.classList.toggle('active', x === c));
+        apply();
+    }));
+
+    search.addEventListener('input', apply);
+}
+
+initFaqPage();

@@ -50,10 +50,6 @@
                         <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Turnos" onclick="go('Turnos')">
                             <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>Turnos
                         </button>
-                        <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Notificaciones" onclick="toast('Notificaciones de demostración')">
-                            <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 2 7H4c.5-1.5 2-3 2-7Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></span>Notificaciones 
-                            <span class="ml-auto bg-rs text-redbrand rounded-full px-2 py-0.5 text-[10px]">2</span>
-                        </button>
                         <button class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs font-semibold text-[#607184] hover:bg-vs hover:text-violetbrand transition" data-page="Mi cuenta" onclick="go('Mi cuenta')">
                             <span class="w-5 grid place-items-center"><svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c0-3.9 3.1-6 7-6s7 2.1 7 6"/></svg></span>Mi cuenta
                         </button>
@@ -67,7 +63,7 @@
                     <b class="text-xs font-bold block">¿Necesitás ayuda?</b>
                     <p class="text-[11px] text-muted leading-relaxed">Encontrá respuestas sobre vacunas, carnets y el uso de VacuRed.</p>
                     <a href="preguntas-frecuentes.html" class="inline-block bg-white border border-violetbrand rounded-lg px-2.5 py-1.5 text-violetbrand text-[11px] font-bold hover:bg-vs transition">
-                        Ver preguntas frecuentes ↗
+                        Preguntas frecuentes ↗
                     </a>
                 </div>
                 <div class="flex items-center gap-2.5 p-2 bg-gradient-to-r from-[#f3f0fc] to-[#eaf3f9] border border-[#dcd3f5] rounded-xl text-xs font-bold">
@@ -114,7 +110,7 @@
 
             <!-- HERO REESTRUCTURADO: Bloques apilados en ancho completo -->
             <section class="space-y-4">
-                <div class="relative bg-gradient-to-r from-[#ffdfe1] to-[#deedf8] rounded-2xl p-6 sm:p-8 flex items-center shadow-sm overflow-hidden min-h-[200px]">
+                <div class="relative bg-gradient-to-r from-vs to-gs rounded-2xl p-6 sm:p-8 flex items-center shadow-sm overflow-hidden min-h-[200px]">
                     <div class="relative z-10 max-w-full sm:max-w-[60%] space-y-3">
                         <span class="inline-block bg-white/80 text-bluebrand rounded-full px-2.5 py-1 text-[10px] font-bold">Información para tu familia</span>
                         <h2 class="text-xl sm:text-2xl font-bold tracking-tight leading-snug">La vacunación al día, un cuidado compartido.</h2>
@@ -142,93 +138,121 @@
                 </div>
             </section>
 
-            <!-- RESUMEN -->
-            <div class="flex justify-between items-center pt-2">
-                <h3 class="text-base font-bold">Resumen de tu familia</h3>
-                <a class="text-xs text-bluebrand font-bold cursor-pointer hover:underline" onclick="go('Carnet familiar')">Ver carnet familiar →</a>
-            </div>
+            <!-- RESUMEN Y PRÓXIMAS DOSIS -->
+            <section class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
             
-            <section class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div class="bg-white border border-line rounded-2xl p-4 flex items-center gap-3 shadow-sm">
-                    <div class="w-10 h-10 rounded-xl bg-vs text-violetbrand grid place-items-center text-lg"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 19c0-3.3 2.7-5 6-5s6 1.7 6 5"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.2c3 0 5 1.5 5 4.3"/></svg></div>
-                    <div><small class="block text-muted text-[10px]">Integrantes registrados</small><strong class="text-xl font-bold">3</strong><em class="not-italic text-muted text-[10px] ml-1">personas</em></div>
+                <!-- COLUMNA IZQUIERDA (5/12): RESUMEN DE TU FAMILIA -->
+                <div
+                    class="lg:col-span-5 bg-white border border-line rounded-2xl p-5 shadow-sm flex flex-col justify-between gap-4">
+                    <div class="flex justify-between items-center gap-2">
+                        <h3 class="text-sm font-bold">Resumen de tu familia</h3>
+                        <a href="carnet.html" class="text-xs text-bluebrand font-bold hover:underline whitespace-nowrap">Ver carnet
+                            →</a>
+                    </div>
+            
+                    <div class="grid grid-cols-3 gap-2.5 my-auto">
+                        <!-- Integrantes registrados -> Mi cuenta -->
+                        <a href="mi-cuenta.html"
+                            class="group bg-vs border border-[#dcd3f5] hover:border-violetbrand/50 rounded-2xl p-3 xl:aspect-square flex flex-col items-center justify-center text-center gap-1.5 transition hover:-translate-y-0.5 hover:shadow-xs">
+                            <div
+                                class="w-8 h-8 rounded-xl bg-white text-violetbrand grid place-items-center shadow-2xs group-hover:scale-105 transition shrink-0">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="9" cy="8" r="3" />
+                                    <path d="M3 19c0-3.3 2.7-5 6-5s6 1.7 6 5" />
+                                    <circle cx="17" cy="9" r="2.5" />
+                                    <path d="M16 14.2c3 0 5 1.5 5 4.3" />
+                                </svg>
+                            </div>
+                            <strong class="block text-xl font-extrabold text-ink leading-none pt-0.5">3</strong>
+                            <span class="block text-[10px] font-bold text-ink leading-tight">Integrantes registrados</span>
+                            <small class="block text-[9px] text-muted leading-none">personas</small>
+                        </a>
+            
+                        <!-- Vacunas registradas -> Carnet familiar -->
+                        <a href="carnet.html"
+                            class="group bg-bs border border-[#c8e0f2] hover:border-bluebrand/50 rounded-2xl p-3 xl:aspect-square flex flex-col items-center justify-center text-center gap-1.5 transition hover:-translate-y-0.5 hover:shadow-xs">
+                            <div
+                                class="w-8 h-8 rounded-xl bg-white text-bluebrand grid place-items-center shadow-2xs group-hover:scale-105 transition shrink-0">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="9" />
+                                    <path d="m8.5 12.3 2.4 2.4 4.6-5" />
+                                </svg>
+                            </div>
+                            <strong class="block text-xl font-extrabold text-ink leading-none pt-0.5">24</strong>
+                            <span class="block text-[10px] font-bold text-ink leading-tight">Vacunas registradas</span>
+                            <small class="block text-[9px] text-muted leading-none">en total</small>
+                        </a>
+            
+                        <!-- Próximas dosis -> Turnos -->
+                        <a href="turnos.html"
+                            class="group bg-rs border border-[#f7c7cb] hover:border-redbrand/50 rounded-2xl p-3 xl:aspect-square flex flex-col items-center justify-center text-center gap-1.5 transition hover:-translate-y-0.5 hover:shadow-xs">
+                            <div
+                                class="w-8 h-8 rounded-xl bg-white text-redbrand grid place-items-center shadow-2xs group-hover:scale-105 transition shrink-0">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="9" />
+                                    <path d="M12 7v5l3 2" />
+                                </svg>
+                            </div>
+                            <strong class="block text-xl font-extrabold text-ink leading-none pt-0.5">2</strong>
+                            <span class="block text-[10px] font-bold text-ink leading-tight">Próximas dosis</span>
+                            <small class="block text-[9px] text-muted leading-none">por revisar</small>
+                        </a>
+                    </div>
                 </div>
-                <div class="bg-white border border-line rounded-2xl p-4 flex items-center gap-3 shadow-sm">
-                    <div class="w-10 h-10 rounded-xl bg-bs text-bluebrand grid place-items-center text-lg"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.3 2.4 2.4 4.6-5"/></svg></div>
-                    <div><small class="block text-muted text-[10px]">Vacunas registradas</small><strong class="text-xl font-bold">24</strong><em class="not-italic text-muted text-[10px] ml-1">en total</em></div>
-                </div>
-                <div class="bg-white border border-line rounded-2xl p-4 flex items-center gap-3 shadow-sm">
-                    <div class="w-10 h-10 rounded-xl bg-rs text-redbrand grid place-items-center text-lg"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-                    <div><small class="block text-muted text-[10px]">Próximas dosis</small><strong class="text-xl font-bold">2</strong><em class="not-italic text-muted text-[10px] ml-1">por revisar</em></div>
-                </div>
-            </section>
-
-            <!-- PRÓXIMAS DOSIS CON IMAGEN INTERNA -->
-            <section>
-                <div class="bg-white border border-line rounded-2xl p-5 shadow-sm space-y-4">
+            
+                <!-- COLUMNA DERECHA (7/12): PRÓXIMAS DOSIS Y RECORDATORIOS -->
+                <div
+                    class="lg:col-span-7 bg-white border border-line rounded-2xl p-5 shadow-sm flex flex-col justify-between space-y-4">
                     <div class="flex justify-between items-center">
                         <h3 class="text-sm font-bold">Próximas dosis y recordatorios</h3>
-                        <button class="text-bluebrand text-xs font-bold hover:underline" onclick="go('Notificaciones')">Ver todos →</button>
+                        <button class="text-bluebrand text-xs font-bold hover:underline" onclick="go('Notificaciones')">Ver todos
+                            →</button>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-[1fr_220px] gap-5 items-center">
+                    <div class="grid grid-cols-1 md:grid-cols-[1fr_170px] xl:grid-cols-[1fr_200px] gap-4 items-center">
                         <div class="space-y-2.5">
                             <div class="grid grid-cols-[42px_1fr_auto] items-center gap-3 border border-[#edf0f4] rounded-xl p-2.5">
                                 <div class="bg-bs text-bluebrand rounded-lg text-center p-1.5">
                                     <b class="block text-sm font-bold leading-none">18</b>
                                     <small class="text-[9px] font-extrabold">NOV</small>
                                 </div>
-                                <div>
-                                    <b class="block text-xs font-bold">Refuerzo de calendario</b>
-                                    <small class="text-muted text-[10px]">Tomás · Revisar dosis correspondiente</small>
+                                <div class="min-w-0">
+                                    <b class="block text-xs font-bold truncate">Refuerzo de calendario</b>
+                                    <small class="block text-muted text-[10px] truncate">Tomás · Revisar dosis
+                                        correspondiente</small>
                                 </div>
-                                <span class="text-[9px] text-[#b76a37] bg-[#fff1e9] rounded-full px-2 py-1 whitespace-nowrap">Próximamente</span>
+                                <span
+                                    class="text-[9px] text-[#b76a37] bg-[#fff1e9] rounded-full px-2 py-1 whitespace-nowrap">Próximamente</span>
                             </div>
-
+            
                             <div class="grid grid-cols-[42px_1fr_auto] items-center gap-3 border border-[#edf0f4] rounded-xl p-2.5">
                                 <div class="bg-bs text-bluebrand rounded-lg text-center p-1.5">
                                     <b class="block text-sm font-bold leading-none">02</b>
                                     <small class="text-[9px] font-extrabold">DIC</small>
                                 </div>
-                                <div>
-                                    <b class="block text-xs font-bold">Control de carnet</b>
-                                    <small class="text-muted text-[10px]">María · Verificar registro de vacunación</small>
+                                <div class="min-w-0">
+                                    <b class="block text-xs font-bold truncate">Control de carnet</b>
+                                    <small class="block text-muted text-[10px] truncate">María · Verificar registro de
+                                        vacunación</small>
                                 </div>
-                                <span class="text-[9px] text-violetbrand bg-vs rounded-full px-2 py-1 whitespace-nowrap">Pendiente</span>
+                                <span
+                                    class="text-[9px] text-violetbrand bg-vs rounded-full px-2 py-1 whitespace-nowrap">Pendiente</span>
                             </div>
-                            
-                            <p class="text-[10px] text-muted leading-relaxed">Los recordatorios son orientativos. Verificá las indicaciones con un centro de salud.</p>
+            
+                            <p class="text-[10px] text-muted leading-relaxed">Los recordatorios son orientativos. Verificá las
+                                indicaciones con un centro de salud.</p>
                         </div>
-
+            
                         <div class="hidden md:block h-36">
-                            <img class="w-full h-full object-cover rounded-xl shadow-sm" src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=500&q=85" alt="Insumos médicos">
+                            <img class="w-full h-full object-cover rounded-xl shadow-sm"
+                                src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=500&q=85"
+                                alt="Insumos médicos">
                         </div>
                     </div>
                 </div>
-            </section>
-
-            <!-- ACCESOS RÁPIDOS EN BARRA HORIZONTAL FINA -->
-            <section>
-                <div class="bg-white border border-line rounded-2xl p-4 shadow-sm space-y-3">
-                    <h3 class="text-sm font-bold">Accesos rápidos</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                        <button class="flex items-center gap-2.5 bg-slate-50 border border-line rounded-xl p-2.5 text-left hover:bg-vs hover:border-[#c8b9ed] transition" onclick="go('Carnet familiar')">
-                            <span class="w-7 h-7 rounded-lg bg-bs text-bluebrand grid place-items-center font-bold text-xs"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
-                            <b class="text-xs text-ink font-bold">Registrar vacuna</b>
-                        </button>
-                        <button class="flex items-center gap-2.5 bg-slate-50 border border-line rounded-xl p-2.5 text-left hover:bg-vs hover:border-[#c8b9ed] transition" onclick="go('Vacunatorios')">
-                            <span class="w-7 h-7 rounded-lg bg-bs text-bluebrand grid place-items-center font-bold text-xs"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-                            <b class="text-xs text-ink font-bold">Buscar vacunatorios</b>
-                        </button>
-                        <button class="flex items-center gap-2.5 bg-slate-50 border border-line rounded-xl p-2.5 text-left hover:bg-vs hover:border-[#c8b9ed] transition" onclick="go('Turnos')">
-                            <span class="w-7 h-7 rounded-lg bg-bs text-bluebrand grid place-items-center font-bold text-xs"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>
-                            <b class="text-xs text-ink font-bold">Gestionar turnos</b>
-                        </button>
-                        <button class="flex items-center gap-2.5 bg-slate-50 border border-line rounded-xl p-2.5 text-left hover:bg-vs hover:border-[#c8b9ed] transition" onclick="toast('Calendario Nacional de Vacunación')">
-                            <span class="w-7 h-7 rounded-lg bg-bs text-bluebrand grid place-items-center font-bold text-xs"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 2.5h6v3H9z"/><path d="m9 13 2 2 4-4"/></svg></span>
-                            <b class="text-xs text-ink font-bold">Ver calendario</b>
-                        </button>
-                    </div>
-                </div>
+            
             </section>
 
             <!-- INTEGRANTES Y CAMPAÑAS -->
@@ -270,22 +294,51 @@
                 </div>
 
                 <!-- INFORMACIÓN Y CAMPAÑAS -->
-                <div class="bg-white border border-line rounded-2xl p-5 shadow-sm space-y-3">
+                <div class="bg-white border border-line rounded-2xl p-5 shadow-sm flex flex-col justify-between space-y-3">
                     <div class="flex justify-between items-center">
                         <h3 class="text-sm font-bold">Información y campañas</h3>
-                        <button class="text-bluebrand text-xs font-bold hover:underline" onclick="toast('Información y recursos')">Ver recursos →</button>
+                        <button class="text-bluebrand text-xs font-bold hover:underline" onclick="toast('Información y recursos')">Ver
+                            recursos →</button>
                     </div>
-                    <div class="grid grid-cols-[90px_1fr] sm:grid-cols-[100px_1fr] gap-3 items-center">
-                        <img class="w-full h-24 object-cover rounded-xl" src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=400&q=85" alt="Profesional de salud">
-                        <div>
-                            <span class="text-[9px] text-redbrand font-extrabold tracking-wider uppercase">INFORMACIÓN OFICIAL</span>
-                            <h4 class="text-xs font-bold my-1">Vacunarse en cada etapa de la vida</h4>
-                            <p class="text-[10px] text-muted leading-relaxed">Conocé las recomendaciones y consultá fuentes oficiales para mantener tus vacunas al día.</p>
-                            <a class="inline-block text-[10px] text-bluebrand font-bold mt-1.5 hover:underline" href="https://www.argentina.gob.ar/salud/vacunas" target="_blank" rel="noopener">Consultar información ↗</a>
+                
+                    <div class="space-y-3 my-auto">
+                        <!-- Campaña 1 -->
+                        <div class="grid grid-cols-[90px_1fr] sm:grid-cols-[100px_1fr] gap-3 items-center">
+                            <img class="w-full h-24 object-cover rounded-xl"
+                                src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=400&q=85"
+                                alt="Profesional de salud">
+                            <div>
+                                <span class="text-[9px] text-redbrand font-extrabold tracking-wider uppercase">INFORMACIÓN
+                                    OFICIAL</span>
+                                <h4 class="text-xs font-bold my-1">Vacunarse en cada etapa de la vida</h4>
+                                <p class="text-[10px] text-muted leading-relaxed">Conocé las recomendaciones y consultá fuentes
+                                    oficiales para mantener tus vacunas al día.</p>
+                                <a class="inline-block text-[10px] text-bluebrand font-bold mt-1.5 hover:underline"
+                                    href="https://www.argentina.gob.ar/salud/vacunas" target="_blank" rel="noopener">Consultar
+                                    información ↗</a>
+                            </div>
+                        </div>
+                
+                        <!-- Campaña 2 -->
+                        <div
+                            class="grid grid-cols-[90px_1fr] sm:grid-cols-[100px_1fr] gap-3 items-center pt-3 border-t border-slate-100">
+                            <img class="w-full h-24 object-cover rounded-xl"
+                                src="https://images.unsplash.com/photo-1632053002928-1919605ee6f7?auto=format&fit=crop&w=400&q=85"
+                                alt="Control pediátrico y vacunación infantil">
+                            <div>
+                                <span class="text-[9px] text-violetbrand font-extrabold tracking-wider uppercase">CAMPAÑA
+                                    PREVENTIVA</span>
+                                <h4 class="text-xs font-bold my-1">Vacunación infantil e ingreso escolar</h4>
+                                <p class="text-[10px] text-muted leading-relaxed">Verificá los refuerzos obligatorios para niños y
+                                    adolescentes antes del inicio de clases.</p>
+                                <a class="inline-block text-[10px] text-bluebrand font-bold mt-1.5 hover:underline"
+                                    href="https://www.argentina.gob.ar/salud/vacunas/calendario" target="_blank" rel="noopener">Ver
+                                    esquema escolar ↗</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </section>
+                </section>
 
             <!-- STRIP -->
             <div class="flex items-center gap-3 bg-vs border border-[#e8e1fa] rounded-2xl p-4">

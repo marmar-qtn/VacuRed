@@ -90,9 +90,9 @@ body {
     height: 31px;
     border-radius: 50% 50% 50% 4px;
     transform: rotate(-45deg);
-    border: 2px solid white;
-    background: #477da8;
-    color: white;
+    border: 2px solid #c12633;
+    background: #ffffff;
+    color: #c12633;
     font-size: 11px;
     font-weight: 800;
     display: flex;
@@ -108,11 +108,13 @@ body {
 }
 
 .map-pin.active {
-    background: #7658c9;
+    background: #c12633;
+    color: #ffffff;
+    border-color: #ffffff;
     width: 37px;
     height: 37px;
     z-index: 20;
-    box-shadow: 0 0 0 5px rgba(118, 88, 201, 0.25), 0 4px 12px rgba(32, 50, 71, 0.3);
+    box-shadow: 0 0 0 5px rgba(193, 38, 51, 0.28), 0 4px 12px rgba(32, 50, 71, 0.3);
 }
 
 .pin-one { top: 34%; left: 27%; }
@@ -150,15 +152,15 @@ body {
 }
 
 .clinic-card:hover {
-    border-color: #7658c9;
+    border-color: #94a3b8;
     transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(32, 50, 71, 0.07);
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
 }
 
 .clinic-card.selected {
-    background: #f8f5ff;
-    border-color: #7658c9;
-    box-shadow: 0 0 0 3px rgba(118, 88, 201, 0.18), 0 4px 14px rgba(118, 88, 201, 0.08);
+    background: #f8fafc;
+    border-color: #64748b;
+    box-shadow: 0 0 0 3px rgba(100, 116, 139, 0.15), 0 4px 14px rgba(15, 23, 42, 0.06);
 }
 
 .clinic-card.selected::before {
@@ -166,10 +168,103 @@ body {
     position: absolute;
     top: 14px;
     right: 14px;
-    background: #7658c9;
-    color: white;
+    background: #475569;
+    color: #ffffff;
     font-size: 9px;
     font-weight: 800;
     padding: 3px 8px;
     border-radius: 20px;
+}
+/* ---------------------------------------------------------
+   4. PREGUNTAS FRECUENTES · CHIPS Y ACORDEONES
+   --------------------------------------------------------- */
+.faq-chip {
+    border: 1px solid #e5eaf0;
+    background: #ffffff;
+    color: #68798b;
+    border-radius: 999px;
+    padding: 6px 13px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.faq-chip:hover {
+    border-color: #c6b9e9;
+    color: #203247;
+}
+
+.faq-chip.active {
+    background: #e7e0f8;
+    border-color: #7658c9;
+    color: #7658c9;
+    font-weight: 700;
+}
+
+.faq-item {
+    border: 1px solid #edf0f4;
+    border-radius: 12px;
+    transition: border-color 0.15s ease;
+}
+
+.faq-item:hover,
+.faq-item[open] {
+    border-color: #c6b9e9;
+}
+
+.faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #203247;
+    border-radius: 12px;
+}
+
+.faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq-item summary:focus-visible {
+    outline: 2px solid #7658c9;
+    outline-offset: 2px;
+}
+
+.faq-item summary i {
+    font-style: normal;
+    color: #7658c9;
+    font-size: 14px;
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
+}
+
+.faq-item[open] summary i {
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    padding: 0 14px 14px;
+    font-size: 12px;
+    line-height: 1.65;
+    color: #748396;
+    max-width: 70ch;
+}
+
+.faq-answer a {
+    color: #4c85b3;
+    font-weight: 700;
+}
+
+.faq-answer a:hover {
+    text-decoration: underline;
+}
+
+.faq-answer b {
+    color: #203247;
 }
