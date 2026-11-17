@@ -99,7 +99,7 @@
               <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Carnet familiar</h1>
               <p class="text-xs sm:text-sm text-muted mt-1">Consultá y organizá el historial de vacunas de cada integrante de tu familia.</p>
             </div>
-            <button class="bg-violetbrand text-white rounded-lg px-4 py-2.5 text-xs font-bold hover:bg-opacity-90 transition whitespace-nowrap self-start sm:self-auto" onclick="openVaccineModal()">
+            <button class="bg-violetbrand text-white rounded-lg px-4 py-2.5 text-xs font-bold hover:bg-opacity-90 transition whitespace-nowrap self-start sm:self-auto shadow-xs cursor-pointer" onclick="openAddVaccineModal()">
               <svg class="w-3.5 h-3.5 inline-block align-[-2px] mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Agregar vacuna
             </button>
           </section>
@@ -127,16 +127,16 @@
               <p class="text-xs text-muted truncate" id="memberDesc">3 integrantes registrados · Carnets organizados en un solo lugar.</p>
             </div>
             <div class="ml-auto">
-              <button class="border border-line bg-white text-bluebrand rounded-lg px-3 py-2 text-xs font-bold hover:bg-slate-50 transition whitespace-nowrap" onclick="toast('Administración de integrantes: demostración')">Administrar familia</button>
+              <button class="border border-line bg-white text-bluebrand rounded-lg px-3 py-2 text-xs font-bold hover:bg-slate-50 transition whitespace-nowrap" onclick="go('Mi cuenta')">Administrar familia</button>
             </div>
           </div>
           <div class="bg-[#dce2ea] border border-line rounded-2xl p-4 flex items-center justify-between gap-3 shadow-sm">
             <div>
               <small class="block text-muted text-[10px]">Vacunas registradas</small>
               <strong class="text-2xl font-extrabold tracking-tight inline-block mr-2 my-0.5" id="vaccineCount">6</strong>
-              <span class="text-muted text-[10px] inline-block">Registros de ejemplo</span>
+              <span class="text-muted text-[10px] inline-block" id="vaccineCountLabel">en el historial</span>
               <div class="h-1.5 w-32 max-w-full bg-white rounded-full mt-2 overflow-hidden">
-                <i class="block w-[72%] h-full bg-[#475569] rounded-full"></i>
+                <i id="vaccineProgressBar" class="block w-[83%] h-full bg-[#475569] rounded-full transition-all duration-300"></i>
               </div>
             </div>
             <div class="w-11 h-11 rounded-xl bg-white text-[#475569] grid place-items-center text-xl"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.3 2.4 2.4 4.6-5"/></svg></div>
@@ -145,14 +145,17 @@
 
         <!-- HISTORIAL DE VACUNACIÓN -->
         <section class="bg-white border border-line rounded-2xl p-5 shadow-sm space-y-4">
-          <div class="flex justify-between items-center">
-            <h3 class="text-sm font-bold">Historial de vacunación</h3>
-            <button class="text-bluebrand text-xs font-bold hover:underline" onclick="toast('Exportación de carnet: función pendiente')">Descargar carnet ↓</button>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm font-bold">Historial de vacunación</h3>
+              <p class="text-[11px] text-muted mt-0.5">Tocá cualquier vacuna para ver su detalle y la recomendación de próxima dosis.</p>
+            </div>
+            <button class="text-bluebrand text-xs font-bold hover:underline self-start sm:self-auto" onclick="toast('Exportación de carnet: función pendiente')">Descargar carnet ↓</button>
           </div>
 
           <!-- FILTROS -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-3">
-            <input id="searchVaccine" type="search" placeholder="Buscar vacuna..." oninput="filterVaccines()" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
+            <input id="searchVaccine" type="search" placeholder="Buscar vacuna o centro..." oninput="filterVaccines()" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
             <select id="timeFilter" onchange="filterVaccines()" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
               <option value="all">Todos los períodos</option>
               <option value="week">Última semana</option>
@@ -166,86 +169,8 @@
             </select>
           </div>
 
-          <!-- LISTA DE VACUNAS -->
-          <div class="space-y-2" id="vaccineList">
-            <div class="vaccine-row grid grid-cols-[36px_1fr_auto_auto] sm:grid-cols-[36px_1fr_125px_auto] items-center gap-3 p-3 border border-[#edf0f4] rounded-xl bg-white hover:border-[#d9e4ed] transition" data-person="Maria" data-status="ok">
-              <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.5 19.5a2.1 2.1 0 0 1-3 0l-1-1a2.1 2.1 0 0 1 0-3L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg></div>
-              <div class="min-w-0">
-                <b class="block text-xs font-bold">Antigripal</b>
-                <small class="block text-muted text-[10px]">María Quintana · Dosis anual</small>
-              </div>
-              <div class="min-w-0">
-                <b class="block text-xs font-bold">15/04/2026</b>
-                <small class="block text-muted text-[10px]">Centro de salud</small>
-              </div>
-              <span class="text-[9px] text-greenbrand bg-[#edf6f2] font-bold px-2.5 py-1 rounded-full whitespace-nowrap justify-self-end">Registrada</span>
-            </div>
-
-            <div class="vaccine-row grid grid-cols-[36px_1fr_auto_auto] sm:grid-cols-[36px_1fr_125px_auto] items-center gap-3 p-3 border border-[#edf0f4] rounded-xl bg-white hover:border-[#d9e4ed] transition" data-person="Maria" data-status="ok">
-              <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.5 19.5a2.1 2.1 0 0 1-3 0l-1-1a2.1 2.1 0 0 1 0-3L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg></div>
-              <div class="min-w-0">
-                <b class="block text-xs font-bold">Hepatitis B</b>
-                <small class="block text-muted text-[10px]">María Quintana · Esquema registrado</small>
-              </div>
-              <div class="min-w-0">
-                <b class="block text-xs font-bold">12/02/2025</b>
-                <small class="block text-muted text-[10px]">Registro personal</small>
-              </div>
-              <span class="text-[9px] text-greenbrand bg-[#edf6f2] font-bold px-2.5 py-1 rounded-full whitespace-nowrap justify-self-end">Registrada</span>
-            </div>
-
-            <div class="vaccine-row grid grid-cols-[36px_1fr_auto_auto] sm:grid-cols-[36px_1fr_125px_auto] items-center gap-3 p-3 border border-[#edf0f4] rounded-xl bg-white hover:border-[#d9e4ed] transition" data-person="Tomas" data-status="ok">
-              <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.5 19.5a2.1 2.1 0 0 1-3 0l-1-1a2.1 2.1 0 0 1 0-3L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg></div>
-              <div class="min-w-0">
-                <b class="block text-xs font-bold">Triple bacteriana acelular</b>
-                <small class="block text-muted text-[10px]">Tomás · Refuerzo</small>
-              </div>
-              <div class="min-w-0">
-                <b class="block text-xs font-bold">20/03/2026</b>
-                <small class="block text-muted text-[10px]">Centro de salud</small>
-              </div>
-              <span class="text-[9px] text-greenbrand bg-[#edf6f2] font-bold px-2.5 py-1 rounded-full whitespace-nowrap justify-self-end">Registrada</span>
-            </div>
-
-            <div class="vaccine-row grid grid-cols-[36px_1fr_auto_auto] sm:grid-cols-[36px_1fr_125px_auto] items-center gap-3 p-3 border border-[#edf0f4] rounded-xl bg-white hover:border-[#d9e4ed] transition" data-person="Tomas" data-status="pending">
-              <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.5 19.5a2.1 2.1 0 0 1-3 0l-1-1a2.1 2.1 0 0 1 0-3L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg></div>
-              <div class="min-w-0">
-                <b class="block text-xs font-bold">Vacuna del calendario</b>
-                <small class="block text-muted text-[10px]">Tomás · Revisar documentación</small>
-              </div>
-              <div class="min-w-0">
-                <b class="block text-xs font-bold">Sin confirmar</b>
-                <small class="block text-muted text-[10px]">Dato pendiente</small>
-              </div>
-              <span class="text-[9px] text-redbrand bg-rs font-bold px-2.5 py-1 rounded-full whitespace-nowrap justify-self-end">A verificar</span>
-            </div>
-
-            <div class="vaccine-row grid grid-cols-[36px_1fr_auto_auto] sm:grid-cols-[36px_1fr_125px_auto] items-center gap-3 p-3 border border-[#edf0f4] rounded-xl bg-white hover:border-[#d9e4ed] transition" data-person="Ana" data-status="ok">
-              <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.5 19.5a2.1 2.1 0 0 1-3 0l-1-1a2.1 2.1 0 0 1 0-3L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg></div>
-              <div class="min-w-0">
-                <b class="block text-xs font-bold">Triple viral</b>
-                <small class="block text-muted text-[10px]">Ana · Dosis registrada</small>
-              </div>
-              <div class="min-w-0">
-                <b class="block text-xs font-bold">08/08/2025</b>
-                <small class="block text-muted text-[10px]">Centro de salud</small>
-              </div>
-              <span class="text-[9px] text-greenbrand bg-[#edf6f2] font-bold px-2.5 py-1 rounded-full whitespace-nowrap justify-self-end">Registrada</span>
-            </div>
-
-            <div class="vaccine-row grid grid-cols-[36px_1fr_auto_auto] sm:grid-cols-[36px_1fr_125px_auto] items-center gap-3 p-3 border border-[#edf0f4] rounded-xl bg-white hover:border-[#d9e4ed] transition" data-person="Ana" data-status="ok">
-              <div class="w-9 h-9 rounded-xl bg-vs text-violetbrand grid place-items-center text-base font-bold flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.5 19.5a2.1 2.1 0 0 1-3 0l-1-1a2.1 2.1 0 0 1 0-3L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg></div>
-              <div class="min-w-0">
-                <b class="block text-xs font-bold">Poliomielitis</b>
-                <small class="block text-muted text-[10px]">Ana · Dosis registrada</small>
-              </div>
-              <div class="min-w-0">
-                <b class="block text-xs font-bold">08/08/2025</b>
-                <small class="block text-muted text-[10px]">Centro de salud</small>
-              </div>
-              <span class="text-[9px] text-greenbrand bg-[#edf6f2] font-bold px-2.5 py-1 rounded-full whitespace-nowrap justify-self-end">Registrada</span>
-            </div>
-          </div>
+          <!-- LISTA DE VACUNAS (Renderizada dinámicamente por script.js) -->
+          <div class="space-y-2.5" id="vaccineList"></div>
 
           <div class="hidden text-center py-7 px-3 text-muted text-xs bg-slate-50 border border-dashed border-line rounded-xl" id="emptyState">No encontramos registros que coincidan con la búsqueda.</div>
           
@@ -263,16 +188,131 @@
     </main>
   </div>
 
-  <!-- TOAST & MODAL -->
-  <div class="fixed bottom-5 right-5 bg-ink text-white px-4 py-3 rounded-xl text-xs opacity-0 translate-y-2 transition-all duration-200 pointer-events-none" id="toast"></div>
-  <div class="hidden fixed inset-0 bg-slate-900/40 items-center justify-center p-5 z-50" id="modal">
+  <!-- MODAL PARA AGREGAR VACUNA -->
+  <div class="hidden fixed inset-0 bg-[#17263866] items-center justify-center p-5 z-50 [&.open]:flex" id="addVaccineModal">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-[520px] max-h-[90vh] overflow-y-auto shadow-xl">
+      <div class="flex justify-between items-start gap-3 mb-4">
+        <div>
+          <div class="text-[10px] text-violetbrand tracking-[1.3px] font-extrabold uppercase mb-1">CARNET FAMILIAR</div>
+          <h3 class="text-[19px] font-bold">Agregar vacuna</h3>
+          <p class="text-xs text-muted mt-0.5">Completá los datos para sumar una dosis al historial familiar.</p>
+        </div>
+        <button type="button" class="w-[31px] h-[31px] flex-shrink-0 border-0 rounded-lg bg-[#f3f5f8] text-muted text-[21px] cursor-pointer hover:bg-rs hover:text-redbrand transition grid place-items-center leading-none" onclick="closeAddVaccineModal()">×</button>
+      </div>
+
+      <form id="addVaccineForm" onsubmit="saveNewVaccine(event)" class="space-y-3 text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] font-bold text-ink mb-1" for="newVaccineMember">Integrante *</label>
+            <select id="newVaccineMember" class="w-full h-[40px] px-3 border border-line rounded-lg bg-white text-ink text-xs outline-none focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 transition">
+              <option value="">Seleccionar integrante</option>
+              <option value="Maria">María Quintana</option>
+              <option value="Tomas">Tomás</option>
+              <option value="Ana">Ana</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold text-ink mb-1" for="newVaccineDose">Dosis *</label>
+            <select id="newVaccineDose" class="w-full h-[40px] px-3 border border-line rounded-lg bg-white text-ink text-xs outline-none focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 transition">
+              <option value="">Seleccionar dosis</option>
+              <option value="Primera dosis">Primera dosis</option>
+              <option value="Segunda dosis">Segunda dosis</option>
+              <option value="Tercera dosis">Tercera dosis</option>
+              <option value="Refuerzo">Refuerzo</option>
+              <option value="Dosis anual">Dosis anual</option>
+              <option value="Dosis única">Dosis única</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-bold text-ink mb-1" for="newVaccineName">Vacuna *</label>
+          <select id="newVaccineName" onchange="toggleCustomVaccineInput()" class="w-full h-[40px] px-3 border border-line rounded-lg bg-white text-ink text-xs outline-none focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 transition">
+            <option value="">Seleccionar vacuna</option>
+            <option value="Antigripal">Antigripal</option>
+            <option value="Hepatitis B">Hepatitis B</option>
+            <option value="Triple bacteriana acelular">Triple bacteriana acelular</option>
+            <option value="Triple viral">Triple viral</option>
+            <option value="Poliomielitis">Poliomielitis</option>
+            <option value="COVID-19">COVID-19</option>
+            <option value="Neumococo conjugada">Neumococo conjugada</option>
+            <option value="VPH">VPH</option>
+            <option value="Doble adultos">Doble adultos</option>
+            <option value="Otra">Otra vacuna...</option>
+          </select>
+        </div>
+
+        <div id="customVaccineNameWrapper" class="hidden">
+          <label class="block text-[11px] font-bold text-ink mb-1" for="customVaccineName">Nombre de la vacuna *</label>
+          <input type="text" id="customVaccineName" placeholder="Ej. Fiebre amarilla" class="w-full h-[40px] px-3 border border-line rounded-lg bg-white text-ink text-xs outline-none focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 transition">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] font-bold text-ink mb-1" for="newVaccineDate">Fecha de aplicación *</label>
+            <input type="date" id="newVaccineDate" class="w-full h-[40px] px-3 border border-line rounded-lg bg-white text-ink text-xs outline-none focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 transition">
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold text-ink mb-1" for="newVaccineStatus">Estado del registro</label>
+            <select id="newVaccineStatus" class="w-full h-[40px] px-3 border border-line rounded-lg bg-white text-ink text-xs outline-none focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 transition">
+              <option value="ok">Registrada (verificada)</option>
+              <option value="pending">A verificar (pendiente)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-bold text-ink mb-1" for="newVaccineCenter">Centro de vacunación / Lugar</label>
+          <input type="text" id="newVaccineCenter" placeholder="Ej. Centro de Salud San Justo" class="w-full h-[40px] px-3 border border-line rounded-lg bg-white text-ink text-xs outline-none focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 transition">
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-bold text-ink mb-1" for="newVaccineNotes">Observaciones o lote (opcional)</label>
+          <input type="text" id="newVaccineNotes" placeholder="Ej. Lote AG-412 · Sin reacciones" class="w-full h-[40px] px-3 border border-line rounded-lg bg-white text-ink text-xs outline-none focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 transition">
+        </div>
+
+        <div class="flex justify-end items-center gap-2 pt-4 mt-2 border-t border-line">
+          <button type="button" class="border border-line bg-white text-[#647589] rounded-lg px-4 py-2.5 text-[11px] font-bold hover:bg-slate-50 transition" onclick="closeAddVaccineModal()">Cancelar</button>
+          <button type="submit" class="bg-violetbrand text-white rounded-lg px-4 py-2.5 text-[11px] font-bold hover:bg-opacity-90 transition cursor-pointer">Guardar vacuna</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL PARA DETALLE DE VACUNA SELECCIONADA -->
+  <div class="hidden fixed inset-0 bg-[#17263866] items-center justify-center p-5 z-50 [&.open]:flex" id="vaccineDetailModal">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-[500px] max-h-[90vh] overflow-y-auto shadow-xl space-y-4">
+      <div class="flex justify-between items-start gap-3">
+        <div>
+          <div class="text-[10px] text-violetbrand tracking-[1.3px] font-extrabold uppercase mb-1">DETALLE DEL REGISTRO</div>
+          <h3 class="text-lg font-extrabold text-ink leading-snug" id="detailVaccineTitle">Vacuna</h3>
+        </div>
+        <button type="button" class="w-[31px] h-[31px] flex-shrink-0 border-0 rounded-lg bg-[#f3f5f8] text-muted text-[21px] cursor-pointer hover:bg-rs hover:text-redbrand transition grid place-items-center leading-none" onclick="closeVaccineDetail()">×</button>
+      </div>
+
+      <div id="vaccineDetailContent"></div>
+
+      <div class="flex justify-between items-center gap-2 pt-3 border-t border-line flex-wrap">
+        <button type="button" id="detailScheduleBtn" onclick="go('Turnos')" class="inline-flex items-center gap-1.5 bg-vs text-violetbrand hover:bg-violetbrand hover:text-white rounded-lg px-3.5 py-2 text-[11px] font-bold transition cursor-pointer">
+          Solicitar turno para refuerzo ↗
+        </button>
+        <button type="button" class="border border-line bg-white rounded-lg px-4 py-2 text-[11px] font-bold text-[#647589] hover:bg-slate-50 transition ml-auto cursor-pointer" onclick="closeVaccineDetail()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST & MODAL GLOBAL -->
+  <div class="fixed bottom-5 right-5 bg-ink text-white px-4 py-3 rounded-xl text-xs opacity-0 translate-y-2 transition-all duration-200 pointer-events-none [&.show]:opacity-100 [&.show]:translate-y-0 z-50" id="toast"></div>
+  <div class="hidden fixed inset-0 bg-slate-900/40 items-center justify-center p-5 z-40 [&.open]:flex" id="modal">
     <div class="bg-white rounded-2xl p-6 w-full max-w-md space-y-3">
-      <h3 class="text-lg font-bold" id="mtitle">Agregar vacuna</h3>
-      <p class="text-xs text-muted" id="mdesc">Completá los datos del registro. Esta acción es demostrativa.</p>
+      <h3 class="text-lg font-bold" id="mtitle"></h3>
+      <p class="text-xs text-muted" id="mdesc"></p>
       <div id="mfields" class="space-y-2 text-xs"></div>
       <div class="flex justify-end gap-2 pt-3">
         <button class="border border-line bg-white rounded-lg px-3 py-2 text-xs text-muted" onclick="closeModal()">Cancelar</button>
-        <button class="bg-violetbrand text-white rounded-lg px-3.5 py-2 text-xs font-bold" onclick="submitModal()">Guardar registro</button>
+        <button class="bg-violetbrand text-white rounded-lg px-3.5 py-2 text-xs font-bold" onclick="submitModal()">Continuar</button>
       </div>
     </div>
   </div>

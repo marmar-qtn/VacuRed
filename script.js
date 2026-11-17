@@ -106,6 +106,8 @@ document.addEventListener('keydown', e => {
         closeModal();
         closeBookingModal();
         closeAppointmentDetail();
+        closeAddVaccineModal();
+        closeVaccineDetail();
     }
 });
 
@@ -863,10 +865,97 @@ function switchAccountTab(tabId, btnElement) {
    ===================================================== */
 
 const people = {
-    Maria: { name: 'María Quintana', initials: 'MQ', desc: 'Adulta · Responsable de la cuenta' },
-    Tomas: { name: 'Tomás', initials: 'T', desc: 'Adolescente · Integrante familiar' },
-    Ana: { name: 'Ana', initials: 'A', desc: 'Niña · Integrante familiar' }
+    Maria: {
+        name: 'María Quintana',
+        initials: 'MQ',
+        desc: 'Adulta · Responsable de la cuenta',
+        colorClass: 'text-violetbrand',
+        avatarBg: 'bg-vs text-violetbrand'
+    },
+    Tomas: {
+        name: 'Tomás',
+        initials: 'JT',
+        desc: 'Adolescente · Integrante familiar',
+        colorClass: 'text-bluebrand',
+        avatarBg: 'bg-bs text-bluebrand'
+    },
+    Ana: {
+        name: 'Ana',
+        initials: 'AL',
+        desc: 'Niña · Integrante familiar',
+        colorClass: 'text-[#2b7a67]',
+        avatarBg: 'bg-gs text-[#2b7a67]'
+    }
 };
+
+let vaccines = [
+    {
+        id: 1,
+        person: 'Maria',
+        name: 'Antigripal',
+        dose: 'Dosis anual',
+        date: '2026-04-15',
+        center: 'Centro de Salud San Justo',
+        status: 'ok',
+        notes: 'Campaña otoñal · Lote AG-2026-41',
+        nextDose: 'Se recomienda aplicar la próxima dosis anual a partir de abril de 2027.'
+    },
+    {
+        id: 2,
+        person: 'Maria',
+        name: 'Hepatitis B',
+        dose: 'Esquema registrado',
+        date: '2025-02-12',
+        center: 'Registro personal',
+        status: 'ok',
+        notes: 'Esquema completo de 3 dosis validado en carnet.',
+        nextDose: 'No aplica. El esquema completo brinda protección de por vida.'
+    },
+    {
+        id: 3,
+        person: 'Tomas',
+        name: 'Triple bacteriana acelular',
+        dose: 'Refuerzo',
+        date: '2026-03-20',
+        center: 'Centro de Salud San Justo',
+        status: 'ok',
+        notes: 'Refuerzo correspondiente a los 11 años · Lote TBA-89',
+        nextDose: 'Próximo refuerzo (Doble adultos - dT) recomendado a los 21 años (2036).'
+    },
+    {
+        id: 4,
+        person: 'Tomas',
+        name: 'Vacuna del calendario',
+        dose: 'Revisar documentación',
+        date: '',
+        center: 'Dato pendiente',
+        status: 'pending',
+        notes: 'Registro cargado sin comprobante físico adjunto.',
+        nextDose: 'Presentá el carnet físico en un vacunatorio para confirmar fecha y próxima dosis.'
+    },
+    {
+        id: 5,
+        person: 'Ana',
+        name: 'Triple viral',
+        dose: 'Dosis registrada',
+        date: '2025-08-08',
+        center: 'Centro de Salud San Justo',
+        status: 'ok',
+        notes: 'Primera dosis infantil · Lote TV-312',
+        nextDose: 'Refuerzo obligatorio al ingreso escolar (entre los 5 y 6 años).'
+    },
+    {
+        id: 6,
+        person: 'Ana',
+        name: 'Poliomielitis',
+        dose: 'Dosis registrada',
+        date: '2025-08-08',
+        center: 'Centro de Salud San Justo',
+        status: 'ok',
+        notes: 'Vacuna inactivada IPV · Lote IPV-104',
+        nextDose: 'Refuerzo escolar previsto al cumplir los 5 años según Calendario Nacional.'
+    }
+];
 
 let selectedPerson = 'all';
 
@@ -891,15 +980,17 @@ function selectPerson(person, btn) {
     if (memberInitials) memberInitials.textContent = p ? p.initials : 'MQ';
     if (memberDesc) memberDesc.textContent = p ? p.desc : '3 integrantes registrados · Carnets organizados en un solo lugar.';
 
-    filterVaccines();
+    renderVaccines();
 }
 
-function matchesTimeFilter(dateText, timeRange) {
+function matchesTimeFilter(isoDate, timeRange) {
     if (timeRange === 'all') return true;
-    const match = dateText.trim().match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-    if (!match) return false;
+    if (!isoDate) return false;
 
-    const [, day, month, year] = match;
+    const parts = isoDate.split('-');
+    if (parts.length !== 3) return false;
+
+    const [year, month, day] = parts;
     const vaccineDate = new Date(Number(year), Number(month) - 1, Number(day));
     const now = new Date();
     now.setHours(23, 59, 59, 999);
@@ -913,42 +1004,285 @@ function matchesTimeFilter(dateText, timeRange) {
     return vaccineDate >= cutoff && vaccineDate <= now;
 }
 
-function filterVaccines() {
+function renderVaccines() {
+    const list = document.getElementById('vaccineList');
+    if (!list) return;
+
     const searchEl = document.getElementById('searchVaccine');
     const timeEl = document.getElementById('timeFilter');
     const statusEl = document.getElementById('statusFilter');
-    if (!searchEl || !timeEl || !statusEl) return;
 
-    const q = searchEl.value.toLowerCase();
-    const t = timeEl.value;
-    const s = statusEl.value;
-    let visible = 0;
+    const q = searchEl ? searchEl.value.toLowerCase().trim() : '';
+    const t = timeEl ? timeEl.value : 'all';
+    const s = statusEl ? statusEl.value : 'all';
 
-    document.querySelectorAll('.vaccine-row').forEach(row => {
-        const dateText = row.querySelectorAll('div')[2]?.querySelector('b')?.textContent || '';
-        const ok =
-            row.textContent.toLowerCase().includes(q) &&
-            (selectedPerson === 'all' || row.dataset.person === selectedPerson) &&
-            matchesTimeFilter(dateText, t) &&
-            (s === 'all' || row.dataset.status === s);
-
-        row.style.display = ok ? 'grid' : 'none';
-        if (ok) visible++;
+    const filtered = vaccines.filter(v => {
+        const personInfo = people[v.person] || { name: v.person };
+        const searchableText = `${v.name} ${personInfo.name} ${v.dose} ${v.center}`.toLowerCase();
+        return (
+            searchableText.includes(q) &&
+            (selectedPerson === 'all' || v.person === selectedPerson) &&
+            matchesTimeFilter(v.date, t) &&
+            (s === 'all' || v.status === s)
+        );
     });
+
+    // Ordenar más recientes primero (dejando sin confirmar al final)
+    filtered.sort((a, b) => {
+        if (!a.date) return 1;
+        if (!b.date) return -1;
+        return new Date(b.date) - new Date(a.date);
+    });
+
+    list.innerHTML = filtered.map(v => {
+        const personInfo = people[v.person] || { name: v.person, colorClass: 'text-ink' };
+        const isVerified = v.status === 'ok';
+        const formattedDate = v.date ? formatAppointmentDate(v.date).formatted : 'Sin confirmar';
+
+        // Degradado sutil de izquierda (blanco) a derecha (verde pastel o rojo pastel) + hover visual
+        const rowGradientAndHover = isVerified
+            ? 'bg-gradient-to-r from-white via-white to-[#edf6f2] border-[#e6edf2] hover:border-greenbrand/50'
+            : 'bg-gradient-to-r from-white via-white to-[#fff2f3] border-[#f2e4e6] hover:border-redbrand/50';
+
+        const iconBoxClass = isVerified
+            ? 'bg-vs text-violetbrand group-hover:bg-violetbrand group-hover:text-white'
+            : 'bg-rs text-redbrand group-hover:bg-redbrand group-hover:text-white';
+
+        const statusBadge = isVerified
+            ? '<span class="text-[10px] text-greenbrand bg-[#edf6f2] border border-greenbrand/25 font-bold px-2.5 py-1 rounded-full whitespace-nowrap">Registrada</span>'
+            : '<span class="text-[10px] text-redbrand bg-rs border border-redbrand/25 font-bold px-2.5 py-1 rounded-full whitespace-nowrap">A verificar</span>';
+
+        return `
+            <div onclick="showVaccineDetail(${v.id})"
+                role="button"
+                tabindex="0"
+                onkeydown="if(event.key==='Enter'||event.key===' ') showVaccineDetail(${v.id})"
+                class="vaccine-row group grid grid-cols-[38px_1fr_auto] sm:grid-cols-[38px_1fr_140px_auto] items-center gap-3 p-3.5 border rounded-xl ${rowGradientAndHover} hover:shadow-sm hover:-translate-y-[1px] transition-all duration-150 cursor-pointer">
+                
+                <div class="w-9 h-9 rounded-xl ${iconBoxClass} grid place-items-center text-base font-bold flex-shrink-0 transition-colors">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.5 19.5a2.1 2.1 0 0 1-3 0l-1-1a2.1 2.1 0 0 1 0-3L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg>
+                </div>
+
+                <div class="min-w-0">
+                    <b class="block text-xs sm:text-[13px] font-bold text-ink truncate">${v.name}</b>
+                    <small class="block text-muted text-[11px] mt-0.5 truncate">
+                        <span class="font-bold ${personInfo.colorClass}">${personInfo.name}</span> · ${v.dose}
+                    </small>
+                </div>
+
+                <div class="hidden sm:block min-w-0">
+                    <b class="block text-xs font-bold text-ink">${formattedDate}</b>
+                    <small class="block text-muted text-[10px] truncate">${v.center}</small>
+                </div>
+
+                <div class="flex items-center gap-2 justify-self-end">
+                    ${statusBadge}
+                    <span class="text-muted/60 group-hover:text-ink group-hover:translate-x-0.5 transition-all text-xs font-bold">›</span>
+                </div>
+            </div>
+        `;
+    }).join('');
 
     const emptyState = document.getElementById('emptyState');
     const vaccineCount = document.getElementById('vaccineCount');
+    const progressBar = document.getElementById('vaccineProgressBar');
 
-    if (emptyState) emptyState.style.display = visible ? 'none' : 'block';
-    if (vaccineCount) vaccineCount.textContent = visible;
+    if (emptyState) emptyState.style.display = filtered.length ? 'none' : 'block';
+    if (vaccineCount) vaccineCount.textContent = filtered.length;
+    if (progressBar) {
+        const verifiedCount = filtered.filter(v => v.status === 'ok').length;
+        const pct = filtered.length ? Math.round((verifiedCount / filtered.length) * 100) : 0;
+        progressBar.style.width = pct + '%';
+    }
 }
 
-function openVaccineModal() {
-    modal(
-        'Agregar vacuna',
-        'Ingresá los datos para sumar un registro al carnet familiar.',
-        '<label class="block font-bold mb-1">Integrante</label><select class="w-full h-10 px-3 border border-line rounded-lg bg-white mb-2"><option>María</option><option>Tomás</option><option>Ana</option></select><label class="block font-bold mb-1">Nombre de la vacuna</label><input class="w-full h-10 px-3 border border-line rounded-lg bg-white mb-2" placeholder="Ej. Antigripal"><label class="block font-bold mb-1">Fecha de aplicación</label><input class="w-full h-10 px-3 border border-line rounded-lg bg-white mb-2" type="date"><label class="block font-bold mb-1">Centro de vacunación (opcional)</label><input class="w-full h-10 px-3 border border-line rounded-lg bg-white mb-2" placeholder="Nombre del establecimiento"><label class="block font-bold mb-1">Observaciones (opcional)</label><input class="w-full h-10 px-3 border border-line rounded-lg bg-white mb-2" placeholder="Dosis, lote u otra información">'
-    );
+function filterVaccines() {
+    renderVaccines();
+}
+
+function getRecommendedNextDose(vaccineName, dose) {
+    const lower = vaccineName.toLowerCase();
+    if (lower.includes('antigripal')) {
+        return 'Se recomienda aplicar una dosis anual cada otoño antes del inicio del invierno.';
+    }
+    if (lower.includes('hepatitis b')) {
+        return dose === 'Tercera dosis' || dose === 'Esquema registrado'
+            ? 'Esquema completo. No requiere dosis adicionales.'
+            : 'Completar las 3 dosis del esquema (0, 1 y 6 meses) según indicación médica.';
+    }
+    if (lower.includes('doble adultos') || lower.includes('triple bacteriana')) {
+        return 'Refuerzo recomendado cada 10 años según el Calendario Nacional de Vacunación.';
+    }
+    if (lower.includes('triple viral') || lower.includes('poliomielitis')) {
+        return 'Verificar refuerzo obligatorio al ingreso escolar (entre los 5 y 6 años).';
+    }
+    if (lower.includes('covid')) {
+        return 'Consultar refuerzo semestral o anual según grupo de edad y factores de riesgo.';
+    }
+    return 'Consultá con un profesional de salud o el Calendario Nacional para verificar si corresponde refuerzo.';
+}
+
+function showVaccineDetail(id) {
+    const v = vaccines.find(item => item.id === id);
+    if (!v) return;
+
+    const personInfo = people[v.person] || {
+        name: v.person,
+        initials: v.person.slice(0, 2).toUpperCase(),
+        desc: 'Integrante familiar',
+        avatarBg: 'bg-vs text-violetbrand'
+    };
+
+    const isVerified = v.status === 'ok';
+    const formattedDate = v.date ? formatAppointmentDate(v.date).formatted : 'Sin confirmar';
+
+    const titleEl = document.getElementById('detailVaccineTitle');
+    const contentEl = document.getElementById('vaccineDetailContent');
+
+    if (titleEl) titleEl.textContent = v.name;
+
+    if (contentEl) {
+        const statusPill = isVerified
+            ? '<span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold bg-[#edf6f2] text-greenbrand border border-greenbrand/30">Registrada</span>'
+            : '<span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold bg-rs text-redbrand border border-redbrand/30">A verificar</span>';
+
+        contentEl.innerHTML = `
+            <div class="space-y-3.5">
+                <!-- Integrante y estado -->
+                <div class="flex items-center justify-between gap-3 p-3 bg-bglight border border-line rounded-xl">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-9 h-9 rounded-xl ${personInfo.avatarBg} grid place-items-center text-xs font-extrabold shrink-0">
+                            ${personInfo.initials}
+                        </div>
+                        <div class="min-w-0">
+                            <b class="block text-xs font-bold text-ink truncate">${personInfo.name}</b>
+                            <small class="block text-[10px] text-muted truncate">${personInfo.desc}</small>
+                        </div>
+                    </div>
+                    ${statusPill}
+                </div>
+
+                <!-- Datos estructurados -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div class="bg-white border border-line rounded-xl p-3 space-y-0.5">
+                        <small class="block text-[9px] text-muted font-extrabold tracking-wider uppercase">DOSIS APLICADA</small>
+                        <strong class="block text-xs font-bold text-ink">${v.dose}</strong>
+                    </div>
+
+                    <div class="bg-white border border-line rounded-xl p-3 space-y-0.5">
+                        <small class="block text-[9px] text-muted font-extrabold tracking-wider uppercase">FECHA DE APLICACIÓN</small>
+                        <strong class="block text-xs font-bold text-ink">${formattedDate}</strong>
+                    </div>
+
+                    <div class="bg-white border border-line rounded-xl p-3 space-y-0.5 sm:col-span-2">
+                        <small class="block text-[9px] text-muted font-extrabold tracking-wider uppercase">VACUNATORIO / LUGAR</small>
+                        <strong class="block text-xs font-bold text-ink">${v.center}</strong>
+                    </div>
+
+                    ${v.notes ? `
+                    <div class="bg-white border border-line rounded-xl p-3 space-y-0.5 sm:col-span-2">
+                        <small class="block text-[9px] text-muted font-extrabold tracking-wider uppercase">OBSERVACIONES</small>
+                        <p class="text-xs text-slate-700 font-medium">${v.notes}</p>
+                    </div>` : ''}
+                </div>
+
+                <!-- Recomendación de próxima dosis -->
+                <div class="bg-vs/70 border border-violetbrand/20 rounded-xl p-3.5 flex items-start gap-2.5">
+                    <span class="w-7 h-7 rounded-lg bg-white text-violetbrand grid place-items-center shrink-0 mt-0.5 shadow-2xs">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+                    </span>
+                    <div class="space-y-0.5">
+                        <small class="block text-[9px] text-violetbrand font-extrabold tracking-wider uppercase">RECOMENDACIÓN DE PRÓXIMA DOSIS</small>
+                        <p class="text-xs text-ink font-medium leading-relaxed">${v.nextDose}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    const detailModal = document.getElementById('vaccineDetailModal');
+    if (detailModal) detailModal.classList.add('open');
+}
+
+function closeVaccineDetail() {
+    const detailModal = document.getElementById('vaccineDetailModal');
+    if (detailModal) detailModal.classList.remove('open');
+}
+
+function openAddVaccineModal() {
+    const form = document.getElementById('addVaccineForm');
+    if (form) form.reset();
+
+    const customWrap = document.getElementById('customVaccineNameWrapper');
+    if (customWrap) customWrap.classList.add('hidden');
+
+    // Preseleccionar integrante si hay una pestaña individual activa
+    if (selectedPerson !== 'all') {
+        const memberSelect = document.getElementById('newVaccineMember');
+        if (memberSelect) memberSelect.value = selectedPerson;
+    }
+
+    const addModal = document.getElementById('addVaccineModal');
+    if (addModal) addModal.classList.add('open');
+}
+
+function closeAddVaccineModal() {
+    const addModal = document.getElementById('addVaccineModal');
+    if (addModal) addModal.classList.remove('open');
+}
+
+function toggleCustomVaccineInput() {
+    const select = document.getElementById('newVaccineName');
+    const wrapper = document.getElementById('customVaccineNameWrapper');
+    if (!select || !wrapper) return;
+
+    if (select.value === 'Otra') {
+        wrapper.classList.remove('hidden');
+    } else {
+        wrapper.classList.add('hidden');
+    }
+}
+
+function saveNewVaccine(event) {
+    event.preventDefault();
+
+    const person = document.getElementById('newVaccineMember')?.value || '';
+    const dose = document.getElementById('newVaccineDose')?.value || '';
+    const selectedName = document.getElementById('newVaccineName')?.value || '';
+    const customName = document.getElementById('customVaccineName')?.value.trim() || '';
+    const date = document.getElementById('newVaccineDate')?.value || '';
+    const status = document.getElementById('newVaccineStatus')?.value || 'ok';
+    const center = document.getElementById('newVaccineCenter')?.value.trim() || 'Centro de salud';
+    const notes = document.getElementById('newVaccineNotes')?.value.trim() || '';
+
+    const finalName = selectedName === 'Otra' ? customName : selectedName;
+
+    if (!person || !dose || !finalName || !date) {
+        toast('Completá los campos obligatorios (*) para guardar la vacuna.');
+        return;
+    }
+
+    const newVaccine = {
+        id: Date.now(),
+        person,
+        name: finalName,
+        dose,
+        date,
+        center,
+        status,
+        notes: notes || 'Registro agregado manualmente por el titular.',
+        nextDose: getRecommendedNextDose(finalName, dose)
+    };
+
+    vaccines.unshift(newVaccine);
+    closeAddVaccineModal();
+    renderVaccines();
+    toast('¡Vacuna agregada al carnet familiar!');
+}
+
+// Inicializar renderizado si estamos en carnet.html
+if (document.getElementById('vaccineList')) {
+    renderVaccines();
 }
 
 /* =====================================================
