@@ -835,7 +835,7 @@ function confirmBooking() {
     toast("¡Tu solicitud de turno fue registrada!");
 }
 /* =====================================================
-   VACURED · MI CUENTA (Pestañas de configuración)
+   VACURED · MI CUENTA (Pestañas, Edición y Familia)
    ===================================================== */
 
 function switchAccountTab(tabId, btnElement) {
@@ -844,9 +844,10 @@ function switchAccountTab(tabId, btnElement) {
         section.style.display = 'none';
     });
 
-    // Remover la clase active de todas las pestañas
+    // Actualizar estilos de las pestañas
     document.querySelectorAll('#accountTabs .family-tab').forEach(tab => {
-        tab.classList.remove('active');
+        tab.classList.remove('active', 'bg-white', 'text-violetbrand', 'border-line', 'shadow-2xs');
+        tab.classList.add('border-transparent', 'bg-transparent', 'text-[#68798b]');
     });
 
     // Mostrar la sección seleccionada y activar el botón
@@ -856,7 +857,258 @@ function switchAccountTab(tabId, btnElement) {
     }
 
     if (btnElement) {
-        btnElement.classList.add('active');
+        btnElement.classList.add('active', 'bg-white', 'text-violetbrand', 'border-line', 'shadow-2xs');
+        btnElement.classList.remove('border-transparent', 'bg-transparent', 'text-[#68798b]');
+    }
+}
+
+let isEditingProfile = false;
+
+function toggleEditProfile() {
+    const btn = document.getElementById('editProfileBtn');
+    const fields = document.querySelectorAll('#tab-perfil .profile-field');
+    if (!btn || !fields.length) return;
+
+    if (!isEditingProfile) {
+        // Activar modo edición
+        isEditingProfile = true;
+
+        fields.forEach(input => {
+            input.disabled = false;
+            input.classList.remove('px-0', 'border-transparent', 'bg-transparent');
+            input.classList.add('px-3', 'border-violetbrand/40', 'bg-white', 'focus:border-violetbrand', 'focus:ring-2', 'focus:ring-violetbrand/15', 'shadow-2xs');
+        });
+
+        btn.className = 'inline-flex items-center gap-2 bg-greenbrand text-white rounded-lg px-3.5 py-2 text-xs font-bold hover:bg-opacity-90 transition self-start sm:self-auto shadow-2xs cursor-pointer';
+        btn.innerHTML = `
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>Guardar cambios</span>
+        `;
+
+        const firstInput = document.getElementById('inputNombre');
+        if (firstInput) firstInput.focus();
+    } else {
+        // Guardar cambios y volver a modo lectura
+        const nombre = document.getElementById('inputNombre')?.value.trim() || '';
+        const dni = document.getElementById('inputDni')?.value.trim() || '';
+        const obraSocial = document.getElementById('inputObraSocial')?.value.trim() || 'Sin cobertura / Particular';
+        const email = document.getElementById('inputEmail')?.value.trim() || '';
+
+        if (!nombre || !email) {
+            toast('Completá al menos tu nombre y correo electrónico.');
+            return;
+        }
+
+        // Actualizar cabecera y sidebar con los datos editados
+        const headerName = document.getElementById('profileHeaderName');
+        const headerEmail = document.getElementById('profileHeaderEmail');
+        const headerDni = document.getElementById('profileHeaderDni');
+        const headerObraSocial = document.getElementById('profileHeaderObraSocial');
+        const sidebarName = document.getElementById('sidebarUserName');
+
+        if (headerName) headerName.textContent = nombre;
+        if (headerEmail) headerEmail.textContent = `${email} · Cuenta familiar activa`;
+        if (headerDni) headerDni.textContent = dni ? `DNI ${dni}` : 'Sin DNI cargado';
+        if (headerObraSocial) headerObraSocial.textContent = obraSocial;
+        if (sidebarName) sidebarName.textContent = nombre;
+
+        isEditingProfile = false;
+
+        fields.forEach(input => {
+            input.disabled = true;
+            input.classList.add('px-0', 'border-transparent', 'bg-transparent');
+            input.classList.remove('px-3', 'border-violetbrand/40', 'bg-white', 'focus:border-violetbrand', 'focus:ring-2', 'focus:ring-violetbrand/15', 'shadow-2xs');
+        });
+
+        btn.className = 'inline-flex items-center gap-2 border border-violetbrand/30 bg-vs/70 text-violetbrand hover:bg-violetbrand hover:text-white rounded-lg px-3.5 py-2 text-xs font-bold transition self-start sm:self-auto cursor-pointer';
+        btn.innerHTML = `
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            <span>Editar perfil</span>
+        `;
+
+        toast('Cambios guardados correctamente');
+    }
+}
+
+const accountFamilyMembers = [
+    {
+        firstName: 'Tomás',
+        lastName: 'Quintana',
+        relation: 'Hijo',
+        pillClass: 'text-violetbrand',
+        dni: '48.920.114',
+        obraSocial: 'OSDE 210 (Grupo familiar)',
+        nacimiento: '2014-09-19',
+        email: 'tomas.quintana@email.com',
+        telefono: '+54 11 4455-6677 (Titular)',
+        localidad: 'San Justo, La Matanza'
+    },
+    {
+        firstName: 'Ana',
+        lastName: 'Quintana',
+        relation: 'Hija',
+        pillClass: 'text-[#2b7a67]',
+        dni: '53.418.902',
+        obraSocial: 'OSDE 210 (Grupo familiar)',
+        nacimiento: '2021-03-04',
+        email: 'maria.quintana@email.com (Titular)',
+        telefono: '+54 11 4455-6677 (Titular)',
+        localidad: 'San Justo, La Matanza'
+    }
+];
+
+let currentFamilyMemberIndex = 0;
+let isEditingFamilyMember = false;
+
+function goToFamilyMember(targetIndex) {
+    if (isEditingFamilyMember) {
+        toast('Guardá los cambios del integrante antes de cambiar.');
+        return;
+    }
+
+    const total = accountFamilyMembers.length;
+    if (targetIndex < 0 || targetIndex >= total || targetIndex === currentFamilyMemberIndex) return;
+
+    const direction = targetIndex > currentFamilyMemberIndex ? 1 : -1;
+    currentFamilyMemberIndex = targetIndex;
+    renderSelectedFamilyMember(direction);
+}
+
+function switchFamilyMember(direction) {
+    if (isEditingFamilyMember) {
+        toast('Guardá los cambios del integrante antes de cambiar.');
+        return;
+    }
+
+    const total = accountFamilyMembers.length;
+    currentFamilyMemberIndex = (currentFamilyMemberIndex + direction + total) % total;
+    renderSelectedFamilyMember(direction);
+}
+
+function renderSelectedFamilyMember(direction = 1) {
+    const member = accountFamilyMembers[currentFamilyMemberIndex];
+    if (!member) return;
+
+    const slideBox = document.getElementById('familyMemberSlideBox');
+    const detailCard = document.getElementById('familyMemberDetailCard');
+    const firstNameEl = document.getElementById('familyMemberFirstName');
+    const lastNameEl = document.getElementById('familyMemberLastName');
+    const pillEl = document.getElementById('familyMemberRelationPill');
+
+    const inputNombre = document.getElementById('fmInputNombre');
+    const inputRelacion = document.getElementById('fmInputRelacion');
+    const inputDni = document.getElementById('fmInputDni');
+    const inputObraSocial = document.getElementById('fmInputObraSocial');
+    const inputNacimiento = document.getElementById('fmInputNacimiento');
+    const inputEmail = document.getElementById('fmInputEmail');
+    const inputTelefono = document.getElementById('fmInputTelefono');
+    const inputLocalidad = document.getElementById('fmInputLocalidad');
+
+    // Animar el slider de puntos sin destruir los nodos DOM para mantener transición fluida
+    document.querySelectorAll('#familyMemberDots .family-dot').forEach((dot, idx) => {
+        if (idx === currentFamilyMemberIndex) {
+            dot.classList.remove('w-1.5', 'bg-slate-300/90', 'hover:bg-slate-400');
+            dot.classList.add('w-6', 'bg-violetbrand');
+        } else {
+            dot.classList.remove('w-6', 'bg-violetbrand');
+            dot.classList.add('w-1.5', 'bg-slate-300/90', 'hover:bg-slate-400');
+        }
+    });
+
+    // Micro-animación direccional al cambiar de integrante
+    const offset = direction >= 0 ? 'translate-x-2' : '-translate-x-2';
+    if (slideBox) {
+        slideBox.classList.add('opacity-0', offset);
+    }
+    if (detailCard) {
+        detailCard.classList.add('opacity-60');
+    }
+
+    setTimeout(() => {
+        if (firstNameEl) firstNameEl.textContent = member.firstName;
+        if (lastNameEl) lastNameEl.textContent = member.lastName;
+        if (pillEl) {
+            pillEl.textContent = member.relation;
+            pillEl.className = `mt-2.5 inline-flex items-center bg-white/45 backdrop-blur-md border border-white/75 rounded-full px-3 py-0.5 text-[10px] font-extrabold tracking-wide shadow-2xs ${member.pillClass}`;
+        }
+
+        if (inputNombre) inputNombre.value = `${member.firstName} ${member.lastName}`.trim();
+        if (inputRelacion) inputRelacion.value = member.relation;
+        if (inputDni) inputDni.value = member.dni;
+        if (inputObraSocial) inputObraSocial.value = member.obraSocial;
+        if (inputNacimiento) inputNacimiento.value = member.nacimiento;
+        if (inputEmail) inputEmail.value = member.email;
+        if (inputTelefono) inputTelefono.value = member.telefono;
+        if (inputLocalidad) inputLocalidad.value = member.localidad;
+
+        if (slideBox) {
+            slideBox.classList.remove('opacity-0', 'translate-x-2', '-translate-x-2');
+        }
+        if (detailCard) {
+            detailCard.classList.remove('opacity-60');
+        }
+    }, 140);
+}
+
+function toggleEditFamilyMember() {
+    const btn = document.getElementById('editFamilyMemberBtn');
+    const fields = document.querySelectorAll('#familyMemberDetailCard .family-field');
+    const member = accountFamilyMembers[currentFamilyMemberIndex];
+    if (!btn || !fields.length || !member) return;
+
+    if (!isEditingFamilyMember) {
+        isEditingFamilyMember = true;
+
+        fields.forEach(input => {
+            input.disabled = false;
+            input.classList.remove('px-0', 'border-transparent', 'bg-transparent');
+            input.classList.add('px-2.5', 'border-violetbrand/40', 'bg-white', 'focus:border-violetbrand', 'focus:ring-2', 'focus:ring-violetbrand/15', 'shadow-2xs');
+        });
+
+        btn.className = 'inline-flex items-center gap-2 bg-greenbrand text-white rounded-lg px-3.5 py-2 text-xs font-bold hover:bg-opacity-90 transition self-start sm:self-auto shadow-2xs cursor-pointer';
+        btn.innerHTML = `
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>Guardar cambios</span>
+        `;
+
+        const firstField = document.getElementById('fmInputNombre');
+        if (firstField) firstField.focus();
+    } else {
+        const fullName = document.getElementById('fmInputNombre')?.value.trim() || '';
+        const relation = document.getElementById('fmInputRelacion')?.value.trim() || '';
+
+        if (!fullName || !relation) {
+            toast('Completá el nombre y la relación con el titular.');
+            return;
+        }
+
+        const nameParts = fullName.split(/\s+/);
+        member.firstName = nameParts[0] || '';
+        member.lastName = nameParts.slice(1).join(' ') || '';
+        member.relation = relation;
+        member.dni = document.getElementById('fmInputDni')?.value.trim() || '';
+        member.obraSocial = document.getElementById('fmInputObraSocial')?.value.trim() || 'Sin cobertura';
+        member.nacimiento = document.getElementById('fmInputNacimiento')?.value || '';
+        member.email = document.getElementById('fmInputEmail')?.value.trim() || '';
+        member.telefono = document.getElementById('fmInputTelefono')?.value.trim() || '';
+        member.localidad = document.getElementById('fmInputLocalidad')?.value.trim() || '';
+
+        isEditingFamilyMember = false;
+
+        fields.forEach(input => {
+            input.disabled = true;
+            input.classList.add('px-0', 'border-transparent', 'bg-transparent');
+            input.classList.remove('px-2.5', 'border-violetbrand/40', 'bg-white', 'focus:border-violetbrand', 'focus:ring-2', 'focus:ring-violetbrand/15', 'shadow-2xs');
+        });
+
+        btn.className = 'inline-flex items-center gap-2 border border-violetbrand/30 bg-vs/70 text-violetbrand hover:bg-violetbrand hover:text-white rounded-lg px-3.5 py-2 text-xs font-bold transition self-start sm:self-auto cursor-pointer';
+        btn.innerHTML = `
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            <span>Editar integrante</span>
+        `;
+
+        renderSelectedFamilyMember(0);
+        toast(`Datos de ${member.firstName} actualizados correctamente`);
     }
 }
 

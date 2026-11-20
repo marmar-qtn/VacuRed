@@ -60,7 +60,7 @@
                 <div class="flex items-center gap-2.5 p-2 bg-gradient-to-r from-[#f3f0fc] to-[#eaf3f9] border border-[#dcd3f5] rounded-xl text-xs font-bold">
                     <div class="w-8.5 h-8.5 rounded-full bg-[#e8e2f7] text-violetbrand flex items-center justify-center font-bold text-xs">MQ</div>
                     <div>
-                        María Quintana
+                        <span id="sidebarUserName">María Quintana</span>
                         <small class="block text-muted font-normal text-[10px] mt-0.5">Cuenta familiar (Titular)</small>
                     </div>
                 </div>
@@ -89,20 +89,17 @@
             </div>
 
             <!-- INTRODUCCIÓN -->
-            <section class="flex flex-col sm:flex-row justify-between sm:items-end gap-4 mb-6">
+            <section class="mb-6">
                 <div>
                     <div class="text-[10px] text-violetbrand tracking-widest font-extrabold uppercase mb-1">CONFIGURACIÓN Y PERFIL</div>
                     <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Mi cuenta</h1>
-                    <p class="text-xs sm:text-sm text-muted mt-1">Administrá tus datos personales, la seguridad y las preferencias de tu cuenta familiar.</p>
+                    <p class="text-xs sm:text-sm text-muted mt-1">Administrá tus datos personales, los integrantes vinculados y las preferencias de tu cuenta familiar.</p>
                 </div>
-                <button class="bg-violetbrand text-white rounded-lg px-4 py-2.5 text-xs font-bold hover:bg-opacity-90 transition whitespace-nowrap self-start sm:self-auto" onclick="toast('Cambios guardados correctamente')">
-                    Guardar cambios
-                </button>
             </section>
 
             <!-- PESTAÑAS DE CONFIGURACIÓN -->
             <div class="flex items-center gap-2 flex-wrap border-b border-line pb-3 mb-4" id="accountTabs">
-                <button class="family-tab active border border-transparent bg-transparent text-[#68798b] rounded-lg px-3.5 py-2 text-xs font-semibold hover:bg-white hover:border-line hover:text-ink transition" onclick="switchAccountTab('perfil', this)">Perfil y datos</button>
+                <button class="family-tab active bg-white text-violetbrand border border-line shadow-2xs rounded-lg px-3.5 py-2 text-xs font-semibold transition" onclick="switchAccountTab('perfil', this)">Perfil y datos</button>
                 <button class="family-tab border border-transparent bg-transparent text-[#68798b] rounded-lg px-3.5 py-2 text-xs font-semibold hover:bg-white hover:border-line hover:text-ink transition" onclick="switchAccountTab('seguridad', this)">Seguridad y acceso</button>
                 <button class="family-tab border border-transparent bg-transparent text-[#68798b] rounded-lg px-3.5 py-2 text-xs font-semibold hover:bg-white hover:border-line hover:text-ink transition" onclick="switchAccountTab('notificaciones', this)">Notificaciones</button>
                 <button class="family-tab border border-transparent bg-transparent text-[#68798b] rounded-lg px-3.5 py-2 text-xs font-semibold hover:bg-white hover:border-line hover:text-ink transition" onclick="switchAccountTab('privacidad', this)">Privacidad y datos</button>
@@ -110,79 +107,285 @@
 
             <!-- SECCIÓN 1: PERFIL Y DATOS -->
             <div class="account-section space-y-5" id="tab-perfil">
-                <section class="grid grid-cols-1 md:grid-cols-[1.55fr_0.8fr] gap-3">
-                    <div class="bg-white border border-line rounded-2xl p-4 flex items-center gap-3 shadow-sm">
-                        <div class="w-12 h-12 rounded-2xl bg-[#e8e2f7] text-violetbrand grid place-items-center font-extrabold text-sm flex-shrink-0">MQ</div>
-                        <div class="flex-1 min-w-0">
-                            <h3 class="text-sm font-bold truncate">María Quintana</h3>
-                            <p class="text-xs text-muted truncate">maria.quintana@email.com · Cuenta familiar principal</p>
-                        </div>
-                        <div class="ml-auto">
-                            <button class="border border-line bg-white text-bluebrand rounded-lg px-3 py-2 text-xs font-bold hover:bg-slate-50 transition whitespace-nowrap" onclick="toast('Función para cambiar foto de perfil')">Cambiar foto</button>
-                        </div>
+                
+                <!-- TARJETA PRINCIPAL DE PERFIL (Una columna, foto a la izquierda de borde a borde) -->
+                <section class="bg-white border border-line rounded-2xl shadow-sm overflow-hidden flex flex-col sm:flex-row items-stretch">
+                    <!-- Foto de perfil llegando a los bordes izquierdo, superior e inferior -->
+                    <div class="sm:w-52 md:w-60 h-44 sm:h-auto relative shrink-0 border-b sm:border-b-0 sm:border-r border-line overflow-hidden">
+                        <img src="https://images.pexels.com/photos/33867521/pexels-photo-33867521.jpeg?_gl=1*1rb6yn7*_ga*MTQzNzgyNDI2Mi4xNzk0ODg4MDIz*_ga_8JE65Q40S6*czE3OTUyMDA4MDkkbzYkZzEkdDE3OTUyMDEwOTEkajI0JGwwJGgw"
+                            alt="Foto de perfil de María Quintana"
+                            class="w-full h-full object-cover object-center">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/25 via-transparent to-transparent"></div>
                     </div>
-                    <div class="bg-white border border-line rounded-2xl p-4 flex items-center justify-between gap-3 shadow-sm">
-                        <div>
-                            <small class="block text-muted text-[10px]">Rol de cuenta</small>
-                            <strong class="text-2xl font-extrabold tracking-tight block my-0.5">Titular</strong>
-                            <span class="block text-muted text-[10px]">Responsable principal</span>
+
+                    <!-- Datos centrales del titular integrados -->
+                    <div class="flex-1 p-5 sm:p-6 flex flex-col justify-between gap-4 bg-gradient-to-r from-white via-white to-vs/40">
+                        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <span class="inline-flex items-center gap-1.5 bg-vs text-violetbrand border border-violetbrand/25 rounded-full px-3 py-0.5 text-[10px] font-extrabold tracking-wider uppercase">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-violetbrand"></span>
+                                        Titular de la cuenta
+                                    </span>
+                                    <span class="inline-flex items-center bg-bs text-bluebrand border border-bluebrand/25 rounded-full px-2.5 py-0.5 text-[10px] font-bold">
+                                        Responsable principal
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <h2 id="profileHeaderName" class="text-xl sm:text-2xl font-extrabold text-ink tracking-tight">María Quintana</h2>
+                                    <p id="profileHeaderEmail" class="text-xs text-muted font-medium mt-0.5">maria.quintana@email.com · Cuenta familiar activa</p>
+                                </div>
+                            </div>
+
+                            <button class="border border-line bg-white text-bluebrand rounded-lg px-3.5 py-2 text-xs font-bold hover:bg-bs/50 transition whitespace-nowrap self-start shadow-2xs cursor-pointer" onclick="toast('Función para cambiar foto de perfil')">
+                                Cambiar foto
+                            </button>
                         </div>
-                        <div class="w-11 h-11 rounded-xl bg-vs text-violetbrand grid place-items-center text-xl"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.3 2.4 2.4 4.6-5"/></svg></div>
+
+                        <!-- Resumen rápido con jerarquía visual -->
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-2 border-t border-line/70">
+                            <div class="bg-white/90 border border-line/80 rounded-xl px-3 py-2">
+                                <small class="block text-[9px] text-muted font-extrabold tracking-wider uppercase">DOCUMENTO</small>
+                                <strong id="profileHeaderDni" class="block text-xs sm:text-sm font-extrabold text-ink mt-0.5">DNI 34.812.490</strong>
+                            </div>
+                            <div class="bg-white/90 border border-line/80 rounded-xl px-3 py-2">
+                                <small class="block text-[9px] text-muted font-extrabold tracking-wider uppercase">COBERTURA MÉDICA</small>
+                                <strong id="profileHeaderObraSocial" class="block text-xs sm:text-sm font-extrabold text-[#2b7a67] mt-0.5 truncate">OSDE 210</strong>
+                            </div>
+                            <div class="bg-white/90 border border-line/80 rounded-xl px-3 py-2 col-span-2 sm:col-span-1">
+                                <small class="block text-[9px] text-muted font-extrabold tracking-wider uppercase">GRUPO FAMILIAR</small>
+                                <strong class="block text-xs sm:text-sm font-extrabold text-violetbrand mt-0.5">3 integrantes vinculados</strong>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
-                <section class="bg-white border border-line rounded-2xl p-5 shadow-sm space-y-4">
-                    <div>
-                        <h3 class="text-sm font-bold">Información personal</h3>
-                        <p class="text-xs text-muted mt-1">Actualizá tus datos de contacto y zona de referencia.</p>
+                <!-- INFORMACIÓN PERSONAL DEL TITULAR (Con jerarquía y edición controlada) -->
+                <section class="bg-white border border-line rounded-2xl p-5 sm:p-6 shadow-sm space-y-5">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-line pb-3.5">
+                        <div>
+                            <h3 class="text-sm sm:text-base font-extrabold text-ink">Información personal del titular</h3>
+                            <p class="text-xs text-muted mt-0.5">Datos identificatorios, cobertura médica y contacto principal.</p>
+                        </div>
+                        <button id="editProfileBtn"
+                            type="button"
+                            onclick="toggleEditProfile()"
+                            class="inline-flex items-center gap-2 border border-violetbrand/30 bg-vs/70 text-violetbrand hover:bg-violetbrand hover:text-white rounded-lg px-3.5 py-2 text-xs font-bold transition self-start sm:self-auto cursor-pointer">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                            <span>Editar perfil</span>
+                        </button>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                        <div class="space-y-1">
-                            <label class="block font-bold text-ink">Nombre y apellido</label>
-                            <input type="text" value="María Quintana" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
+
+                    <!-- Nivel 1 de jerarquía: Datos principales destacados -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                        <div class="bg-vs/55 border border-violetbrand/20 rounded-xl p-3.5 space-y-1">
+                            <label for="inputNombre" class="block text-[10px] font-extrabold text-violetbrand tracking-wider uppercase">Nombre y apellido</label>
+                            <input id="inputNombre" type="text" value="María Quintana" disabled
+                                class="profile-field w-full h-9 px-0 border border-transparent rounded-lg bg-transparent text-ink text-sm sm:text-[15px] font-extrabold outline-none transition disabled:opacity-100 disabled:cursor-default">
                         </div>
-                        <div class="space-y-1">
-                            <label class="block font-bold text-ink">Correo electrónico</label>
-                            <input type="email" value="maria.quintana@email.com" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
+
+                        <div class="bg-bs/55 border border-bluebrand/20 rounded-xl p-3.5 space-y-1">
+                            <label for="inputDni" class="block text-[10px] font-extrabold text-bluebrand tracking-wider uppercase">Número de documento (DNI)</label>
+                            <input id="inputDni" type="text" value="34.812.490" disabled
+                                class="profile-field w-full h-9 px-0 border border-transparent rounded-lg bg-transparent text-ink text-sm sm:text-[15px] font-extrabold outline-none transition disabled:opacity-100 disabled:cursor-default">
                         </div>
-                        <div class="space-y-1">
-                            <label class="block font-bold text-ink">Teléfono de contacto</label>
-                            <input type="text" value="+54 11 4455-6677" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
+
+                        <div class="bg-gs/65 border border-greenbrand/25 rounded-xl p-3.5 space-y-1">
+                            <label for="inputObraSocial" class="block text-[10px] font-extrabold text-[#2b7a67] tracking-wider uppercase">Obra social / Cobertura</label>
+                            <input id="inputObraSocial" type="text" value="OSDE 210" placeholder="Sin cobertura / Particular" disabled
+                                class="profile-field w-full h-9 px-0 border border-transparent rounded-lg bg-transparent text-[#2b7a67] text-sm sm:text-[15px] font-extrabold outline-none transition disabled:opacity-100 disabled:cursor-default">
                         </div>
-                        <div class="space-y-1">
-                            <label class="block font-bold text-ink">Localidad de referencia</label>
-                            <input type="text" value="San Justo, La Matanza" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
+                    </div>
+
+                    <!-- Nivel 2 de jerarquía: Datos complementarios y de contacto -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-1">
+                        <div class="bg-bglight/80 border border-line rounded-xl p-3 space-y-1">
+                            <label for="inputNacimiento" class="block text-[10px] font-bold text-muted uppercase tracking-wide">Fecha de nacimiento</label>
+                            <input id="inputNacimiento" type="date" value="1990-05-14" disabled
+                                class="profile-field w-full h-9 px-0 border border-transparent rounded-lg bg-transparent text-ink text-xs font-bold outline-none transition disabled:opacity-100 disabled:cursor-default">
                         </div>
+
+                        <div class="bg-bglight/80 border border-line rounded-xl p-3 space-y-1">
+                            <label for="inputEmail" class="block text-[10px] font-bold text-muted uppercase tracking-wide">Correo electrónico</label>
+                            <input id="inputEmail" type="email" value="maria.quintana@email.com" disabled
+                                class="profile-field w-full h-9 px-0 border border-transparent rounded-lg bg-transparent text-ink text-xs font-bold outline-none transition disabled:opacity-100 disabled:cursor-default">
+                        </div>
+
+                        <div class="bg-bglight/80 border border-line rounded-xl p-3 space-y-1">
+                            <label for="inputTelefono" class="block text-[10px] font-bold text-muted uppercase tracking-wide">Teléfono de contacto</label>
+                            <input id="inputTelefono" type="text" value="+54 11 4455-6677" disabled
+                                class="profile-field w-full h-9 px-0 border border-transparent rounded-lg bg-transparent text-ink text-xs font-bold outline-none transition disabled:opacity-100 disabled:cursor-default">
+                        </div>
+
+                        <div class="bg-bglight/80 border border-line rounded-xl p-3 space-y-1">
+                            <label for="inputLocalidad" class="block text-[10px] font-bold text-muted uppercase tracking-wide">Localidad de referencia</label>
+                            <input id="inputLocalidad" type="text" value="San Justo, La Matanza" disabled
+                                class="profile-field w-full h-9 px-0 border border-transparent rounded-lg bg-transparent text-ink text-xs font-bold outline-none transition disabled:opacity-100 disabled:cursor-default">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECCIÓN DE GRUPO FAMILIAR (Selector minimalista a la izquierda + Ficha editable a la derecha) -->
+                <section class="bg-white border border-line rounded-2xl p-5 sm:p-6 shadow-sm space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <div class="text-[10px] text-bluebrand tracking-widest font-extrabold uppercase mb-0.5">GRUPO FAMILIAR</div>
+                            <h3 class="text-sm sm:text-base font-extrabold text-ink">Integrantes de la familia</h3>
+                            <p class="text-xs text-muted mt-0.5">Alterná entre los integrantes para consultar o actualizar sus datos particulares.</p>
+                        </div>
+                        <button id="editFamilyMemberBtn"
+                            type="button"
+                            onclick="toggleEditFamilyMember()"
+                            class="inline-flex items-center gap-2 border border-violetbrand/30 bg-vs/70 text-violetbrand hover:bg-violetbrand hover:text-white rounded-lg px-3.5 py-2 text-xs font-bold transition self-start sm:self-auto cursor-pointer">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                            <span>Editar integrante</span>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-4 items-stretch">
+                        
+                        <!-- Columna izquierda: Selector limpio con flechas simples, nombre en 2 líneas y slider animado -->
+                        <div class="bg-gradient-to-br from-vs via-[#f5f1fd] to-bs border border-line rounded-2xl p-5 flex flex-col justify-between items-center text-center min-h-[190px]">
+                            <div class="w-full flex-1 flex items-center justify-between gap-2">
+                                <button type="button"
+                                    onclick="switchFamilyMember(-1)"
+                                    aria-label="Integrante anterior"
+                                    class="p-1 text-slate-400 hover:text-violetbrand active:scale-90 transition-colors bg-transparent border-0 cursor-pointer shrink-0">
+                                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                                </button>
+
+                                <div id="familyMemberSlideBox" class="flex flex-col items-center justify-center min-w-0 px-1 transition-all duration-300 ease-out">
+                                    <h4 class="leading-tight tracking-tight">
+                                        <span id="familyMemberFirstName" class="block text-xl font-extrabold text-ink truncate">Tomás</span>
+                                        <span id="familyMemberLastName" class="block text-sm font-bold text-slate-600 mt-0.5 truncate">Quintana</span>
+                                    </h4>
+                                    <span id="familyMemberRelationPill" class="mt-2.5 inline-flex items-center bg-white/45 backdrop-blur-md border border-white/75 text-violetbrand rounded-full px-3 py-0.5 text-[10px] font-extrabold tracking-wide shadow-2xs">
+                                        Hijo
+                                    </span>
+                                </div>
+
+                                <button type="button"
+                                    onclick="switchFamilyMember(1)"
+                                    aria-label="Integrante siguiente"
+                                    class="p-1 text-slate-400 hover:text-violetbrand active:scale-90 transition-colors bg-transparent border-0 cursor-pointer shrink-0">
+                                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                                </button>
+                            </div>
+
+                            <!-- Slider animado (puntos persistentes con transición fluida de ancho y color) -->
+                            <div class="flex items-center justify-center gap-1.5 pt-3" id="familyMemberDots">
+                                <button type="button" onclick="goToFamilyMember(0)" aria-label="Ver integrante 1" class="family-dot h-1.5 w-6 rounded-full bg-violetbrand transition-all duration-300 ease-out cursor-pointer"></button>
+                                <button type="button" onclick="goToFamilyMember(1)" aria-label="Ver integrante 2" class="family-dot h-1.5 w-1.5 rounded-full bg-slate-300/90 hover:bg-slate-400 transition-all duration-300 ease-out cursor-pointer"></button>
+                            </div>
+                        </div>
+
+                        <!-- Columna derecha: Datos particulares y editables del integrante seleccionado -->
+                        <div id="familyMemberDetailCard" class="bg-bglight/60 border border-line rounded-2xl p-4 sm:p-5 flex flex-col justify-between gap-4 transition-all duration-300 ease-out">
+                            <!-- Cabecera destacada del integrante -->
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-line">
+                                <div class="flex-1 min-w-0">
+                                    <label for="fmInputNombre" class="block text-[9px] text-muted font-extrabold tracking-wider uppercase">NOMBRE Y APELLIDO</label>
+                                    <input id="fmInputNombre" type="text" value="Tomás Quintana" disabled
+                                        class="family-field w-full h-8 px-0 border border-transparent rounded-lg bg-transparent text-ink text-base sm:text-lg font-extrabold outline-none transition disabled:opacity-100 disabled:cursor-default mt-0.5">
+                                </div>
+
+                                <div class="bg-white border border-violetbrand/25 rounded-xl px-3.5 py-2 shrink-0">
+                                    <label for="fmInputRelacion" class="block text-[9px] text-violetbrand font-extrabold tracking-wider uppercase">RELACIÓN CON TITULAR DE LA CUENTA</label>
+                                    <input id="fmInputRelacion" type="text" value="Hijo" disabled
+                                        class="family-field w-full h-7 px-0 border border-transparent rounded-lg bg-transparent text-ink text-xs sm:text-sm font-extrabold outline-none transition disabled:opacity-100 disabled:cursor-default">
+                                </div>
+                            </div>
+
+                            <!-- Datos particulares (mismos campos que el titular) -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                                <div class="bg-white border border-line rounded-xl p-3">
+                                    <label for="fmInputDni" class="block text-[9px] text-bluebrand font-extrabold tracking-wider uppercase">NÚMERO DE DOCUMENTO</label>
+                                    <input id="fmInputDni" type="text" value="48.920.114" disabled
+                                        class="family-field w-full h-8 px-0 border border-transparent rounded-lg bg-transparent text-ink text-xs sm:text-sm font-extrabold outline-none transition disabled:opacity-100 disabled:cursor-default mt-0.5">
+                                </div>
+
+                                <div class="bg-white border border-line rounded-xl p-3">
+                                    <label for="fmInputObraSocial" class="block text-[9px] text-[#2b7a67] font-extrabold tracking-wider uppercase">OBRA SOCIAL / COBERTURA</label>
+                                    <input id="fmInputObraSocial" type="text" value="OSDE 210 (Grupo familiar)" disabled
+                                        class="family-field w-full h-8 px-0 border border-transparent rounded-lg bg-transparent text-[#2b7a67] text-xs sm:text-sm font-extrabold outline-none transition disabled:opacity-100 disabled:cursor-default mt-0.5">
+                                </div>
+
+                                <div class="bg-white border border-line rounded-xl p-3">
+                                    <label for="fmInputNacimiento" class="block text-[9px] text-muted font-extrabold tracking-wider uppercase">FECHA DE NACIMIENTO</label>
+                                    <input id="fmInputNacimiento" type="date" value="2014-09-19" disabled
+                                        class="family-field w-full h-8 px-0 border border-transparent rounded-lg bg-transparent text-ink text-xs font-bold outline-none transition disabled:opacity-100 disabled:cursor-default mt-0.5">
+                                </div>
+
+                                <div class="bg-white border border-line rounded-xl p-3">
+                                    <label for="fmInputEmail" class="block text-[9px] text-muted font-extrabold tracking-wider uppercase">CORREO ELECTRÓNICO</label>
+                                    <input id="fmInputEmail" type="email" value="tomas.quintana@email.com" disabled
+                                        class="family-field w-full h-8 px-0 border border-transparent rounded-lg bg-transparent text-ink text-xs font-bold outline-none transition disabled:opacity-100 disabled:cursor-default mt-0.5">
+                                </div>
+
+                                <div class="bg-white border border-line rounded-xl p-3">
+                                    <label for="fmInputTelefono" class="block text-[9px] text-muted font-extrabold tracking-wider uppercase">TELÉFONO DE CONTACTO</label>
+                                    <input id="fmInputTelefono" type="text" value="+54 11 4455-6677 (Titular)" disabled
+                                        class="family-field w-full h-8 px-0 border border-transparent rounded-lg bg-transparent text-ink text-xs font-bold outline-none transition disabled:opacity-100 disabled:cursor-default mt-0.5">
+                                </div>
+
+                                <div class="bg-white border border-line rounded-xl p-3">
+                                    <label for="fmInputLocalidad" class="block text-[9px] text-muted font-extrabold tracking-wider uppercase">LOCALIDAD DE REFERENCIA</label>
+                                    <input id="fmInputLocalidad" type="text" value="San Justo, La Matanza" disabled
+                                        class="family-field w-full h-8 px-0 border border-transparent rounded-lg bg-transparent text-ink text-xs font-bold outline-none transition disabled:opacity-100 disabled:cursor-default mt-0.5">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </section>
             </div>
 
             <!-- SECCIÓN 2: SEGURIDAD Y ACCESO -->
             <div class="account-section space-y-5" id="tab-seguridad" style="display: none;">
-                <section class="bg-white border border-line rounded-2xl p-5 shadow-sm space-y-4">
-                    <div>
-                        <h3 class="text-sm font-bold">Seguridad de la cuenta</h3>
-                        <p class="text-xs text-muted mt-1">Gestioná tu contraseña y métodos de acceso seguro.</p>
-                    </div>
-                    <div class="max-w-md space-y-3 text-xs">
-                        <div class="space-y-1">
-                            <label class="block font-bold text-ink">Contraseña actual</label>
-                            <input type="password" placeholder="••••••••" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
-                        </div>
-                        
-                        <div class="space-y-1">
-                            <label class="block font-bold text-ink">Nueva contraseña</label>
-                            <input type="password" placeholder="Mínimo 8 caracteres" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
+                <section class="bg-white border border-line rounded-2xl p-5 sm:p-6 shadow-sm">
+                    <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-6 items-center">
+                        <!-- Columna izquierda: Formulario de contraseña -->
+                        <div class="space-y-4">
+                            <div>
+                                <div class="text-[10px] text-violetbrand tracking-widest font-extrabold uppercase mb-1">PROTECCIÓN DE ACCESO</div>
+                                <h3 class="text-base font-extrabold text-ink">Seguridad de la cuenta</h3>
+                                <p class="text-xs text-muted mt-1">Gestioná tu contraseña y mantené protegida la información sanitaria de tu familia.</p>
+                            </div>
+
+                            <div class="space-y-3 text-xs">
+                                <div class="space-y-1">
+                                    <label class="block font-bold text-ink">Contraseña actual</label>
+                                    <input type="password" placeholder="••••••••" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
+                                </div>
+                                
+                                <div class="space-y-1">
+                                    <label class="block font-bold text-ink">Nueva contraseña</label>
+                                    <input type="password" placeholder="Mínimo 8 caracteres" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
+                                </div>
+
+                                <div class="space-y-1">
+                                    <label class="block font-bold text-ink">Confirmar nueva contraseña</label>
+                                    <input type="password" placeholder="Repetir nueva contraseña" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
+                                </div>
+
+                                <button class="bg-violetbrand text-white rounded-lg px-4 py-2.5 text-xs font-bold hover:bg-opacity-90 transition mt-2 cursor-pointer" onclick="toast('Contraseña actualizada con éxito')">
+                                    Actualizar contraseña
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="space-y-1">
-                            <label class="block font-bold text-ink">Confirmar nueva contraseña</label>
-                            <input type="password" placeholder="Repetir nueva contraseña" class="w-full h-10 px-3 border border-line rounded-lg bg-white text-ink text-xs focus:border-[#a99be0] focus:ring-2 focus:ring-violetbrand/10 outline-none transition">
+                        <!-- Columna derecha: Imagen apaisada (más ancha que alta) -->
+                        <div class="space-y-2.5">
+                            <div class="w-full aspect-[16/10] rounded-2xl overflow-hidden border border-line shadow-xs bg-slate-100">
+                                <img src="https://images.pexels.com/photos/5841747/pexels-photo-5841747.jpeg?_gl=1*1m7syda*_ga*MTQzNzgyNDI2Mi4xNzk0ODg4MDIz*_ga_8JE65Q40S6*czE3OTUyMDA4MDkkbzYkZzEkdDE3OTUyMDIxMDIkajEwJGwwJGgw"
+                                    alt="Seguridad y cuidado familiar en VacuRed"
+                                    class="w-full h-full object-cover object-center">
+                            </div>
+                            <p class="text-[11px] text-muted leading-relaxed px-1">
+                                Recomendamos actualizar tu clave periódicamente y no compartir tus credenciales de acceso con terceros.
+                            </p>
                         </div>
-
-                        <button class="bg-violetbrand text-white rounded-lg px-4 py-2.5 text-xs font-bold hover:bg-opacity-90 transition mt-3" onclick="toast('Contraseña actualizada con éxito')">
-                            Actualizar contraseña
-                        </button>
                     </div>
                 </section>
             </div>
@@ -268,9 +471,9 @@
     </div>
 
     <!-- TOAST & MODAL -->
-    <div class="fixed bottom-5 right-5 bg-ink text-white px-4 py-3 rounded-xl text-xs opacity-0 translate-y-2 transition-all duration-200 pointer-events-none" id="toast"></div>
+    <div class="fixed bottom-5 right-5 bg-ink text-white px-4 py-3 rounded-xl text-xs opacity-0 translate-y-2 transition-all duration-200 pointer-events-none [&.show]:opacity-100 [&.show]:translate-y-0 z-50" id="toast"></div>
     
-    <div class="hidden fixed inset-0 bg-slate-900/40 items-center justify-center p-5 z-50" id="modal">
+    <div class="hidden fixed inset-0 bg-slate-900/40 items-center justify-center p-5 z-50 [&.open]:flex" id="modal">
         <div class="bg-white rounded-2xl p-6 w-full max-w-md space-y-3">
             <h3 class="text-lg font-bold" id="mtitle"></h3>
             <p class="text-xs text-muted" id="mdesc"></p>
