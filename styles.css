@@ -2,10 +2,20 @@
 
 /* =========================================================
    VACURED · ESTILOS COMPLEMENTARIOS Y COMPONENTES DINÁMICOS
+   RESPONSIVE DESIGN - Mobile First Approach
    ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
 
 body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
 }
 
 /* ---------------------------------------------------------
@@ -35,6 +45,8 @@ body {
     color: #203247;
     font-size: 12px;
     outline: none;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 #mfields input:focus,
@@ -43,11 +55,20 @@ body {
     box-shadow: 0 0 0 3px rgba(118, 88, 201, 0.12);
 }
 
+/* Mobile: Touch-friendly input height */
+@media (max-width: 768px) {
+    #mfields input,
+    #mfields select {
+        height: 44px;
+        font-size: 16px;
+    }
+}
+
 /* ---------------------------------------------------------
    2. MAPA E INTERACCIÓN DE VACUNATORIOS
    --------------------------------------------------------- */
 .clinic-map {
-    height: 290px;
+    height: 220px;
     position: relative;
     overflow: hidden;
     border-radius: 14px;
@@ -56,6 +77,13 @@ body {
         linear-gradient(35deg, transparent 48%, white 49%, white 52%, transparent 53%),
         linear-gradient(120deg, transparent 46%, white 47%, white 50%, transparent 51%);
     background-size: 105px 115px, 130px 125px;
+}
+
+/* Tablet y Desktop */
+@media (min-width: 768px) {
+    .clinic-map {
+        height: 290px;
+    }
 }
 
 .map-block {
@@ -103,6 +131,15 @@ body {
     cursor: pointer;
 }
 
+/* Mobile: Larger touch targets */
+@media (max-width: 768px) {
+    .map-pin {
+        width: 36px;
+        height: 36px;
+        font-size: 12px;
+    }
+}
+
 .map-pin span {
     transform: rotate(45deg);
 }
@@ -115,6 +152,13 @@ body {
     height: 37px;
     z-index: 20;
     box-shadow: 0 0 0 5px rgba(193, 38, 51, 0.28), 0 4px 12px rgba(32, 50, 71, 0.3);
+}
+
+@media (max-width: 768px) {
+    .map-pin.active {
+        width: 42px;
+        height: 42px;
+    }
 }
 
 .pin-one { top: 34%; left: 27%; }
@@ -138,23 +182,52 @@ body {
     color: #477da8;
     font-size: 18px;
     font-weight: 700;
+    flex-shrink: 0;
+}
+
+/* Mobile: Larger touch targets */
+@media (max-width: 768px) {
+    .search-symbol,
+    .map-icon {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
+    }
 }
 
 .clinic-card {
     background: #ffffff;
     border: 1px solid #e5eaf0;
     border-radius: 16px;
-    padding: 18px;
+    padding: 16px;
     cursor: pointer;
     transition: all 0.2s ease;
     margin-bottom: 12px;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Tablet: Increase padding */
+@media (min-width: 768px) {
+    .clinic-card {
+        padding: 18px;
+    }
 }
 
 .clinic-card:hover {
     border-color: #94a3b8;
     transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+}
+
+@media (max-width: 768px) {
+    .clinic-card:active {
+        background: #f8fafc;
+        border-color: #64748b;
+    }
 }
 
 .clinic-card.selected {
@@ -188,9 +261,20 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.15s ease;
+    display: inline-block;
+    white-space: nowrap;
 }
 
-.faq-chip:hover {
+/* Mobile: Adjust padding and size */
+@media (max-width: 640px) {
+    .faq-chip {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+}
+
+.faq-chip:hover,
+.faq-chip:active {
     border-color: #c6b9e9;
     color: #203247;
 }
@@ -206,6 +290,13 @@ body {
     border: 1px solid #edf0f4;
     border-radius: 12px;
     transition: border-color 0.15s ease;
+    margin-bottom: 8px;
+}
+
+@media (min-width: 768px) {
+    .faq-item {
+        margin-bottom: 12px;
+    }
 }
 
 .faq-item:hover,
@@ -225,6 +316,16 @@ body {
     font-weight: 700;
     color: #203247;
     border-radius: 12px;
+    user-select: none;
+}
+
+/* Mobile: Larger touch target */
+@media (max-width: 768px) {
+    .faq-item summary {
+        min-height: 48px;
+        padding: 14px 16px;
+        font-size: 13px;
+    }
 }
 
 .faq-item summary::-webkit-details-marker {
@@ -254,6 +355,14 @@ body {
     line-height: 1.65;
     color: #748396;
     max-width: 70ch;
+}
+
+/* Mobile: Better spacing */
+@media (max-width: 768px) {
+    .faq-answer {
+        padding: 0 16px 16px;
+        font-size: 13px;
+    }
 }
 
 .faq-answer a {
@@ -290,6 +399,7 @@ body {
 /* Scrollbar sutil para la lista de campañas */
 .custom-scrollbar::-webkit-scrollbar {
     width: 5px;
+    height: 5px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -303,4 +413,139 @@ body {
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #94a3b8;
+}
+
+/* ---------------------------------------------------------
+   6. RESPONSIVE UTILITY CLASSES
+   --------------------------------------------------------- */
+/* Hide elements on specific breakpoints */
+@media (max-width: 640px) {
+    .hidden-mobile {
+        display: none !important;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+    .hidden-tablet {
+        display: none !important;
+    }
+}
+
+@media (min-width: 1025px) {
+    .hidden-desktop {
+        display: none !important;
+    }
+}
+
+/* Touch-friendly adjustments */
+@media (max-width: 768px) {
+    button, a {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
+/* Improve text readability on mobile */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    h3 {
+        font-size: 16px;
+    }
+}
+
+/* Container adjustments */
+@media (max-width: 640px) {
+    .max-w-6xl,
+    .max-w-5xl,
+    .max-w-4xl {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
+
+/* Grid responsive behavior */
+@media (max-width: 768px) {
+    .grid-auto-flow-dense {
+        grid-auto-flow: row;
+    }
+}
+
+/* Navbar responsive */
+@media (max-width: 768px) {
+    nav {
+        gap: 8px;
+    }
+
+    nav a {
+        padding: 8px 12px;
+        font-size: 11px;
+    }
+}
+
+/* Modal and overlay improvements */
+@media (max-width: 768px) {
+    .modal-content,
+    .dialog {
+        max-width: 95vw;
+        max-height: 90vh;
+        margin: auto;
+        border-radius: 20px;
+    }
+}
+
+/* Improve image responsiveness */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Table responsive on mobile */
+@media (max-width: 768px) {
+    table {
+        font-size: 12px;
+        overflow-x: auto;
+        display: block;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tbody, tr, td {
+        display: block;
+        width: 100%;
+    }
+
+    tr {
+        margin-bottom: 12px;
+        border: 1px solid #e5eaf0;
+        border-radius: 8px;
+        padding: 12px;
+    }
+
+    td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 12px;
+        font-weight: 700;
+        text-align: left;
+    }
 }
