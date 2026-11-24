@@ -439,9 +439,10 @@ body {
 
 /* Touch-friendly adjustments */
 @media (max-width: 768px) {
-    button, a {
-        min-height: 44px;
-        min-width: 44px;
+    button:not(.family-dot),
+    header a,
+    #mobileNavDrawer a {
+        min-height: 40px;
     }
 }
 

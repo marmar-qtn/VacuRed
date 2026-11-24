@@ -108,6 +108,7 @@ document.addEventListener('keydown', e => {
         closeAppointmentDetail();
         closeAddVaccineModal();
         closeVaccineDetail();
+        closeMobileMenu();
     }
 });
 
@@ -1801,3 +1802,255 @@ function selectCampaign(index) {
         bodyEl.classList.add('panel-fade-in');
     }
 }
+
+/* =====================================================
+   VACURED · NAVEGACIÓN MÓVIL (Drawer lateral + Barra inferior)
+   ===================================================== */
+
+function getActivePageName() {
+    const activeSidebarBtn = document.querySelector('aside button.bg-vs[data-page]');
+    if (activeSidebarBtn) return activeSidebarBtn.dataset.page;
+
+    const path = window.location.pathname.toLowerCase();
+    if (path.includes('carnet')) return 'Carnet familiar';
+    if (path.includes('vacunatorios')) return 'Vacunatorios';
+    if (path.includes('turnos')) return 'Turnos';
+    if (path.includes('mi-cuenta')) return 'Mi cuenta';
+    if (path.includes('preguntas-frecuentes')) return 'Preguntas frecuentes';
+    return 'Inicio';
+}
+
+function initMobileNavigation() {
+    const sidebar = document.querySelector('aside');
+    const mainEl = document.querySelector('main');
+    if (!sidebar || !mainEl) return;
+
+    const activePage = getActivePageName();
+
+    const navItems = [
+        {
+            page: 'Inicio',
+            shortLabel: 'Inicio',
+            icon: '<svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11 12 4l8 7"/><path d="M6 10v9.5h4.5V14h3v5.5H18V10"/></svg>'
+        },
+        {
+            page: 'Carnet familiar',
+            shortLabel: 'Carnet',
+            icon: '<svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 2.5h6v3H9z"/><path d="m9 13 2 2 4-4"/></svg>'
+        },
+        {
+            page: 'Vacunatorios',
+            shortLabel: 'Vacunatorios',
+            icon: '<svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>'
+        },
+        {
+            page: 'Turnos',
+            shortLabel: 'Turnos',
+            icon: '<svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>'
+        },
+        {
+            page: 'Mi cuenta',
+            shortLabel: 'Mi cuenta',
+            icon: '<svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c0-3.9 3.1-6 7-6s7 2.1 7 6"/></svg>'
+        }
+    ];
+
+    // 1. Insertar botón hamburguesa en el topbar móvil junto al logo de VacuRed
+    const mobileBrand = mainEl.querySelector('.md\\:hidden');
+    if (mobileBrand && !document.getElementById('mobileMenuOpenBtn')) {
+        const menuBtn = document.createElement('button');
+        menuBtn.type = 'button';
+        menuBtn.id = 'mobileMenuOpenBtn';
+        menuBtn.setAttribute('aria-label', 'Abrir menú de navegación');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.setAttribute('aria-controls', 'mobileNavDrawer');
+        menuBtn.className = 'w-9 h-9 border border-line bg-white rounded-xl grid place-items-center text-ink hover:bg-vs hover:text-violetbrand hover:border-violetbrand/30 active:scale-95 transition cursor-pointer mr-1 shrink-0';
+        menuBtn.innerHTML = '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+        menuBtn.addEventListener('click', openMobileMenu);
+        mobileBrand.prepend(menuBtn);
+    }
+
+    // 2. Crear Drawer lateral desplegable para móvil (misma estructura que el sidebar)
+    if (!document.getElementById('mobileNavDrawer')) {
+        const drawerLinksHtml = navItems.map(item => {
+            const isActive = item.page === activePage;
+            const classes = isActive
+                ? 'bg-vs text-violetbrand font-bold'
+                : 'text-[#607184] hover:bg-vs hover:text-violetbrand font-semibold';
+            return `
+                <button type="button"
+                    onclick="closeMobileMenu(); go('${item.page}')"
+                    class="w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-3 text-xs ${classes} transition cursor-pointer">
+                    <span class="w-5 grid place-items-center shrink-0">${item.icon}</span>
+                    <span>${item.page}</span>
+                </button>
+            `;
+        }).join('');
+
+        const isFaqActive = activePage === 'Preguntas frecuentes';
+        const faqCtaHtml = isFaqActive
+            ? '<span class="inline-block bg-violetbrand text-white rounded-lg px-2.5 py-1.5 text-[11px] font-bold">Preguntas frecuentes ✓</span>'
+            : '<a href="preguntas-frecuentes.html" class="inline-block bg-white border border-violetbrand rounded-lg px-2.5 py-1.5 text-violetbrand text-[11px] font-bold hover:bg-vs transition">Preguntas frecuentes ↗</a>';
+
+        const drawer = document.createElement('div');
+        drawer.id = 'mobileNavDrawer';
+        drawer.className = 'md:hidden fixed inset-0 z-50 pointer-events-none';
+        drawer.setAttribute('aria-hidden', 'true');
+        drawer.innerHTML = `
+            <!-- Fondo oscuro difuminado -->
+            <div id="mobileNavBackdrop"
+                onclick="closeMobileMenu()"
+                class="fixed inset-0 bg-slate-900/40 backdrop-blur-[2px] opacity-0 transition-opacity duration-300"></div>
+
+            <!-- Panel lateral -->
+            <aside id="mobileNavPanel"
+                class="relative w-[280px] max-w-[84vw] h-full bg-white border-r border-line shadow-2xl flex flex-col justify-between p-5 overflow-y-auto -translate-x-full transition-transform duration-300 ease-out">
+                <div class="space-y-5">
+                    <!-- Cabecera con marca y botón cerrar -->
+                    <div class="flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-2.5 font-extrabold text-xl tracking-tight">
+                            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violetbrand to-redbrand grid place-items-center text-white text-lg">✳</div>
+                            <div>Vacu<span class="text-redbrand">Red</span><small class="block text-[10px] text-muted font-medium tracking-wide">Tu salud, en red.</small></div>
+                        </div>
+                        <button type="button"
+                            onclick="closeMobileMenu()"
+                            aria-label="Cerrar menú"
+                            class="w-9 h-9 rounded-xl bg-slate-100 text-muted hover:bg-rs hover:text-redbrand grid place-items-center text-xl leading-none transition cursor-pointer shrink-0">
+                            ×
+                        </button>
+                    </div>
+
+                    <!-- Selector de ubicación (oculta en el topbar en móvil) -->
+                    <button type="button"
+                        onclick="closeMobileMenu(); locationModal()"
+                        class="w-full flex items-center justify-between gap-2 border border-line bg-bglight/80 hover:bg-bs/50 rounded-xl px-3 py-2.5 text-[#566b80] text-xs font-semibold transition cursor-pointer">
+                        <span class="flex items-center gap-2 truncate">
+                            <svg class="w-4 h-4 text-bluebrand shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                            <span class="truncate">San Justo, Buenos Aires</span>
+                        </span>
+                        <span class="text-[10px] text-muted">▾</span>
+                    </button>
+
+                    <!-- Enlaces principales -->
+                    <div>
+                        <p class="text-[10px] text-[#9aa6b4] tracking-widest font-extrabold px-3 mb-2">MENÚ PRINCIPAL</p>
+                        <nav class="grid gap-1">
+                            ${drawerLinksHtml}
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Pie del menú lateral móvil -->
+                <div class="space-y-3 pt-5 mt-5 border-t border-line">
+                    <div class="bg-gradient-to-br from-[#eef4fa] to-[#f5f2fc] border border-line rounded-2xl p-3.5 space-y-2">
+                        <b class="text-xs font-bold block">¿Necesitás ayuda?</b>
+                        <p class="text-[11px] text-muted leading-relaxed">Encontrá respuestas sobre vacunas, carnets y el uso de VacuRed.</p>
+                        ${faqCtaHtml}
+                    </div>
+
+                    <div class="flex items-center gap-2.5 p-2.5 bg-gradient-to-r from-[#f3f0fc] to-[#eaf3f9] border border-[#dcd3f5] rounded-xl text-xs font-bold">
+                        <div class="w-9 h-9 rounded-full bg-[#e8e2f7] text-violetbrand flex items-center justify-center font-bold text-xs shrink-0">MQ</div>
+                        <div class="flex-1 min-w-0">
+                            <span class="block truncate">María Quintana</span>
+                            <small class="block text-muted font-normal text-[10px] mt-0.5 truncate">Cuenta familiar (Titular)</small>
+                        </div>
+                        <button type="button"
+                            onclick="closeMobileMenu(); logout()"
+                            title="Cerrar sesión"
+                            aria-label="Cerrar sesión"
+                            class="w-9 h-9 rounded-lg grid place-items-center text-violetbrand hover:text-redbrand hover:bg-white/70 transition cursor-pointer shrink-0">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4H6.5A1.5 1.5 0 0 0 5 5.5v13A1.5 1.5 0 0 0 6.5 20H10"/><path d="M15 8l4 4-4 4M19 12H9"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </aside>
+        `;
+        document.body.appendChild(drawer);
+    }
+
+    // 3. Crear barra de navegación inferior fija en móvil para acceso en 1 toque
+    if (!document.getElementById('mobileBottomNav')) {
+        const bottomItemsHtml = navItems.map(item => {
+            const isActive = item.page === activePage;
+            const textClass = isActive
+                ? 'text-violetbrand font-extrabold'
+                : 'text-[#607184] hover:text-violetbrand font-semibold';
+            const pillClass = isActive
+                ? 'bg-vs text-violetbrand'
+                : 'bg-transparent';
+
+            return `
+                <button type="button"
+                    onclick="go('${item.page}')"
+                    aria-current="${isActive ? 'page' : 'false'}"
+                    class="flex flex-col items-center justify-center gap-0.5 py-1 px-0.5 rounded-xl ${textClass} transition cursor-pointer min-w-0">
+                    <span class="w-8 h-7 rounded-xl grid place-items-center ${pillClass} transition-colors">
+                        ${item.icon}
+                    </span>
+                    <span class="text-[10px] leading-tight truncate max-w-full">${item.shortLabel}</span>
+                </button>
+            `;
+        }).join('');
+
+        const bottomNav = document.createElement('nav');
+        bottomNav.id = 'mobileBottomNav';
+        bottomNav.setAttribute('aria-label', 'Navegación principal móvil');
+        bottomNav.className = 'md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-line px-1.5 py-1.5 shadow-[0_-4px_20px_rgba(32,50,71,0.06)]';
+        bottomNav.innerHTML = `<div class="grid grid-cols-5 gap-1">${bottomItemsHtml}</div>`;
+        document.body.appendChild(bottomNav);
+
+        // Dar aire inferior al contenido y subir el toast en móvil para que no los tape la barra fija
+        mainEl.classList.add('pb-24', 'md:pb-12');
+        const toastEl = document.getElementById('toast');
+        if (toastEl) {
+            toastEl.classList.remove('bottom-5');
+            toastEl.classList.add('bottom-20', 'md:bottom-5');
+        }
+    }
+}
+
+function openMobileMenu() {
+    const drawer = document.getElementById('mobileNavDrawer');
+    const backdrop = document.getElementById('mobileNavBackdrop');
+    const panel = document.getElementById('mobileNavPanel');
+    const openBtn = document.getElementById('mobileMenuOpenBtn');
+    if (!drawer || !backdrop || !panel) return;
+
+    drawer.classList.remove('pointer-events-none');
+    drawer.setAttribute('aria-hidden', 'false');
+    if (openBtn) openBtn.setAttribute('aria-expanded', 'true');
+
+    requestAnimationFrame(() => {
+        backdrop.classList.remove('opacity-0');
+        backdrop.classList.add('opacity-100');
+        panel.classList.remove('-translate-x-full');
+        panel.classList.add('translate-x-0');
+    });
+
+    document.body.style.overflow = 'hidden';
+}
+
+function closeMobileMenu() {
+    const drawer = document.getElementById('mobileNavDrawer');
+    const backdrop = document.getElementById('mobileNavBackdrop');
+    const panel = document.getElementById('mobileNavPanel');
+    const openBtn = document.getElementById('mobileMenuOpenBtn');
+    if (!drawer || !backdrop || !panel) return;
+
+    backdrop.classList.remove('opacity-100');
+    backdrop.classList.add('opacity-0');
+    panel.classList.remove('translate-x-0');
+    panel.classList.add('-translate-x-full');
+
+    drawer.setAttribute('aria-hidden', 'true');
+    if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+
+    setTimeout(() => {
+        if (drawer.getAttribute('aria-hidden') === 'true') {
+            drawer.classList.add('pointer-events-none');
+        }
+    }, 300);
+}
+
+initMobileNavigation();
